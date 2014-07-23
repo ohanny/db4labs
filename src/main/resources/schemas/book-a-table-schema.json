@@ -98,7 +98,7 @@
             "name":"menu",
             "columns":[
                 {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
-                {"name":"content", "type":"varchar", "length":2000, "nullable":false, "storeAsFile":true}
+                {"name":"content", "type":"varchar", "length":5000, "nullable":false, "storeAsFile":true}
             ]
         },
         {
