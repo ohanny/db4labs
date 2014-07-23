@@ -1,12 +1,10 @@
 package fr.icodem.db4labs.app.eshop.controller;
 
+import fr.icodem.db4labs.dbtools.validation.MessageBinders;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import fr.icodem.db4labs.dbtools.validation.MessageBinder;
-
-import java.util.List;
 
 public class EverydayProductFormController {
 
@@ -14,10 +12,10 @@ public class EverydayProductFormController {
     @FXML private ComboBox<String> unitComboBox;
     @FXML private TextArea compositionTextArea;
 
-    @FXML private List<MessageBinder> messageBinders;
+    @FXML private MessageBinders messageBinders;
 
     // getters and setters
-    public List<MessageBinder> getMessageBinders() {
+    public MessageBinders getMessageBinders() {
         return messageBinders;
     }
 

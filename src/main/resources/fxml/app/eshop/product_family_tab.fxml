@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 <?import fr.icodem.db4labs.component.DefaultTreeCellFactory?>
-<?import fr.icodem.db4labs.component.MessageLabel?>
+
 <Tab xmlns:fx="http://javafx.com/fxml" text="Product Families"
      fx:controller="fr.icodem.db4labs.app.eshop.controller.ProductFamilyTabController">
     <content>
@@ -50,9 +50,8 @@
                                GridPane.rowIndex="1" GridPane.columnIndex="1"/>
                     <Label text="Name" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
                     <TextField fx:id="nameTextField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-                    <MessageLabel property="name" inputControl="$nameTextField"
-                                  GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
-                    <HBox GridPane.rowIndex="4" GridPane.columnIndex="1"
+
+                    <HBox GridPane.rowIndex="3" GridPane.columnIndex="1"
                           spacing="10" alignment="CENTER_RIGHT">
                         <Button text="Cancel" onAction="#cancel"/>
                         <Button text="Save" onAction="#save"/>

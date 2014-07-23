@@ -3,6 +3,8 @@ package fr.icodem.db4labs.app.eshop.controller;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import fr.icodem.db4labs.component.FormState;
+import fr.icodem.db4labs.dbtools.validation.MessageBinders;
+import fr.icodem.db4labs.dbtools.validation.MessageBindersBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -41,7 +43,7 @@ public class ProductFamilyTabController implements Initializable {
     @FXML private TextField idTextField;
     @FXML private TextField nameTextField;
 
-    @FXML private List<MessageBinder> messageBinders;
+    private MessageBinders messageBinders;
 
     private FormState formState;
 
@@ -90,6 +92,12 @@ public class ProductFamilyTabController implements Initializable {
 
         // load items
         find(null);
+
+        // message binders
+        messageBinders = new MessageBindersBuilder()
+                .bind("name").to(nameTextField)
+                .build();
+
     }
 
     @FXML

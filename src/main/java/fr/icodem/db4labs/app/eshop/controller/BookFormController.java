@@ -1,12 +1,17 @@
 package fr.icodem.db4labs.app.eshop.controller;
 
+import fr.icodem.db4labs.dbtools.validation.MessageBinders;
+import fr.icodem.db4labs.dbtools.validation.MessageBindersBuilder;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import fr.icodem.db4labs.dbtools.validation.MessageBinder;
 
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class BookFormController {
+public class BookFormController implements Initializable {
 
     @FXML private TextField releaseDateBookTextField;
     @FXML private TextField isbnTextField;
@@ -14,7 +19,20 @@ public class BookFormController {
     @FXML private TextField pagesTextField;
     @FXML private TextField authorsTextField;
 
-    @FXML private List<MessageBinder> messageBinders;
+    @FXML private MessageBinders messageBinders;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        // message binders
+        messageBinders = new MessageBindersBuilder()
+                .bind("release_date").to(releaseDateBookTextField)
+                .bind("isbn").to(isbnTextField)
+                .bind("language").to(languageTextField)
+                .bind("pages").to(pagesTextField)
+                .bind("authors").to(authorsTextField)
+                .build();
+    }
 
     // getters and setters
     public TextField getReleaseDateBookTextField() {
@@ -33,7 +51,7 @@ public class BookFormController {
         return pagesTextField;
     }
 
-    public List<MessageBinder> getMessageBinders() {
+    public MessageBinders getMessageBinders() {
         return messageBinders;
     }
 

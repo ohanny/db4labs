@@ -14,6 +14,10 @@ public class MessageBinders implements Iterable<MessageBinder> {
         binders.add(binder);
     }
 
+    public void merge(MessageBinders source) {
+        binders.addAll(source.binders);
+    }
+
     @Override
     public Iterator<MessageBinder> iterator() {
         return binders.iterator();

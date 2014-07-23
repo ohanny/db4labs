@@ -3,12 +3,11 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-<?import fr.icodem.db4labs.dbtools.validation.*?>
-<?import java.util.ArrayList?>
 <?import fr.icodem.db4labs.component.DefaultTableCellFactory?>
 <?import fr.icodem.db4labs.component.ImageInput?>
 <?import fr.icodem.db4labs.component.DefaultListCellFactory?>
 <?import fr.icodem.db4labs.component.DefaultListCell?>
+
 <Tab xmlns:fx="http://javafx.com/fxml" text="Products"
      fx:controller="fr.icodem.db4labs.app.eshop.controller.ProductTabController">
     <content>
@@ -56,15 +55,6 @@
                 <!-- form panel -->
                 <GridPane fx:id="formPane" hgap="10" vgap="10" maxWidth="200" minHeight="200" 
                           styleClass="form" StackPane.alignment="TOP_RIGHT" >
-                    <fx:define>
-                        <ArrayList fx:id="messageBinders">
-                            <MessageBinder property="name" target="${nameTextField}"/>
-                            <MessageBinder property="description" target="${descriptionTextArea}"/>
-                            <MessageBinder property="price" target="${priceTextField}"/>
-                            <MessageBinder property="name" target="${nameTextField}"/>
-                            <MessageBinder property="family_id" target="${familyComboBox}"/>
-                        </ArrayList>
-                    </fx:define>
 
                     <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>

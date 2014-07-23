@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import fr.icodem.db4labs.component.FormState;
+import fr.icodem.db4labs.dbtools.validation.MessageBinders;
+import fr.icodem.db4labs.dbtools.validation.MessageBindersBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -105,7 +107,7 @@ public class ProductTabController implements Initializable {
     @FXML private TextArea nutritionalValueTextArea;
 
     // message binders
-    @FXML private List<MessageBinder> messageBinders;
+    private MessageBinders messageBinders;
 
     private FormState formState;
 
@@ -145,12 +147,6 @@ public class ProductTabController implements Initializable {
         unitComboBox = formGroceryController.getUnitComboBox();
         compositionTextArea = formGroceryController.getCompositionTextArea();
         nutritionalValueTextArea = formGroceryController.getNutritionalValueTextArea();
-
-        // concat message binders from sub-app
-        messageBinders.addAll(formBookController.getMessageBinders());
-        messageBinders.addAll(formMovieController.getMessageBinders());
-        messageBinders.addAll(formAlbumController.getMessageBinders());
-        messageBinders.addAll(formGroceryController.getMessageBinders());
 
         formPane.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -230,7 +226,22 @@ public class ProductTabController implements Initializable {
 
         // load items
         find(null);
-        
+
+        // message binders
+        messageBinders = new MessageBindersBuilder()
+                .bind("name").to(nameTextField)
+                .bind("description").to(descriptionTextArea)
+                .bind("price").to(priceTextField)
+                .bind("family_id").to(familyComboBox)
+                .build();
+
+        // merge message binders from sub-app
+        messageBinders.merge(formBookController.getMessageBinders());
+        messageBinders.merge(formMovieController.getMessageBinders());
+        messageBinders.merge(formAlbumController.getMessageBinders());
+        messageBinders.merge(formGroceryController.getMessageBinders());
+
+
         // filter product list
         filterTextField.textProperty().addListener(new ChangeListener() {
             @Override
