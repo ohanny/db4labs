@@ -3,7 +3,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 <?import fr.icodem.db4labs.component.DefaultTreeCellFactory?>
-<?import fr.icodem.db4labs.component.MessageLabel?>
 <?import fr.icodem.db4labs.component.ImageInput?>
 <Tab xmlns:fx="http://javafx.com/fxml" text="Countries &amp; Cities"
      fx:controller="fr.icodem.db4labs.app.bat.controller.CountryTabController">
@@ -57,21 +56,17 @@
 
                     <Label text="Name" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
                     <TextField fx:id="nameTextField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-                    <MessageLabel property="name" inputControl="$nameTextField"
-                                  GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
 
-                    <Label fx:id="postCodeLabel"  text="Post code" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                    <TextField fx:id="postCodeTextField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-                    <MessageLabel property="post_code" inputControl="$postCodeTextField"
-                                  GridPane.rowIndex="5" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+                    <Label fx:id="postCodeLabel"  text="Post code" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="postCodeTextField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-                    <Label fx:id="foremostLabel" text="Foremost" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                    <CheckBox fx:id="foremostCheckBox" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                    <Label fx:id="foremostLabel" text="Foremost" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <CheckBox fx:id="foremostCheckBox" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-                    <Label fx:id="cityImageLabel" text="Image" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-                    <ImageInput fx:id="cityImageInput" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                    <Label fx:id="cityImageLabel" text="Image" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <ImageInput fx:id="cityImageInput" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
-                    <HBox fx:id="buttonBox" GridPane.rowIndex="7" GridPane.columnIndex="1"
+                    <HBox fx:id="buttonBox" GridPane.rowIndex="6" GridPane.columnIndex="1"
                           spacing="10" alignment="CENTER_RIGHT">
                         <Button text="Cancel" onAction="#cancel"/>
                         <Button text="Save" onAction="#save"/>

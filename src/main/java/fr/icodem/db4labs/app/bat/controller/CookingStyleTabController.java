@@ -7,6 +7,8 @@ import fr.icodem.db4labs.component.FormState;
 import fr.icodem.db4labs.container.AppContainer;
 import fr.icodem.db4labs.database.PersistentObject;
 import fr.icodem.db4labs.dbtools.validation.MessageBinder;
+import fr.icodem.db4labs.dbtools.validation.MessageBinders;
+import fr.icodem.db4labs.dbtools.validation.MessageBindersBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -40,7 +42,7 @@ public class CookingStyleTabController implements Initializable {
     @FXML private TextField idTextField;
     @FXML private TextField nameTextField;
 
-    @FXML private List<MessageBinder> messageBinders;
+    private MessageBinders messageBinders;
 
     private FormState formState;
 
@@ -74,6 +76,12 @@ public class CookingStyleTabController implements Initializable {
 
         // load items
         find(null);
+
+        // message binders
+        messageBinders = new MessageBindersBuilder()
+                .bind("name").to(nameTextField)
+                .build();
+
     }
 
     @FXML

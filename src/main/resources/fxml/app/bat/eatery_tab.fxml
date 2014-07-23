@@ -3,8 +3,6 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-<?import fr.icodem.db4labs.dbtools.validation.*?>
-<?import java.util.ArrayList?>
 <?import fr.icodem.db4labs.component.DefaultTableCellFactory?>
 <?import fr.icodem.db4labs.component.ImageInput?>
 <?import fr.icodem.db4labs.component.DefaultListCellFactory?>
@@ -57,26 +55,6 @@
                 <!-- form panel -->
                 <GridPane fx:id="formPane" hgap="10" vgap="10" maxWidth="550" minHeight="200"
                           styleClass="form" StackPane.alignment="TOP_RIGHT" >
-                    <!--
-                    <fx:define>
-                        <ArrayList fx:id="messageBinders">
-                            <MessageBinder property="name" target="${nameTextField}"/>
-                            <MessageBinder property="description" target="${descriptionTextArea}"/>
-                            <MessageBinder property="executive_chef" target="${executiveChefTextField}"/>
-                            <MessageBinder property="street" target="${streetTextField}"/>
-                            <MessageBinder property="post_code" target="${postCodeTextField}"/>
-                            <MessageBinder property="cooking_style_id" target="${cookingStyleComboBox}"/>
-                            <MessageBinder property="city_id" target="${cityComboBox}"/>
-                            <MessageBinder property="getting_there" target="${gettingThereTextField}"/>
-                            <MessageBinder property="parking" target="${parkingTextField}"/>
-                            <MessageBinder property="hours_of_operation1" target="${hoursOfOperationTextField1}"/>
-                            <MessageBinder property="hours_of_operation2" target="${hoursOfOperationTextField2}"/>
-                            <MessageBinder property="price" target="${priceTextField}"/>
-                            <MessageBinder property="payment_options" target="${paymentOptionsTextField}"/>
-                        </ArrayList>
-                    </fx:define>
-                    -->
-
                     <rowConstraints>
                         <RowConstraints vgrow="ALWAYS"/>
                     </rowConstraints>

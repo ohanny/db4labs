@@ -7,7 +7,8 @@ import fr.icodem.db4labs.component.FormState;
 import fr.icodem.db4labs.component.ImageInput;
 import fr.icodem.db4labs.container.AppContainer;
 import fr.icodem.db4labs.database.PersistentObject;
-import fr.icodem.db4labs.dbtools.validation.MessageBinder;
+import fr.icodem.db4labs.dbtools.validation.MessageBinders;
+import fr.icodem.db4labs.dbtools.validation.MessageBindersBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -26,7 +27,6 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 @Singleton
@@ -52,7 +52,7 @@ public class CountryTabController implements Initializable {
 
     @FXML private HBox buttonBox;
 
-    @FXML private List<MessageBinder> messageBinders;
+    private MessageBinders messageBinders;
 
     private FormState formState;
 
@@ -101,6 +101,13 @@ public class CountryTabController implements Initializable {
 
         // load items
         find(null);
+
+        // message binders
+        messageBinders = new MessageBindersBuilder()
+                .bind("name").to(nameTextField)
+                .bind("post_code").to(postCodeTextField)
+                .build();
+
     }
 
     @FXML
