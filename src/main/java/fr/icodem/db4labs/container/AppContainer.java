@@ -43,8 +43,6 @@ public class AppContainer {
 
     @Inject private Config config;
 
-
-    //@Inject
     private SqlExecutor sqlExecutor;
 
     // container methods
@@ -79,22 +77,10 @@ public class AppContainer {
         post(new NavigationEvent(true));
     }
 
-    @Deprecated
-    public boolean validate(Validator validator, Node form,
-                            List<MessageBinder> messageBinders,
-                            PersistentObject... dataList) {
-        return validatorResultsHandler.handle(validator, form, messageBinders, dataList);
-    }
-
     public boolean validate(Validator validator, Node form,
                             MessageBinders messageBinders,
                             PersistentObject... dataList) {
         return validatorResultsHandler.handle(validator, form, messageBinders, dataList);
-    }
-
-    @Deprecated
-    public void clearValidationMessages(Node form, List<MessageBinder> messageBinders) {
-        validatorResultsHandler.clearValidationMessages(form, messageBinders);
     }
 
     public void clearValidationMessages(Node form, MessageBinders messageBinders) {

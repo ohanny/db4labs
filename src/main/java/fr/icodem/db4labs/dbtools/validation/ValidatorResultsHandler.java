@@ -11,11 +11,6 @@ import java.util.Set;
 
 public class ValidatorResultsHandler {
 
-    @Deprecated
-    public void clearValidationMessages(Node form, List<MessageBinder> messageBinders) {
-        clearMessages(form, messageBinders);
-    }
-
     public void clearValidationMessages(Node form, MessageBinders messageBinders) {
         clearMessages(form, messageBinders);
     }
@@ -45,31 +40,6 @@ public class ValidatorResultsHandler {
         return true;
     }
 
-    @Deprecated
-    public boolean handle(Validator validator, Node form,
-                          List<MessageBinder> messageBinders,
-                          PersistentObject... dataList) {
-        // clear messages
-        clearMessages(form, messageBinders);
-
-        // perform validation
-        ValidatorResults results = validator.validate(dataList);
-
-        // validation errors
-        if (!results.isValid()) {
-            // convert validator results into error messages
-            List<Message> messages = convert(results);
-
-            // display validation messages on ui
-            displayMessages(messages, form, messageBinders);
-
-            // validation failed
-            return false;
-        }
-
-        // validation ok
-        return true;
-    }
 
     private List<Message> convert(ValidatorResults results) {
         List<Message> messages = new ArrayList<>();
@@ -88,9 +58,8 @@ public class ValidatorResultsHandler {
         return messages;
     }
 
-    @Deprecated
-    private void displayMessages(List<Message> messages, Node form, List<MessageBinder> messageBinders) {
-        // TODO remove MessageLabel or MessageBinder for validation ?
+    private void displayMessages(List<Message> messages, Node form, MessageBinders messageBinders) {
+        // TODO remove MessageLabel ?
         Set<Node> labels = form.lookupAll("MessageLabel");
         for (Node node : labels) {
             MessageLabel label = (MessageLabel)node;
@@ -108,36 +77,8 @@ public class ValidatorResultsHandler {
                 mb.setMessage(m);
             }
         }
-
     }
 
-    private void displayMessages(List<Message> messages, Node form, MessageBinders messageBinders) {
-        for (MessageBinder mb : messageBinders) {
-            if (mb.getProperty() != null) {
-                Message m = getMessage(mb.getProperty(), messages);
-                mb.setMessage(m);
-            }
-        }
-    }
-
-    @Deprecated
-    private void clearMessages(Node form, List<MessageBinder> messageBinders) {
-        // todo keep message label
-        Set<Node> labels = form.lookupAll("MessageLabel");
-        for (Node node : labels) {
-            MessageLabel label = (MessageLabel)node;
-            label.setMessage(null);
-        }
-
-        if (messageBinders != null) {
-            for (MessageBinder mb : messageBinders) {
-                if (mb.getProperty() != null) {
-                    mb.setMessage(null);
-                }
-            }
-        }
-
-    }
     private void clearMessages(Node form, MessageBinders messageBinders) {
         if (messageBinders != null) {
             for (MessageBinder mb : messageBinders) {

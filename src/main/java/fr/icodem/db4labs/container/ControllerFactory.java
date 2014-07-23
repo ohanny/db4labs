@@ -10,12 +10,6 @@ public class ControllerFactory implements Callback<Class<?>, Object> {
     @Inject
     private AppContainer container;
 
-/*
-    public ControllerFactory(AppContainer container) {
-        this.container = container;
-    }
-*/
-
     @Override
     public Object call(Class<?> aClass) {
         return container.getInstance(aClass);
