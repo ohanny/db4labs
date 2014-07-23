@@ -1,0 +1,30 @@
+{
+    "dbName":"eshop_grocery",
+    "appName":"EShopGrocery",
+    "description":"A database with Everyday and Food Products for an e-commerce site",
+    "imports": ["eshop-schema.json"],
+    "tables": [
+        {
+            "name":"everyday_product",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true},
+                {"name":"quantity", "type":"integer", "nullable":false},
+                {"name":"unit", "type":"varchar", "length": 5, "nullable":false},
+                {"name":"composition", "type":"varchar", "length":500, "nullable":false}
+            ],
+            "constraints":[
+                {"name":"fk_everyday_product1", "type":"foreign", "column":"id", "tableRef":"product", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"food_product",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true},
+                {"name":"nutritional_value", "type":"varchar", "length":500, "nullable":false}
+            ],
+            "constraints":[
+                {"name":"fk_food_product1", "type":"foreign", "column":"id", "tableRef":"everyday_product", "columnRef":"id"}
+            ]
+        }
+    ]
+}

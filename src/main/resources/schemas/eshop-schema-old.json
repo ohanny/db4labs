@@ -1,0 +1,147 @@
+{
+    "dbName":"eshop",
+    "appName":"EShop",
+    "description":"A database with Products",
+    "tables": [
+        {
+            "name":"user_credential",
+            "columns":[
+                {"name":"id", "type":"varchar", "length":30, "notNull":true, "pk":true},
+                {"name":"password", "type":"varchar", "length":20, "notNull":true}
+            ]
+        },
+        {
+            "name":"item_counter",
+            "columns":[
+                {"name":"item", "type":"varchar", "length":20, "notNull":true, "pk":true},
+                {"name":"info", "type":"varchar", "length":20, "notNull":false},
+                {"name":"next_value", "type":"integer", "notNull":true}
+            ]
+        },
+        {
+            "name":"product_family",
+            "columns":[
+                {"name":"id", "type":"integer", "notNull":true, "pk":true, "identity":true},
+                {"name":"name", "type":"varchar", "length":25, "notNull":true},
+                {"name":"parent_id", "type":"integer"}
+            ],
+            "constraints":[
+                {"name":"fk_product_family1", "type":"foreign", "column":"parent_id", "tableRef":"product_family", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"product_image",
+            "columns":[
+                {"name":"id", "type":"integer", "notNull":true, "pk":true, "identity":true},
+                {"name":"content", "type":"blob", "notNull":true}
+            ]
+        },
+        {
+            "name":"product",
+            "columns":[
+                {"name":"id", "type":"integer", "notNull":true, "pk":true, "identity":true},
+                {"name":"name", "type":"varchar", "length":100, "notNull":true},
+                {"name":"description", "type":"varchar", "length":2000, "notNull":false},
+                {"name":"price", "type":"numeric", "precision":9, "scale":2, "notNull":true},
+                {"name":"available", "type":"boolean", "notNull":true},
+                {"name":"family_id", "type":"integer", "notNull":true},
+                {"name":"image_id", "type":"integer"}
+            ],
+            "constraints":[
+                {"name":"fk_product1", "type":"foreign", "column":"family_id", "tableRef":"product_family", "columnRef":"id"},
+                {"name":"fk_product2", "type":"foreign", "column":"image_id", "tableRef":"product_image", "columnRef":"id"},
+                {"name":"uk_product1", "type":"unique", "column":"image_id"}
+            ]
+        },
+        {
+            "name":"product_tag",
+            "columns":[
+                {"name":"id", "type":"integer", "notNull":true, "pk":true, "identity":true},
+                {"name":"name", "type":"varchar", "length":20, "notNull":true}
+            ]
+        },
+        {
+            "name":"product_product_tag",
+            "columns":[
+                {"name":"product_id", "type":"integer", "notNull":true, "pk":true},
+                {"name":"tag_id", "type":"integer", "notNull":true, "pk":true}
+            ],
+            "constraints":[
+                {"name":"fk_product_product_tag1", "type":"foreign", "column":"product_id", "tableRef":"product", "columnRef":"id"},
+                {"name":"fk_product_product_tag2", "type":"foreign", "column":"tag_id", "tableRef":"product_tag", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"customer",
+            "columns":[
+                {"name":"email", "type":"varchar", "length":30, "notNull":true, "pk":true},
+                {"name":"phone", "type":"varchar", "length":10},
+                {"name":"type", "type":"varchar", "length":10, "notNull":true},
+                {"name":"first_name", "type":"varchar", "length":20},
+                {"name":"last_name", "type":"varchar", "length":20},
+                {"name":"organization_name", "type":"varchar", "length":20},
+                {"name":"registration_number", "type":"varchar", "length":20},
+                {"name":"street", "type":"varchar", "length":30, "notNull":true},
+                {"name":"post_code", "type":"varchar", "length":10, "notNull":true},
+                {"name":"city", "type":"varchar", "length":20, "notNull":true},
+                {"name":"country", "type":"varchar", "length":20, "notNull":true}
+            ],
+            "constraints":[
+                {"name":"uk_customer1", "type":"unique", "column":"registration_number"}
+            ]
+        },
+        {
+            "name":"customer_credential",
+            "columns":[
+                {"name":"email", "type":"varchar", "length":30, "notNull":true, "pk":true},
+                {"name":"password", "type":"varchar", "length":20, "notNull":true}
+            ],
+            "constraints":[
+                {"name":"fk_customer_credential1", "type":"foreign", "column":"email", "tableRef":"customer", "columnRef":"email"}
+            ]
+        },
+        {
+            "name":"purchase_order",
+            "columns":[
+                {"name":"id", "type":"integer", "notNull":true, "pk":true, "identity":true},
+                {"name":"order_number", "type":"varchar", "length":10, "notNull":true},
+                {"name":"tracking_number", "type":"varchar", "length":10, "notNull":false},
+                {"name":"order_date", "type":"timestamp", "notNull":true},
+                {"name":"status", "type":"varchar", "length":10, "notNull":true},
+                {"name":"customer_id", "type":"varchar", "length":30, "notNull":true}
+            ],
+            "constraints":[
+                {"name":"fk_purchase_order1", "type":"foreign", "column":"customer_id", "tableRef":"customer", "columnRef":"email"},
+                {"name":"uk_purchase_order1", "type":"unique", "column":"tracking_number"}
+            ]
+        },
+        {
+            "name":"order_line",
+            "columns":[
+                {"name":"id", "type":"integer", "notNull":true, "pk":true, "identity":true},
+                {"name":"position", "type":"integer", "notNull":false},
+                {"name":"quantity", "type":"integer", "notNull":true},
+                {"name":"order_id", "type":"integer", "notNull":true},
+                {"name":"product_id", "type":"integer", "notNull":true}
+            ],
+            "constraints":[
+                {"name":"fk_order_line1", "type":"foreign", "column":"order_id", "tableRef":"purchase_order", "columnRef":"id"},
+                {"name":"fk_order_line2", "type":"foreign", "column":"product_id", "tableRef":"product", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"review",
+            "columns":[
+                {"name":"product_id", "type":"integer", "notNull":true, "pk":true},
+                {"name":"customer_id", "type":"varchar", "length":30, "notNull":true, "pk":true},
+                {"name":"rating", "type":"integer", "notNull":true},
+                {"name":"comment", "type":"varchar"}
+            ],
+            "constraints":[
+                {"name":"fk_review1", "type":"foreign", "column":"product_id", "tableRef":"product", "columnRef":"id"},
+                {"name":"fk_review2", "type":"foreign", "column":"customer_id", "tableRef":"customer", "columnRef":"email"}
+            ]
+        }
+
+    ]
+}

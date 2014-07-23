@@ -1,0 +1,44 @@
+<?import javafx.scene.control.TextField?>
+<?import fr.icodem.db4labs.component.MessageLabel?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.control.Label?>
+<?import java.util.ArrayList?>
+<?import fr.icodem.db4labs.dbtools.validation.MessageBinder?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<GridPane xmlns:fx="http://javafx.com/fxml" hgap="10" vgap="10"
+          fx:controller="fr.icodem.db4labs.app.eshop.controller.MovieFormController">
+    <fx:define>
+        <ArrayList fx:id="messageBinders">
+            <MessageBinder property="release_date" target="${releaseDateMovieTextField}"/>
+            <MessageBinder property="length" target="${lengthMovieTextField}"/>
+            <MessageBinder property="authors" target="${actorsTextField}"/>
+        </ArrayList>
+    </fx:define>
+
+    <columnConstraints>
+        <ColumnConstraints minWidth="80"/>
+        <ColumnConstraints minWidth="100" maxWidth="100"/>
+        <ColumnConstraints minWidth="40" />
+        <ColumnConstraints hgrow="ALWAYS"/>
+    </columnConstraints>
+
+    <Label text="Release date" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <TextField fx:id="releaseDateMovieTextField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+    <Label text="Length" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+    <TextField fx:id="lengthMovieTextField" maxWidth="60"
+               GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+    <Label text="Languages" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <TextField fx:id="languagesMovieTextField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+    <Label text="Director" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+    <TextField fx:id="directorTextField" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+    <Label text="Actors" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <TextField fx:id="actorsTextField" GridPane.columnSpan="3"
+               GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+
+</GridPane>

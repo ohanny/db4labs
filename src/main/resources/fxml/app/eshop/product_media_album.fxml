@@ -1,0 +1,37 @@
+<?import javafx.scene.control.TextField?>
+<?import fr.icodem.db4labs.component.MessageLabel?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.control.Label?>
+<?import java.util.ArrayList?>
+<?import fr.icodem.db4labs.dbtools.validation.MessageBinder?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<GridPane xmlns:fx="http://javafx.com/fxml" hgap="10" vgap="10"
+          fx:controller="fr.icodem.db4labs.app.eshop.controller.AlbumFormController">
+    <fx:define>
+        <ArrayList fx:id="messageBinders">
+            <MessageBinder property="release_date" target="${releaseDateAlbumTextField}"/>
+            <MessageBinder property="length" target="${lengthAlbumTextField}"/>
+            <MessageBinder property="authors" target="${artistsTextField}"/>
+        </ArrayList>
+    </fx:define>
+
+    <columnConstraints>
+        <ColumnConstraints minWidth="80"/>
+        <ColumnConstraints minWidth="100" maxWidth="100"/>
+        <ColumnConstraints minWidth="35" />
+        <ColumnConstraints hgrow="ALWAYS"/>
+    </columnConstraints>
+
+    <Label text="Release date" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <TextField fx:id="releaseDateAlbumTextField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+    <Label text="Length" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+    <TextField fx:id="lengthAlbumTextField" maxWidth="60"
+               GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+    <Label text="Artists" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <TextField fx:id="artistsTextField" GridPane.columnSpan="3"
+               GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+</GridPane>

@@ -1,0 +1,81 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import fr.icodem.db4labs.component.DefaultTableCellFactory?>
+<?import fr.icodem.db4labs.component.MessageLabel?>
+<Tab xmlns:fx="http://javafx.com/fxml" text="Cooking Styles"
+     fx:controller="fr.icodem.db4labs.app.bat.controller.CookingStyleTabController">
+    <content>
+        <StackPane>
+            <children>
+                <GridPane fx:id="tablePane" hgap="10" vgap="10" visible="true"
+                          gridLinesVisible="false">
+                    <padding>
+                        <Insets bottom="5.0" left="0.0" right="0.0" top="10.0"/>
+                    </padding>
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="ALWAYS" />
+                        <RowConstraints />
+                    </rowConstraints>
+
+                    <TableView fx:id="tableView" GridPane.columnIndex="0"
+                               GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+                        <columns>
+                            <TableColumn text="Id">
+                                <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
+                                <cellFactory><DefaultTableCellFactory property="id"></DefaultTableCellFactory></cellFactory>
+                            </TableColumn>
+                            <TableColumn text="Name" prefWidth="400">
+                                <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
+                                <cellFactory><DefaultTableCellFactory property="name"></DefaultTableCellFactory></cellFactory>
+                            </TableColumn>
+                        </columns>
+                    </TableView>
+
+                    <HBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="10" alignment="BASELINE_RIGHT">
+                        <Button fx:id="deleteButton" text="Delete" onAction="#delete" disable="true"/>
+                        <Button fx:id="editButton" text="Edit" onAction="#edit" disable="true"/>
+                        <Button text="Add" onAction="#add"/>
+                        <Button text="Refresh" onAction="#find"/>
+                    </HBox>
+
+                </GridPane>
+
+                <GridPane fx:id="formPane" hgap="10" vgap="10"
+                          maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300"
+                          styleClass="form"
+                          StackPane.alignment="TOP_RIGHT">
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="20.0"/>
+                        <ColumnConstraints percentWidth="80.0"/>
+                    </columnConstraints>
+
+                    <Text styleClass="form-title" text="Cooking Style Form"
+                           GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+                    <Label text="Id" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="idTextField" editable="false" focusTraversable="false"
+                               GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    <Label text="Name" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="nameTextField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    <MessageLabel property="name" inputControl="$nameTextField"
+                                  GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+                    <HBox GridPane.rowIndex="4" GridPane.columnIndex="1"
+                          spacing="10" alignment="CENTER_RIGHT">
+                        <Button text="Cancel" onAction="#cancel"/>
+                        <Button text="Save" onAction="#save"/>
+                    </HBox>
+                </GridPane>
+            </children>
+        </StackPane>
+    </content>
+</Tab>
+
+

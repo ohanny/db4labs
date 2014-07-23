@@ -1,0 +1,20 @@
+<?import javafx.scene.control.*?>
+
+<?import java.net.URL?>
+
+<?import javafx.scene.layout.StackPane?>
+
+<?import javafx.scene.layout.VBox?>
+<StackPane fx:controller="fr.icodem.db4labs.app.controller.ExportDatabaseController"
+          xmlns:fx="http://javafx.com/fxml">
+
+    <VBox spacing="20">
+        <Label fx:id="messageLabel" style="-fx-font-size: 18" text="Exporting database to MySql">
+        </Label>
+        <Button text="Export" onAction="#loadDatabase"/>
+        <Button text="Back" onAction="#goBack"/>
+        <ProgressIndicator fx:id="indicator" visible="false"/>
+    </VBox>
+
+
+</StackPane>

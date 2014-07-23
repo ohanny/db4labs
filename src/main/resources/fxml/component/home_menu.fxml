@@ -1,0 +1,45 @@
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+
+<fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml">
+    <GridPane styleClass="home-box-menu" gridLinesVisible="false"
+              onMouseClicked="#selectItem">
+
+        <columnConstraints>
+            <ColumnConstraints prefWidth="50.0" halignment="CENTER"/>
+            <ColumnConstraints prefWidth="350.0" />
+            <ColumnConstraints />
+        </columnConstraints>
+
+        <ImageView fx:id="itemImage" GridPane.columnIndex="0" GridPane.rowIndex="0"
+                   fitWidth="64" fitHeight="64"
+                   scaleX="0.90" scaleY="0.90">
+<!--            <image>
+                <Image url="/images/multimedia-128.png"/>
+            </image>-->
+        </ImageView>
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+
+            <Label fx:id="titleLabel" styleClass="home-menu-title" text="eShop Media"/>
+            <Label fx:id="descriptionLabel" styleClass="home-menu-description" wrapText="true"
+                   text="A schemas with books, albums and movies"/>
+
+        </VBox>
+        <ImageView GridPane.columnIndex="2" GridPane.rowIndex="0"
+                   fitWidth="64" fitHeight="64"
+                   scaleX="0.50" scaleY="0.50">
+            <image>
+                <Image url="/images/right-arrow-128.png"/>
+            </image>
+        </ImageView>
+    </GridPane>
+</fx:root>

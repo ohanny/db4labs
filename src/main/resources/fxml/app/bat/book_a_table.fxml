@@ -1,0 +1,36 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.control.*?>
+
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.ColumnConstraints?>
+
+<?import javafx.scene.layout.AnchorPane?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml" alignment="TOP_CENTER" hgap="10" vgap="10"
+          gridLinesVisible="false" prefWidth="800" prefHeight="600">
+
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </padding>
+
+    <columnConstraints>
+        <ColumnConstraints percentWidth="100.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints percentHeight="100.0"/>
+    </rowConstraints>
+
+
+    <TabPane tabClosingPolicy="UNAVAILABLE"
+           GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <tabs>
+            <fx:include source="eatery_tab.fxml"/>
+            <fx:include source="country_tab.fxml"/>
+            <fx:include source="cooking_style_tab.fxml"/>
+            <fx:include source="eatery_tag_tab.fxml"/>
+        </tabs>
+    </TabPane>
+
+</GridPane>

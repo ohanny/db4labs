@@ -1,0 +1,26 @@
+<?import javafx.scene.layout.StackPane?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="fr.icodem.db4labs.app.controller.ApplicationLayoutController">
+    <top>
+        <MenuBar fx:id="menuBar">
+            <menus>
+                <Menu text="File">
+                    <items>
+                        <MenuItem text="Save" disable="true"/>
+                        <MenuItem text="Export to database" onAction="#loadDatabase"/>
+                    </items>
+                </Menu>
+                <Menu text="Help" disable="true"/>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <StackPane id="stackPane">
+        </StackPane>
+    </center>
+</BorderPane>

@@ -1,0 +1,190 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import fr.icodem.db4labs.dbtools.validation.*?>
+<?import java.util.ArrayList?>
+<?import fr.icodem.db4labs.component.DefaultTableCellFactory?>
+<?import fr.icodem.db4labs.component.ImageInput?>
+<?import fr.icodem.db4labs.component.DefaultListCellFactory?>
+<?import fr.icodem.db4labs.component.DefaultListCell?>
+<Tab xmlns:fx="http://javafx.com/fxml" text="Products"
+     fx:controller="fr.icodem.db4labs.app.eshop.controller.ProductTabController">
+    <content>
+        <StackPane>
+            <children>
+                <GridPane fx:id="tablePane" hgap="10" vgap="10" visible="true"
+                          gridLinesVisible="false">
+                    <padding>
+                        <Insets bottom="5.0" left="0.0" right="0.0" top="10.0"/>
+                    </padding>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+
+                    <HBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="10" 
+                          alignment="CENTER" prefHeight="25" >
+                        <TextField fx:id="filterTextField" prefWidth="300" promptText="Search" />
+                    </HBox>
+                    <TableView fx:id="tableView" GridPane.columnIndex="0" onMouseClicked="#select" 
+                               GridPane.rowIndex="1" GridPane.hgrow="ALWAYS">
+                        <columns>
+                            <TableColumn text="Id">
+                                <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
+                                <cellFactory><DefaultTableCellFactory property="id"></DefaultTableCellFactory></cellFactory>
+                            </TableColumn>
+                            <TableColumn text="Name">
+                                <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
+                                <cellFactory><DefaultTableCellFactory property="name"></DefaultTableCellFactory></cellFactory>
+                            </TableColumn>
+                        </columns>
+                    </TableView>
+
+                    <HBox GridPane.columnIndex="0" GridPane.rowIndex="2" spacing="10" 
+                          alignment="CENTER_RIGHT" prefHeight="80" >
+                        <Button fx:id="deleteButton" text="Delete" onAction="#delete" disable="true"/>
+                        <Button fx:id="editButton" text="Edit" onAction="#edit" disable="true"/>
+                        <Button text="Add" onAction="#add"/>
+                        <Button text="Refresh" onAction="#find"/>
+                    </HBox>
+
+                </GridPane>
+
+                <!-- form panel -->
+                <GridPane fx:id="formPane" hgap="10" vgap="10" maxWidth="200" minHeight="200" 
+                          styleClass="form" StackPane.alignment="TOP_RIGHT" >
+                    <fx:define>
+                        <ArrayList fx:id="messageBinders">
+                            <MessageBinder property="name" target="${nameTextField}"/>
+                            <MessageBinder property="description" target="${descriptionTextArea}"/>
+                            <MessageBinder property="price" target="${priceTextField}"/>
+                            <MessageBinder property="name" target="${nameTextField}"/>
+                            <MessageBinder property="family_id" target="${familyComboBox}"/>
+                        </ArrayList>
+                    </fx:define>
+
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+
+                    <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints minHeight="30"/>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints minHeight="30"/>
+                        <RowConstraints maxHeight="100" />
+                        <RowConstraints />
+                        <RowConstraints vgrow="SOMETIMES" fillHeight="true" />
+                    </rowConstraints>
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="75" />
+                        <ColumnConstraints maxWidth="100"/>
+                        <ColumnConstraints minWidth="60" />
+                        <ColumnConstraints minWidth="400" />
+                    </columnConstraints>
+
+                    <Text styleClass="form-title" text="Product Form"
+                           GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+                    <Label text="Type" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <HBox fx:id="typeMediaBox" spacing="10" GridPane.columnSpan="3"
+                          GridPane.rowIndex="1" GridPane.columnIndex="1">
+                        <fx:define>
+                            <ToggleGroup fx:id="typeMediaGroup"/>
+                        </fx:define>
+                        <children>
+                            <RadioButton fx:id="bookRadioButton" text="Book" toggleGroup="$typeMediaGroup"/>
+                            <RadioButton fx:id="movieRadioButton" text="Movie" toggleGroup="$typeMediaGroup"/>
+                            <RadioButton fx:id="albumRadioButton" text="Album" toggleGroup="$typeMediaGroup"/>
+                        </children>
+                    </HBox>
+                    <HBox fx:id="typeGroceryBox" spacing="10"
+                          GridPane.rowIndex="1" GridPane.columnIndex="1">
+                        <fx:define>
+                            <ToggleGroup fx:id="typeGroceryGroup"/>
+                        </fx:define>
+                        <children>
+                            <RadioButton fx:id="everydayProductRadioButton" text="Everyday product" toggleGroup="$typeGroceryGroup"/>
+                            <RadioButton fx:id="foodProductRadioButton" text="Food product" toggleGroup="$typeGroceryGroup"/>
+                        </children>
+                    </HBox>
+
+                    <Label text="Id" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="idTextField" editable="false" focusTraversable="false"
+                               GridPane.rowIndex="2" GridPane.columnIndex="1" maxWidth="50"/>
+
+                    <Label text="Name" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                    <TextField fx:id="nameTextField" minWidth="300"
+                               GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+
+                    <Label text="Family" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <HBox GridPane.rowIndex="3" GridPane.columnIndex="1" 
+                          GridPane.columnSpan="3" spacing="10" alignment="CENTER_LEFT">
+                        <ComboBox fx:id="familyComboBox" prefHeight="21.0" prefWidth="210.0">
+                            <cellFactory><DefaultListCellFactory property="name"></DefaultListCellFactory></cellFactory>
+                            <buttonCell><DefaultListCell property="name"/></buttonCell>
+                        </ComboBox>
+
+                        <Label text="Sub-family" prefWidth="80">
+                            <HBox.margin>
+                                <Insets left="33.0" />
+                            </HBox.margin>
+                        </Label>
+                        <ComboBox fx:id="subFamilyComboBox" prefHeight="21.0" prefWidth="210.0">
+                            <cellFactory><DefaultListCellFactory property="name"></DefaultListCellFactory></cellFactory>
+                            <buttonCell><DefaultListCell property="name"/></buttonCell>
+                        </ComboBox>
+                    </HBox>
+
+                    <Label text="Description" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <TextArea fx:id="descriptionTextArea" GridPane.rowIndex="4" GridPane.columnIndex="1"
+                              minHeight="100" maxHeight="100" maxWidth="550" GridPane.columnSpan="3"
+                              wrapText="true"/>
+
+                    <Label text="Price" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <TextField fx:id="priceTextField" GridPane.rowIndex="5" GridPane.columnIndex="1"
+                               maxWidth="60"/>
+
+                    <Label text="Available" GridPane.rowIndex="5" GridPane.columnIndex="2"/>
+                    <CheckBox fx:id="availableCheckBox" GridPane.rowIndex="5" GridPane.columnIndex="3"/>
+
+                    <Label text="Image" GridPane.rowIndex="6" GridPane.columnIndex="0" 
+                           GridPane.valignment="BOTTOM" />
+                    <ImageInput fx:id="imageInput" GridPane.rowIndex="7" GridPane.columnIndex="0"
+                                GridPane.rowSpan="2" GridPane.columnSpan="2" GridPane.valignment="TOP" />
+
+                    <Label text="Tags" GridPane.rowIndex="7" GridPane.columnIndex="2"/>
+                    <FlowPane fx:id="tagsBox" GridPane.columnSpan="1" hgap="30" vgap="10"  
+                          GridPane.rowIndex="7" GridPane.columnIndex="3"/>
+
+                    <!-- fields specific to sub-applications -->
+                    <fx:include source="product_media_book.fxml" fx:id="formBook"
+                                GridPane.rowIndex="6" GridPane.columnIndex="2" 
+                                GridPane.columnSpan="2" />
+                    <fx:include source="product_media_movie.fxml" fx:id="formMovie"
+                                GridPane.rowIndex="6" GridPane.columnIndex="2" 
+                                GridPane.columnSpan="2"/>
+                    <fx:include source="product_media_album.fxml" fx:id="formAlbum"
+                                GridPane.rowIndex="6" GridPane.columnIndex="2" 
+                                GridPane.columnSpan="2"/>
+                    <fx:include source="product_grocery.fxml" fx:id="formGrocery"
+                                GridPane.rowIndex="6" GridPane.columnIndex="2" 
+                                GridPane.columnSpan="2"/>
+
+                    <HBox GridPane.rowIndex="8" GridPane.columnIndex="3"
+                          spacing="10" alignment="BOTTOM_RIGHT">
+                        <Button text="Cancel" onAction="#cancel"/>
+                        <Button text="Save" onAction="#save"/>
+                    </HBox>
+                </GridPane>
+            </children>
+        </StackPane>
+    </content>
+</Tab>
+
+

@@ -1,0 +1,28 @@
+#home-title {
+    -fx-font: bold 24 Tahoma;
+    /*-fx-font-family: "Arial Black";*/
+    -fx-fill: #818181;
+    -fx-effect: innershadow( one-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+.home-box-menu {
+    -fx-background-color: transparent;
+    -fx-background-radius: 15.0;
+    -fx-padding: 8;
+    -fx-border-color: cornflowerblue;
+    -fx-border-width: 3;
+    -fx-border-radius: 15;
+    /*-fx-effect: dropshadow(one-pass-box, black , 8 , 0.0 , 2 , 0 );*/
+}
+
+.home-box-menu:hover {
+    -fx-background-color: aliceblue;
+    -fx-cursor: hand;
+}
+
+.home-menu-title {
+    -fx-font-size: 20;
+}
+.home-menu-description {
+    -fx-font-size: 14;
+}

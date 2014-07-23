@@ -1,0 +1,161 @@
+/* forms */
+.form {
+    -fx-background-image: url("../images/background-linen.jpg");
+}
+
+.form-title {
+    -fx-font-size: 20px;
+    -fx-font-family: "Arial Black";
+    -fx-fill: #818181;
+    -fx-effect: innershadow( one-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+.form .label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+}
+
+.form .button {
+    -fx-text-fill: white;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+/* image input component */
+.image-zone {
+    -fx-stroke: dodgerblue;
+    -fx-stroke-dash-array: 12 2 4 2;
+    -fx-stroke-dash-offset: 6;
+    -fx-stroke-line-cap: butt;
+    -fx-stroke-width: 2;
+    -fx-fill: transparent;
+    -fx-arc-width: 5;
+    -fx-arc-height: 5;
+}
+.image-input {
+    /*-fx-border-color: dodgerblue;*/
+    -fx-border-style: dashed;
+    -fx-border-width: 2;
+    -fx-border-radius: 3;
+    /*-fx-text-fill: ghostwhite;*/
+}
+.image-input.no-content {
+    -fx-border-color: slategray;
+}
+.image-input.drag-over {
+    -fx-border-color: dodgerblue;
+}
+.image-input.no-content #text {
+    -fx-border-color: slategray;
+    visibility: visible;
+}
+.image-input.message #text {
+    visibility: visible;
+}
+.image-input #text {
+    -fx-fill: ghostwhite;
+    visibility: hidden;
+}
+.image-input #removeButton {
+    -fx-background-color: transparent;
+    visibility: hidden;
+}
+.image-input:hover #removeButton {
+    visibility: visible;
+}
+.image-input.no-content #removeButton {
+    visibility: hidden;
+}
+
+/* validation */
+.label.message-label {  /* todo keep message-mabel ?*/
+    visibility: hidden;
+}
+.label.message_info {
+    -fx-graphic: url("../images/message-info.png");
+    -fx-text-fill: blue;
+    visibility: visible;
+}
+.label.message_warning {
+    -fx-graphic: url("../images/message-warning.png");
+    -fx-text-fill: orange;
+    visibility: visible;
+}
+.label.message_error {
+    -fx-graphic: url("../images/message-error.png");
+    -fx-text-fill: red;
+    visibility: visible;
+}
+
+.tooltip {
+    -fx-padding: 15;
+}
+.tooltip.message_info {
+    -fx-graphic: url("../images/message-info.png");
+}
+.tooltip.message_warning {
+    -fx-graphic: url("../images/message-warning.png");
+}
+.tooltip.message_error {
+    -fx-graphic: url("../images/message-error.png");
+}
+
+.text-field.message_error {
+    -fx-background-color: red,
+    linear-gradient(
+        to bottom,
+        derive(red,70%) 5%,
+        derive(red,90%) 40%
+    );
+}
+
+.text-field.message_warning {
+    -fx-background-color: orange,
+    linear-gradient(
+        to bottom,
+        derive(orange,70%) 5%,
+        derive(orange,90%) 40%
+    );
+}
+
+.text-area.message_error {
+    -fx-background-color: red,
+    linear-gradient(
+        to bottom,
+        derive(red,70%) 5%,
+        derive(red,90%) 40%
+    );
+}
+
+.text-area.message_warning {
+    -fx-background-color: orange,
+    linear-gradient(
+        to bottom,
+        derive(orange,70%) 5%,
+        derive(orange,90%) 40%
+    );
+}
+
+.combo-box.message_error {
+    -fx-background-color: red,
+    linear-gradient(
+        to bottom,
+        derive(red,70%) 5%,
+        derive(red,90%) 40%
+    );
+}
+
+.combo-box.message_warning {
+    -fx-background-color: orange,
+    linear-gradient(
+        to bottom,
+        derive(orange,70%) 5%,
+        derive(orange,90%) 40%
+    );
+}
+
+

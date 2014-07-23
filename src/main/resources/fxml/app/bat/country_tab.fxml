@@ -1,0 +1,85 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import fr.icodem.db4labs.component.DefaultTreeCellFactory?>
+<?import fr.icodem.db4labs.component.MessageLabel?>
+<?import fr.icodem.db4labs.component.ImageInput?>
+<Tab xmlns:fx="http://javafx.com/fxml" text="Countries &amp; Cities"
+     fx:controller="fr.icodem.db4labs.app.bat.controller.CountryTabController">
+    <content>
+        <StackPane>
+            <children>
+                <GridPane fx:id="tablePane" hgap="10" vgap="10" visible="true"
+                          gridLinesVisible="false">
+                    <padding>
+                        <Insets bottom="5.0" left="0.0" right="0.0" top="10.0"/>
+                    </padding>
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="ALWAYS" />
+                        <RowConstraints />
+                    </rowConstraints>
+
+                    <TreeView fx:id="treeView" showRoot="true"
+                              GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+                        <cellFactory><DefaultTreeCellFactory property="name"></DefaultTreeCellFactory></cellFactory>
+                    </TreeView>
+
+                    <HBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="10" alignment="BASELINE_RIGHT">
+                        <Button fx:id="deleteButton" text="Delete" onAction="#delete" disable="true"/>
+                        <Button fx:id="editButton" text="Edit" onAction="#edit" disable="true"/>
+                        <Button fx:id="addButton" text="Add" onAction="#add" disable="true"/>
+                        <Button text="Refresh" onAction="#find"/>
+                    </HBox>
+
+                </GridPane>
+
+                <GridPane fx:id="formPane" hgap="10" vgap="10"
+                          maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300"
+                          styleClass="form"
+                          StackPane.alignment="TOP_RIGHT">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="25.0"/>
+                        <ColumnConstraints percentWidth="75.0"/>
+                    </columnConstraints>
+
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                    <Text styleClass="form-title" text="Country Form" fx:id="titleText"
+                           GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+                    <Label text="Id" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="idTextField" editable="false" focusTraversable="false"
+                               GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Name" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="nameTextField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    <MessageLabel property="name" inputControl="$nameTextField"
+                                  GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+
+                    <Label fx:id="postCodeLabel"  text="Post code" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <TextField fx:id="postCodeTextField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                    <MessageLabel property="post_code" inputControl="$postCodeTextField"
+                                  GridPane.rowIndex="5" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+
+                    <Label fx:id="foremostLabel" text="Foremost" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <CheckBox fx:id="foremostCheckBox" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                    <Label fx:id="cityImageLabel" text="Image" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                    <ImageInput fx:id="cityImageInput" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                    <HBox fx:id="buttonBox" GridPane.rowIndex="7" GridPane.columnIndex="1"
+                          spacing="10" alignment="CENTER_RIGHT">
+                        <Button text="Cancel" onAction="#cancel"/>
+                        <Button text="Save" onAction="#save"/>
+                    </HBox>
+                </GridPane>
+            </children>
+        </StackPane>
+    </content>
+</Tab>
+
+

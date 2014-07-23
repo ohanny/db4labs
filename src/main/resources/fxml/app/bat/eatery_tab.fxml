@@ -1,0 +1,351 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import fr.icodem.db4labs.dbtools.validation.*?>
+<?import java.util.ArrayList?>
+<?import fr.icodem.db4labs.component.DefaultTableCellFactory?>
+<?import fr.icodem.db4labs.component.ImageInput?>
+<?import fr.icodem.db4labs.component.DefaultListCellFactory?>
+<?import fr.icodem.db4labs.component.DefaultListCell?>
+
+<Tab xmlns:fx="http://javafx.com/fxml" text="Eateries"
+     fx:controller="fr.icodem.db4labs.app.bat.controller.EateryTabController">
+    <content>
+        <StackPane>
+            <children>
+                <GridPane fx:id="tablePane" hgap="10" vgap="10" visible="true"
+                          gridLinesVisible="false">
+                    <padding>
+                        <Insets bottom="5.0" left="0.0" right="0.0" top="10.0"/>
+                    </padding>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+
+                    <HBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="10" 
+                          alignment="CENTER" prefHeight="25" >
+                        <TextField fx:id="filterTextField" prefWidth="300" promptText="Search" />
+                    </HBox>
+                    <TableView fx:id="tableView" GridPane.columnIndex="0" onMouseClicked="#select" 
+                               GridPane.rowIndex="1" GridPane.hgrow="ALWAYS">
+                        <columns>
+                            <TableColumn text="Id">
+                                <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
+                                <cellFactory><DefaultTableCellFactory property="id"></DefaultTableCellFactory></cellFactory>
+                            </TableColumn>
+                            <TableColumn text="Name" prefWidth="400">
+                                <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
+                                <cellFactory><DefaultTableCellFactory property="name"></DefaultTableCellFactory></cellFactory>
+                            </TableColumn>
+                        </columns>
+                    </TableView>
+
+                    <HBox GridPane.columnIndex="0" GridPane.rowIndex="2" spacing="10" 
+                          alignment="CENTER_RIGHT" prefHeight="80" >
+                        <Button fx:id="deleteButton" text="Delete" onAction="#delete" disable="true"/>
+                        <Button fx:id="editButton" text="Edit" onAction="#edit" disable="true"/>
+                        <Button text="Add" onAction="#add"/>
+                        <Button text="Refresh" onAction="#find"/>
+                    </HBox>
+
+                </GridPane>
+
+                <!-- form panel -->
+                <GridPane fx:id="formPane" hgap="10" vgap="10" maxWidth="550" minHeight="200"
+                          styleClass="form" StackPane.alignment="TOP_RIGHT" >
+                    <!--
+                    <fx:define>
+                        <ArrayList fx:id="messageBinders">
+                            <MessageBinder property="name" target="${nameTextField}"/>
+                            <MessageBinder property="description" target="${descriptionTextArea}"/>
+                            <MessageBinder property="executive_chef" target="${executiveChefTextField}"/>
+                            <MessageBinder property="street" target="${streetTextField}"/>
+                            <MessageBinder property="post_code" target="${postCodeTextField}"/>
+                            <MessageBinder property="cooking_style_id" target="${cookingStyleComboBox}"/>
+                            <MessageBinder property="city_id" target="${cityComboBox}"/>
+                            <MessageBinder property="getting_there" target="${gettingThereTextField}"/>
+                            <MessageBinder property="parking" target="${parkingTextField}"/>
+                            <MessageBinder property="hours_of_operation1" target="${hoursOfOperationTextField1}"/>
+                            <MessageBinder property="hours_of_operation2" target="${hoursOfOperationTextField2}"/>
+                            <MessageBinder property="price" target="${priceTextField}"/>
+                            <MessageBinder property="payment_options" target="${paymentOptionsTextField}"/>
+                        </ArrayList>
+                    </fx:define>
+                    -->
+
+                    <rowConstraints>
+                        <RowConstraints vgrow="ALWAYS"/>
+                    </rowConstraints>
+
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+
+                    <StackPane>
+                        <children>
+
+                            <!-- main form pane -->
+                            <GridPane hgap="10" vgap="10" visible="true"
+                                      fx:id="mainFormPane" gridLinesVisible="false">
+
+                                <rowConstraints>
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints minHeight="30"/>
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints minHeight="30"/>
+                                    <RowConstraints maxHeight="100" />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints vgrow="ALWAYS" fillHeight="true" />
+                                </rowConstraints>
+                                <columnConstraints>
+                                    <ColumnConstraints minWidth="85" />
+                                    <ColumnConstraints maxWidth="100"/>
+                                    <ColumnConstraints minWidth="60" />
+                                    <ColumnConstraints minWidth="450" />
+                                </columnConstraints>
+
+                                <Text styleClass="form-title" text="Eatery Form"
+                                       GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+                                <Label text="Id" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                <TextField fx:id="idTextField" editable="false" focusTraversable="false"
+                                           GridPane.rowIndex="1" GridPane.columnIndex="1" maxWidth="50"/>
+
+                                <Label text="Name" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                                <TextField fx:id="nameTextField" minWidth="300"
+                                           GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+                                <Label text="Cooking style" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                <HBox GridPane.rowIndex="2" GridPane.columnIndex="1"
+                                      GridPane.columnSpan="3" spacing="10" alignment="CENTER_LEFT">
+                                    <ComboBox fx:id="cookingStyleComboBox" prefHeight="21.0" prefWidth="200.0">
+                                        <cellFactory><DefaultListCellFactory property="name"></DefaultListCellFactory></cellFactory>
+                                        <buttonCell><DefaultListCell property="name"/></buttonCell>
+                                    </ComboBox>
+
+                                    <Label text="Executive Chef" prefWidth="100">
+                                        <HBox.margin>
+                                            <Insets left="20.0" />
+                                        </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="executiveChefTextField" minWidth="248"/>
+                                </HBox>
+
+
+                                <Label text="Country" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                                <HBox GridPane.rowIndex="3" GridPane.columnIndex="1"
+                                      GridPane.columnSpan="3" spacing="10" alignment="CENTER_LEFT">
+                                    <ComboBox fx:id="countryComboBox" prefHeight="21.0" prefWidth="190.0" >
+                                        <cellFactory><DefaultListCellFactory property="name"></DefaultListCellFactory></cellFactory>
+                                        <buttonCell><DefaultListCell property="name"/></buttonCell>
+                                    </ComboBox>
+
+                                    <Label text="Region" minWidth="45">
+                                        <HBox.margin>
+                                            <Insets left="0.0" />
+                                        </HBox.margin>
+                                    </Label>
+                                    <ComboBox fx:id="regionComboBox" prefHeight="21.0" prefWidth="200.0">
+                                        <cellFactory><DefaultListCellFactory property="name"></DefaultListCellFactory></cellFactory>
+                                        <buttonCell><DefaultListCell property="name"/></buttonCell>
+                                    </ComboBox>
+
+                                    <Label text="City" minWidth="30">
+                                        <HBox.margin>
+                                            <Insets left="0.0" />
+                                        </HBox.margin>
+                                    </Label>
+                                    <ComboBox fx:id="cityComboBox" prefHeight="21.0" prefWidth="220.0" minWidth="210.0">
+                                        <cellFactory><DefaultListCellFactory objectName="name"></DefaultListCellFactory></cellFactory>
+                                        <buttonCell><DefaultListCell objectName="name"/></buttonCell>
+                                    </ComboBox>
+                                </HBox>
+
+                                <Label text="Post code" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                                <HBox GridPane.rowIndex="4" GridPane.columnIndex="1"
+                                      GridPane.columnSpan="3" spacing="10" alignment="CENTER_LEFT">
+                                    <TextField fx:id="postCodeTextField" prefWidth="140" />
+
+                                    <Label text="Street" prefWidth="110">
+                                        <HBox.margin>
+                                            <Insets left="5.0" />
+                                        </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="streetTextField" minWidth="440" prefWidth="440"/>
+                                </HBox>
+
+                                <Label text="Description" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                                <TextArea fx:id="descriptionTextArea" GridPane.rowIndex="5" GridPane.columnIndex="1"
+                                          minHeight="150" maxHeight="150" maxWidth="585" GridPane.columnSpan="3"
+                                          wrapText="true"/>
+
+                                <Label text="Tags" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                                <FlowPane fx:id="tagsBox" GridPane.columnSpan="3" hgap="30" vgap="10"
+                                          GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                                <Label text="Parking" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                                <HBox GridPane.rowIndex="7" GridPane.columnIndex="1"
+                                      GridPane.columnSpan="3" spacing="10" alignment="CENTER_LEFT">
+                                    <TextField fx:id="parkingTextField" prefWidth="200"/>
+
+                                    <Label text="Getting there" prefWidth="110">
+                                        <HBox.margin>
+                                            <Insets left="15.0" />
+                                        </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="gettingThereTextField" prefWidth="225"/>
+                                </HBox>
+
+                                <Label text="Hours 1" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                                <HBox GridPane.rowIndex="8" GridPane.columnIndex="1"
+                                      GridPane.columnSpan="3" spacing="10" alignment="CENTER_LEFT">
+                                    <TextField fx:id="hoursOfOperationTextField1" prefWidth="200"/>
+
+                                    <Label text="Hours 2" prefWidth="110">
+                                        <HBox.margin>
+                                            <Insets left="15.0" />
+                                        </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="hoursOfOperationTextField2" prefWidth="225"/>
+                                </HBox>
+
+                                <Label text="Price" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+                                <HBox GridPane.rowIndex="9" GridPane.columnIndex="1"
+                                      GridPane.columnSpan="3" spacing="10" alignment="CENTER_LEFT">
+                                    <TextField fx:id="priceTextField" prefWidth="200"/>
+
+                                    <Label text="Payment Options" prefWidth="110">
+                                        <HBox.margin>
+                                            <Insets left="15.0" />
+                                        </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="paymentOptionsTextField" prefWidth="225"/>
+                                </HBox>
+
+                                <HBox GridPane.rowIndex="10" GridPane.columnIndex="3"
+                                      spacing="10" alignment="BOTTOM_RIGHT">
+                                    <Button text="Menu" onAction="#showMenuForm"/>
+                                    <Button text="Eatery Images" onAction="#showEateryImagesForm"/>
+                                    <Button text="Food Spotting Images" onAction="#showFoodSpottingImagesForm"/>
+                                    <Button text="Cancel" onAction="#cancel"/>
+                                    <Button text="Save" onAction="#save"/>
+                                </HBox>
+                            </GridPane><!-- end main form -->
+
+                            <!-- menu form -->
+                            <GridPane hgap="10" vgap="10" visible="false"
+                                      fx:id="menuFormPane" gridLinesVisible="false">
+
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="ALWAYS" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints />
+                                    <RowConstraints vgrow="ALWAYS"/>
+                                </rowConstraints>
+
+                                <Text styleClass="form-title" text="Eatery Form : Menu"
+                                      GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+
+                                <TextArea fx:id="menuTextArea" GridPane.rowIndex="1" GridPane.columnIndex="0"
+                                          minHeight="100" wrapText="true"/>
+
+                                <HBox GridPane.rowIndex="2" GridPane.columnIndex="0" alignment="BOTTOM_RIGHT">
+                                    <Button text="Back" onAction="#showMainForm"/>
+                                </HBox>
+                            </GridPane><!-- end menu form -->
+
+                            <!-- eatery images form -->
+                            <GridPane hgap="10" vgap="10" visible="false"
+                                      fx:id="eateryImagesFormPane" gridLinesVisible="false">
+
+                                <columnConstraints>
+                                    <ColumnConstraints />
+                                    <ColumnConstraints />
+                                    <ColumnConstraints />
+                                    <ColumnConstraints hgrow="ALWAYS" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints vgrow="ALWAYS"/>
+                                </rowConstraints>
+
+                                <Text styleClass="form-title" text="Eatery Images"
+                                      GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+                                <ImageInput fx:id="eateryImageInput1" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <ImageInput fx:id="eateryImageInput2" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                                <ImageInput fx:id="eateryImageInput3" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+                                <ImageInput fx:id="eateryImageInput4" GridPane.rowIndex="1" GridPane.columnIndex="3" />
+                                <ImageInput fx:id="eateryImageInput5" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <ImageInput fx:id="eateryImageInput6" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                                <ImageInput fx:id="eateryImageInput7" GridPane.rowIndex="2" GridPane.columnIndex="2" />
+                                <ImageInput fx:id="eateryImageInput8" GridPane.rowIndex="2" GridPane.columnIndex="3" />
+
+                                <HBox GridPane.rowIndex="3" GridPane.columnIndex="3"
+                                      spacing="10" alignment="BOTTOM_RIGHT">
+                                    <Button text="Back" onAction="#showMainForm"/>
+                                </HBox>
+                            </GridPane><!-- end eatery images form -->
+
+                            <!-- food spotting images form -->
+                            <GridPane hgap="10" vgap="10" visible="false"
+                                      fx:id="foodSpottingImagesFormPane" gridLinesVisible="false">
+
+                                <columnConstraints>
+                                    <ColumnConstraints />
+                                    <ColumnConstraints />
+                                    <ColumnConstraints />
+                                    <ColumnConstraints hgrow="ALWAYS" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints vgrow="ALWAYS"/>
+                                </rowConstraints>
+
+                                <Text styleClass="form-title" text="Food Spotting Images"
+                                      GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+                                <ImageInput fx:id="foodSpottingImageInput1" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <ImageInput fx:id="foodSpottingImageInput2" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                                <ImageInput fx:id="foodSpottingImageInput3" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+                                <ImageInput fx:id="foodSpottingImageInput4" GridPane.rowIndex="1" GridPane.columnIndex="3" />
+                                <ImageInput fx:id="foodSpottingImageInput5" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <ImageInput fx:id="foodSpottingImageInput6" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                                <ImageInput fx:id="foodSpottingImageInput7" GridPane.rowIndex="2" GridPane.columnIndex="2" />
+                                <ImageInput fx:id="foodSpottingImageInput8" GridPane.rowIndex="2" GridPane.columnIndex="3" />
+
+                                <HBox GridPane.rowIndex="3" GridPane.columnIndex="3"
+                                      spacing="10" alignment="BOTTOM_RIGHT">
+                                    <Button text="Back" onAction="#showMainForm"/>
+                                </HBox>
+                            </GridPane><!-- end food spotting images form -->
+
+                        </children>
+                    </StackPane>
+
+                </GridPane>
+            </children>
+        </StackPane>
+    </content>
+</Tab>
+
+

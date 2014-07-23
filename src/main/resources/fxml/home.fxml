@@ -1,0 +1,40 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import fr.icodem.db4labs.component.HomeMenu?>
+<?import java.net.URL?>
+
+<?import javafx.scene.text.Text?>
+<GridPane fx:controller="fr.icodem.db4labs.controller.HomeController"
+          xmlns:fx="http://javafx.com/fxml" alignment="TOP_CENTER" hgap="10" vgap="10"
+          gridLinesVisible="false">
+
+    <stylesheets>
+        <URL value="@/styles/home.css"/>
+    </stylesheets>
+
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </padding>
+
+    <Text id="home-title" text="Database Tools"
+           GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+
+    <HomeMenu title="eShop" description="A database with Products"
+              image="/images/multimedia-128.png" onSelectEvent="#loadEShop"
+              GridPane.columnIndex="0" GridPane.rowIndex="1" />
+
+    <HomeMenu title="eShop Media" description="A database with Books, Albums and Movies"
+              image="/images/multimedia-128.png" onSelectEvent="#loadEShopMedia"
+              GridPane.columnIndex="0" GridPane.rowIndex="2" />
+
+    <HomeMenu title="eShop Grocery" description="A database with Everyday and Food Products"
+              image="/images/multimedia-128.png" onSelectEvent="#loadEShopGrocery"
+              GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+
+    <HomeMenu title="Book A Table" description="A database with restaurants where one can book a table"
+              image="/images/multimedia-128.png" onSelectEvent="#loadBookATable"
+              GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+
+
+</GridPane>

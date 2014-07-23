@@ -1,0 +1,105 @@
+{
+    "dbName":"eshop_media",
+    "appName":"EShopMedia",
+    "description":"A database with Books, Movies and Albums for an e-commerce site",
+    "imports": ["eshop-schema.json"],
+    "tables": [
+        {
+            "name":"book",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true},
+                {"name":"release_date", "type":"date", "nullable":false},
+                {"name":"isbn", "type":"varchar", "length":14, "nullablel":false},
+                {"name":"language", "type":"varchar", "length":10, "nullable":false},
+                {"name":"pages", "type":"integer", "nullable":false}
+            ],
+            "constraints":[
+                {"name":"fk_book1", "type":"foreign", "column":"id", "tableRef":"product", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"movie",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true},
+                {"name":"release_date", "type":"date", "nullable":false},
+                {"name":"length", "type":"integer", "nullable":false}
+            ],
+            "constraints":[
+                {"name":"fk_movie1", "type":"foreign", "column":"id", "tableRef":"product", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"movie_language",
+            "columns":[
+                {"name":"movie_id", "type":"integer", "nullable":false, "pk":true},
+                {"name":"language", "type":"varchar", "length":2, "nullable":false, "pk":true}
+            ],
+            "constraints":[
+                {"name":"fk_movie_language1", "type":"foreign", "column":"movie_id", "tableRef":"movie", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"album",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true},
+                {"name":"release_date", "type":"date", "nullable":false},
+                {"name":"length", "type":"integer", "nullable":false}
+            ],
+            "constraints":[
+                {"name":"fk_album1", "type":"foreign", "column":"id", "tableRef":"product", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"figure",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
+                {"name":"name", "type":"varchar", "length":100, "nullable":false}
+            ]
+        },
+        {
+            "name":"book_author",
+            "columns":[
+                {"name":"book_id", "type":"integer", "nullable":false, "pk":true},
+                {"name":"author_id", "type":"integer", "nullable":false, "pk":true}
+            ],
+            "constraints":[
+                {"name":"fk_book_author1", "type":"foreign", "column":"book_id", "tableRef":"book", "columnRef":"id"},
+                {"name":"fk_book_author2", "type":"foreign", "column":"author_id", "tableRef":"figure", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"movie_actor",
+            "columns":[
+                {"name":"movie_id", "type":"integer", "nullable":false, "pk":true},
+                {"name":"actor_id", "type":"integer", "nullable":false, "pk":true}
+            ],
+            "constraints":[
+                {"name":"fk_movie_actor1", "type":"foreign", "column":"movie_id", "tableRef":"movie", "columnRef":"id"},
+                {"name":"fk_movie_actor2", "type":"foreign", "column":"actor_id", "tableRef":"figure", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"movie_director",
+            "columns":[
+                {"name":"movie_id", "type":"integer", "nullable":false, "pk":true},
+                {"name":"director_id", "type":"integer", "nullable":false, "pk":true}
+            ],
+            "constraints":[
+                {"name":"fk_movie_director1", "type":"foreign", "column":"movie_id", "tableRef":"movie", "columnRef":"id"},
+                {"name":"fk_movie_director2", "type":"foreign", "column":"director_id", "tableRef":"figure", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"album_artist",
+            "columns":[
+                {"name":"album_id", "type":"integer", "nullable":false, "pk":true},
+                {"name":"artist_id", "type":"integer", "nullable":false, "pk":true}
+            ],
+            "constraints":[
+                {"name":"fk_album_artist1", "type":"foreign", "column":"album_id", "tableRef":"album", "columnRef":"id"},
+                {"name":"fk_album_artist2", "type":"foreign", "column":"artist_id", "tableRef":"figure", "columnRef":"id"}
+            ]
+        }
+
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "dbName":"common",
+    "appName":"Common",
+    "description":"A schema with common tables",
+    "tables": [
+        {
+            "name":"item_counter",
+            "columns":[
+                {"name":"item", "type":"varchar", "length":20, "nullable":false, "pk":true},
+                {"name":"subset", "type":"varchar", "length":20, "nullable":false, "pk":true},
+                {"name":"info", "type":"varchar", "length":100, "nullable":true},
+                {"name":"next_value", "type":"integer", "nullable":false}
+            ]
+        },
+        {
+            "name":"event_log",
+            "columns":[
+                {"name":"event_id", "type":"integer", "nullable":false, "pk":true, "identity":true},
+                {"name":"event_date", "type":"timestamp", "nullable":false, "pk":true},
+                {"name":"title", "type":"varchar", "length":100, "nullable":true}
+            ]
+        }
+    ]
+}

@@ -1,0 +1,129 @@
+{
+    "dbName":"eshop",
+    "appName":"EShop",
+    "description":"A database with Products for an e-commerce site",
+    "imports": ["common-schema.json"],
+    "tables": [
+        {
+            "name":"product_family",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
+                {"name":"name", "type":"varchar", "length":25, "nullable":false},
+                {"name":"parent_id", "type":"integer"}
+            ],
+            "constraints":[
+                {"name":"fk_product_family1", "type":"foreign", "column":"parent_id", "tableRef":"product_family", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"product_image",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
+                {"name":"content", "type":"blob", "nullable":false}
+            ]
+        },
+        {
+            "name":"product",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
+                {"name":"name", "type":"varchar", "length":100, "nullable":false},
+                {"name":"description", "type":"varchar", "length":2000, "nullable":true},
+                {"name":"price", "type":"numeric", "precision":9, "scale":2, "nullable":true},
+                {"name":"available", "type":"boolean", "nullable":false},
+                {"name":"family_id", "type":"integer", "nullable":false},
+                {"name":"image_id", "type":"integer"}
+            ],
+            "constraints":[
+                {"name":"fk_product1", "type":"foreign", "column":"family_id", "tableRef":"product_family", "columnRef":"id"},
+                {"name":"fk_product2", "type":"foreign", "column":"image_id", "tableRef":"product_image", "columnRef":"id"},
+                {"name":"uk_product1", "type":"unique", "column":"image_id"}
+            ]
+        },
+        {
+            "name":"product_tag",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
+                {"name":"name", "type":"varchar", "length":20, "nullable":false}
+            ]
+        },
+        {
+            "name":"product_product_tag",
+            "columns":[
+                {"name":"product_id", "type":"integer", "nullable":false, "pk":true},
+                {"name":"tag_id", "type":"integer", "nullable":false, "pk":true}
+            ],
+            "constraints":[
+                {"name":"fk_product_product_tag1", "type":"foreign", "column":"product_id", "tableRef":"product", "columnRef":"id"},
+                {"name":"fk_product_product_tag2", "type":"foreign", "column":"tag_id", "tableRef":"product_tag", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"user_data",
+            "columns":[
+                {"name":"username", "type":"varchar", "length":30, "nullable":false, "pk":true},
+                {"name":"password", "type":"varchar", "length":20, "nullable":false},
+                {"name":"type", "type":"varchar", "length":10, "nullable":false},
+                {"name":"first_name", "type":"varchar", "length":20},
+                {"name":"last_name", "type":"varchar", "length":20},
+                {"name":"street", "type":"varchar", "length":30},
+                {"name":"post_code", "type":"varchar", "length":10},
+                {"name":"city", "type":"varchar", "length":20},
+                {"name":"country", "type":"varchar", "length":20}
+            ]
+        },
+        {
+            "name":"customer_detail",
+            "columns":[
+                {"name":"email", "type":"varchar", "length":30, "nullable":false, "pk":true},
+                {"name":"birth_date", "type":"date"},
+                {"name":"phone", "type":"varchar", "length":10}
+            ],
+            "constraints":[
+                {"name":"fk_customer_detail1", "type":"foreign", "column":"email", "tableRef":"user_data", "columnRef":"username"}
+            ]
+        },
+        {
+            "name":"purchase_order",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
+                {"name":"order_number", "type":"varchar", "length":10, "nullable":false},
+                {"name":"tracking_number", "type":"varchar", "length":10, "nullable":true},
+                {"name":"order_date", "type":"timestamp", "nullable":false},
+                {"name":"status", "type":"varchar", "length":10, "nullable":false},
+                {"name":"customer_id", "type":"varchar", "length":30, "nullable":false}
+            ],
+            "constraints":[
+                {"name":"fk_purchase_order1", "type":"foreign", "column":"customer_id", "tableRef":"user_data", "columnRef":"username"},
+                {"name":"uk_purchase_order1", "type":"unique", "column":"tracking_number"}
+            ]
+        },
+        {
+            "name":"order_line",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
+                {"name":"position", "type":"integer", "nullable":true},
+                {"name":"quantity", "type":"integer", "nullable":false},
+                {"name":"order_id", "type":"integer", "nullable":false},
+                {"name":"product_id", "type":"integer", "nullable":false}
+            ],
+            "constraints":[
+                {"name":"fk_order_line1", "type":"foreign", "column":"order_id", "tableRef":"purchase_order", "columnRef":"id"},
+                {"name":"fk_order_line2", "type":"foreign", "column":"product_id", "tableRef":"product", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"review",
+            "columns":[
+                {"name":"product_id", "type":"integer", "nullable":false, "pk":true},
+                {"name":"customer_id", "type":"varchar", "length":30, "nullable":false, "pk":true},
+                {"name":"rating", "type":"integer", "nullable":false},
+                {"name":"comment", "type":"varchar"}
+            ],
+            "constraints":[
+                {"name":"fk_review1", "type":"foreign", "column":"product_id", "tableRef":"product", "columnRef":"id"},
+                {"name":"fk_review2", "type":"foreign", "column":"customer_id", "tableRef":"user_data", "columnRef":"username"}
+            ]
+        }
+
+    ]
+}
