@@ -64,7 +64,7 @@
             "name":"eatery",
             "columns":[
                 {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
-                {"name":"name", "type":"varchar", "length":25, "nullable":false},
+                {"name":"name", "type":"varchar", "length":50, "nullable":false},
                 {"name":"description", "type":"varchar", "length":2000, "nullable":true},
                 {"name":"executive_chef", "type":"varchar", "length":30, "nullable":true},
                 {"name":"street", "type":"varchar", "length":50},
@@ -76,7 +76,8 @@
             "constraints":[
                 {"name":"fk_eatery1", "type":"foreign", "column":"cooking_style_id", "tableRef":"cooking_style", "columnRef":"id"},
                 {"name":"fk_eatery2", "type":"foreign", "column":"city_id", "tableRef":"city", "columnRef":"id"},
-                {"name":"fk_eatery3", "type":"foreign", "column":"menu_id", "tableRef":"menu", "columnRef":"id"}
+                {"name":"fk_eatery3", "type":"foreign", "column":"menu_id", "tableRef":"menu", "columnRef":"id"},
+                {"name":"uk_eatery1", "type":"unique", "column":"menu_id"}
             ]
         },
         {
@@ -144,7 +145,7 @@
         {
             "name":"booking",
             "columns":[
-                {"name":"id", "type":"integer", "nullable":false, "pk":true},
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
                 {"name":"eatery_id", "type":"integer", "nullable":false},
                 {"name":"customer_id", "type":"varchar", "length":30, "nullable":false},
                 {"name":"date_time", "type":"timestamp", "nullable":false},
@@ -158,7 +159,7 @@
         {
             "name":"eatery_weekly_report",
             "columns":[
-                {"name":"id", "type":"integer", "nullable":false, "pk":true},
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
                 {"name":"week", "type":"date", "nullable":false},
                 {"name":"input_date", "type":"timestamp", "nullable":false},
                 {"name":"taking_amount", "type":"numeric", "precision":9, "scale":2, "nullable":true},
@@ -172,7 +173,7 @@
         {
             "name":"booking_report",
             "columns":[
-                {"name":"id", "type":"integer", "nullable":false, "pk":true},
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
                 {"name":"fulfilled", "type":"boolean", "nullable":false},
                 {"name":"comment", "type":"varchar", "length":500, "nullable":true},
                 {"name":"weekly_report_id", "type":"integer", "nullable":false},
