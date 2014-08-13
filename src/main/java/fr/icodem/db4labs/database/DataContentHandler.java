@@ -125,7 +125,6 @@ public class DataContentHandler implements ContentHandler {
                 while (buffer.remaining() > 0) {
                     baos.write(buffer.get());
                 }
-                //baos.write(buffer.array());
                 buffer.clear();
             }
             content = baos.toByteArray();
