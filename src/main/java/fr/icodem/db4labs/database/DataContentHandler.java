@@ -115,14 +115,17 @@ public class DataContentHandler implements ContentHandler {
     }
 
     private byte[] getFileContent(long fileId) throws IOException {
-        byte[] content = null;
+        byte[] content;
         Path filePath = filesPath.resolve("" + fileId);
         try (SeekableByteChannel channel = Files.newByteChannel(filePath, StandardOpenOption.READ);
-             ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
-            ByteBuffer buffer = ByteBuffer.allocate(1096);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
+            ByteBuffer buffer = ByteBuffer.allocate(1024);
             while (channel.read(buffer) > 0) {
                 buffer.flip();
-                baos.write(buffer.array());
+                while (buffer.remaining() > 0) {
+                    baos.write(buffer.get());
+                }
+                //baos.write(buffer.array());
                 buffer.clear();
             }
             content = baos.toByteArray();

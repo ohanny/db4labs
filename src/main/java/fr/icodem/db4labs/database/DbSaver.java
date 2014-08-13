@@ -174,26 +174,12 @@ public class DbSaver {
     private void addFileToArchive(FileSystem archive, byte[] data, Path path) throws Exception {
         try (SeekableByteChannel channel = Files.newByteChannel(path,
                 StandardOpenOption.WRITE,
-                StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);) {
+                StandardOpenOption.CREATE,
+                StandardOpenOption.TRUNCATE_EXISTING);) {
             ByteBuffer buffer = ByteBuffer.allocate(data.length);//TODO check memory
             buffer.put(data);
             flushBuffer(buffer, channel);
         }
     }
-
-
-/*
-    public void ecrire(String contenu){
-        try {
-            mpb.limit(contenu.length());
-            CharBuffer cb = CharBuffer.wrap(contenu);
-            ByteBuffer bb = encodeur.encode(cb);
-            mpb.put(bb);
-        }
-        catch (CharacterCodingException e) {
-            e.printStackTrace();
-        }
-    }
-    */
 
 }
