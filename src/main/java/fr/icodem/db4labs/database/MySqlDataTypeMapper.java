@@ -16,6 +16,9 @@ public class MySqlDataTypeMapper extends DataTypeMapper {
             case INTEGER:
                 sb.append("integer");
                 break;
+            case BLOB:
+                sb.append("mediumblob");
+                break;
             default:
                 return super.getSqlStringType(column);
         }

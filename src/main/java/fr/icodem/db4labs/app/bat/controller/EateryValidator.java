@@ -11,7 +11,7 @@ public class EateryValidator extends Validator {
             // base eatery properties
             case "name":
                 String str = checkStringNotNull(value, "The name may not be null !");
-                checkStringMaxLength(str, 25, "Length must be less than 25");
+                checkStringMaxLength(str, 50, "Length must be less than 50");
                 result.setConvertedValue(str);
                 break;
 

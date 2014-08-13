@@ -161,6 +161,12 @@ public class EateryService {
                                .addParameter(id, DataType.INTEGER);
         container.delete("eatery_eatery_tag", where);
 
+        // delete practical information
+        where = WhereDescriptor.build("id = ?")
+                .addParameter(id, DataType.INTEGER);
+        container.delete("practical_information", where);
+
+
         // delete eatery
         container.delete(eatery);
 

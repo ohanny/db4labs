@@ -528,7 +528,7 @@ public class EateryTabController implements Initializable {
             menu = new PersistentObject("menu");
             po.setObject("menu", menu);
         }
-        menu.setProperty("content", menuTextArea.getText());
+        menu.setProperty("content", menuTextArea.getText().trim());
 
         // practical information
         PersistentObject practicalInfo = (PersistentObject) po.getObject("practicalInformation");
