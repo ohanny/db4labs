@@ -318,6 +318,8 @@ public class SqlExecutor {
             case VARCHAR:
             case CHARACTER:
                 st.setString(index, (String)value);
+                //if (value == null) st.setString(index, (String)value);
+                //else st.setString(index, ((String)value).trim());
                 break;
             case INTEGER:
                 if (value == null) st.setNull(index, Types.INTEGER);

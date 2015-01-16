@@ -17,7 +17,8 @@
                 {"name":"eatery_id", "type":"integer", "nullable":true}
             ],
             "constraints":[
-                {"name":"fk_user_data1", "type":"foreign", "column":"eatery_id", "tableRef":"eatery", "columnRef":"id"}
+                {"name":"fk_user_data1", "type":"foreign", "column":"eatery_id", "tableRef":"eatery", "columnRef":"id"},
+                {"name":"uk_user_data1", "type":"unique", "column":"eatery_id"}
             ]
         },
         {

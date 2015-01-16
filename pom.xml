@@ -15,11 +15,12 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.0</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+            <!--
             <plugin>
                 <groupId>com.zenjava</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -28,15 +29,16 @@
                     <mainClass>fr.icodem.db4labs.Main</mainClass>
                 </configuration>
             </plugin>
-            <!--
             -->
         </plugins>
     </build>
 
+    <!--
     <properties>
         <java.home>/Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home/jre</java.home>
         <javafx.version>2.2.25</javafx.version>
     </properties>
+    -->
     <!--    <build>
             <resources>
                 <resource>
@@ -46,6 +48,7 @@
         </build>-->
 
     <dependencies>
+        <!--
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>javafx</artifactId>
@@ -53,7 +56,6 @@
             <systemPath>${java.home}/lib/jfxrt.jar</systemPath>
             <scope>system</scope>
         </dependency>
-        <!--
         -->
 
 
