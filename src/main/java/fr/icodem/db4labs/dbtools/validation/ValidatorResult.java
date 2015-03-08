@@ -5,6 +5,7 @@ public class ValidatorResult {
     public static enum State {Valid, Warning, Error}
 
     private String property;
+    private Object originalValue;
     private Object convertedValue;
     private State state;
     private String message;
@@ -20,6 +21,14 @@ public class ValidatorResult {
 
     public void setProperty(String property) {
         this.property = property;
+    }
+
+    public Object getOriginalValue() {
+        return originalValue;
+    }
+
+    public void setOriginalValue(Object originalValue) {
+        this.originalValue = originalValue;
     }
 
     public Object getConvertedValue() {

@@ -20,45 +20,30 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-            <!--
             <plugin>
-                <groupId>com.zenjava</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>2.0</version>
-                <configuration>
-                    <mainClass>fr.icodem.db4labs.Main</mainClass>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>fr.icodem.db4labs.Main</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
-            -->
         </plugins>
     </build>
 
-    <!--
-    <properties>
-        <java.home>/Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home/jre</java.home>
-        <javafx.version>2.2.25</javafx.version>
-    </properties>
-    -->
-    <!--    <build>
-            <resources>
-                <resource>
-                    <directory>src/main/resources</directory>
-                </resource>
-            </resources>
-        </build>-->
-
     <dependencies>
-        <!--
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>javafx</artifactId>
-            <version>${javafx.version}</version>
-            <systemPath>${java.home}/lib/jfxrt.jar</systemPath>
-            <scope>system</scope>
-        </dependency>
-        -->
-
-
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>

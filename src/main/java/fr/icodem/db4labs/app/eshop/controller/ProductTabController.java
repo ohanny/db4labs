@@ -1,6 +1,8 @@
 package fr.icodem.db4labs.app.eshop.controller;
 
 import com.google.common.base.Splitter;
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.net.URL;
@@ -8,12 +10,14 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import fr.icodem.db4labs.app.eshop.event.ProductAddedEvent;
 import fr.icodem.db4labs.component.FormState;
 import fr.icodem.db4labs.dbtools.validation.MessageBinders;
 import fr.icodem.db4labs.dbtools.validation.MessageBindersBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -38,10 +42,12 @@ import fr.icodem.db4labs.app.eshop.service.ProductTagService;
 import fr.icodem.db4labs.component.ImageInput;
 import fr.icodem.db4labs.container.AppContainer;
 import fr.icodem.db4labs.database.PersistentObject;
-import fr.icodem.db4labs.dbtools.validation.MessageBinder;
 
 @Singleton
 public class ProductTabController implements Initializable {
+
+    @Inject
+    private EventBus eventBus;
 
     @FXML private TableView<PersistentObject> tableView;
     @FXML private GridPane tablePane;
@@ -120,7 +126,7 @@ public class ProductTabController implements Initializable {
     @Inject private ProductTagService productTagService;
 
     private final DecimalFormat fmtPrice = new DecimalFormat("0.00");
-    
+
     private ObservableList<PersistentObject> products;
 
     @Override
@@ -243,10 +249,10 @@ public class ProductTabController implements Initializable {
 
 
         // filter product list
-        filterTextField.textProperty().addListener(new ChangeListener() {
+        filterTextField.textProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void changed(ObservableValue observable, Object oldVal, Object newVal) {
-                filter((String) oldVal, (String) newVal);
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                filter(oldValue, newValue);
             }
         });
     }
@@ -681,38 +687,25 @@ public class ProductTabController implements Initializable {
 
     private void populateData(PersistentObject po) {
         // base properties
-        po.setProperty("name", nameTextField.getText());
-        po.setProperty("description", descriptionTextArea.getText());
-        po.setProperty("price", priceTextField.getText());
-        po.setProperty("available", availableCheckBox.isSelected());
+        String name = nameTextField.getText();
+        String description = descriptionTextArea.getText();
+        String price = priceTextField.getText();
+        boolean available = availableCheckBox.isSelected();
 
         // family
+        Integer familyId = null;
         if (subFamilyComboBox.getSelectionModel().getSelectedItem() != null) {
-            po.setProperty("family_id", subFamilyComboBox.getSelectionModel().getSelectedItem().getProperty("id"));
+            familyId = (Integer)subFamilyComboBox.getSelectionModel().getSelectedItem().getProperty("id");
         } else {
-            po.setProperty("family_id", null);
+            familyId = null;
         }
-        if (po.getProperty("family_id") == null &&
+        if (familyId == null &&
                 familyComboBox.getSelectionModel().getSelectedItem() != null) {// no sub-family selected, choose a family
-            po.setProperty("family_id", familyComboBox.getSelectionModel().getSelectedItem().getProperty("id"));
+            familyId = (Integer)familyComboBox.getSelectionModel().getSelectedItem().getProperty("id");
         }
 
         // image
         byte[] img = imageInput.getData();
-        PersistentObject imgItem = (PersistentObject) po.getObject("image");
-        if (img != null) {
-            if (imgItem == null) {
-                imgItem = new PersistentObject("product_image");
-                imgItem.setProperty("content", img);
-                po.setObject("image", imgItem);
-            } else {
-                imgItem.setProperty("content", img);
-            }
-        } else if (imgItem != null) {// no image, delete previous one
-            po.setProperty("image_id", null);
-            po.setObject("image", null);
-            po.setObject("image.old", imgItem);// so that service can delete old image
-        }
 
         // tags
         List<PersistentObject> tags = new ArrayList<>();
@@ -722,143 +715,70 @@ public class ProductTabController implements Initializable {
                 tags.add((PersistentObject) chk.getUserData());
             }
         }
-        po.setObject("tags", tags);
 
         // properties depending on product type
+        String type = null;
+        String releaseDate = null;
+        String isbn = null;
+        String language = null;
+        String pages = null;
+        String authors = null;
+        String length = null;
+        String languages = null;
+        String actors = null;
+        String director = null;
+        String artists = null;
+        String quantity = null;
+        String unit = null;
+        String composition = null;
+        String nutritionalValue = null;
         switch (appNameProvider.getAppName()) {
             case EShopMedia:
                 if (bookRadioButton.isSelected()) {
-                    PersistentObject book = (PersistentObject) po.getObject("book");
-                    if (book == null) {
-                        book = new PersistentObject("book");
-                        po.setObject("book", book);
-                        po.setObject("type", "book");
-                    }
-                    book.setProperty("release_date", releaseDateBookTextField.getText());
-                    book.setProperty("isbn", isbnTextField.getText());
-                    book.setProperty("language", languageTextField.getText());
-                    book.setProperty("pages", pagesTextField.getText());
-
-
-                    // authors
-                    book.moveObject("authors", "authors.old");
-                    List<PersistentObject> authors = new ArrayList<>();
-                    Iterable<String> authorNames = Splitter.on(',')
-                                                           .trimResults()
-                                                           .omitEmptyStrings()
-                                                           .split(authorsTextField.getText());
-                    for (String authorName : authorNames) {
-                        PersistentObject author = new PersistentObject("figure");
-                        author.setProperty("name", authorName);
-                        authors.add(author);
-                    }
-                    book.setObject("authors", authors);
-
+                    type = "book";
+                    releaseDate = releaseDateBookTextField.getText();
+                    isbn = isbnTextField.getText();
+                    language = languageTextField.getText();
+                    pages = pagesTextField.getText();
+                    authors = authorsTextField.getText();
                 }
                 else if (movieRadioButton.isSelected()) {
-                    PersistentObject movie = (PersistentObject) po.getObject("movie");
-                    if (movie == null) {
-                        movie = new PersistentObject("movie");
-                        po.setObject("movie", movie);
-                        po.setObject("type", "movie");
-                    }
-                    movie.setProperty("release_date", releaseDateMovieTextField.getText());
-                    movie.setProperty("length", lengthMovieTextField.getText());
-
-                    // languages
-                    Set<String> languagesSet = new HashSet<>();
-                    Iterable<String> languagesString = Splitter.on(',')
-                                                               .trimResults()
-                                                               .omitEmptyStrings()
-                                                               .split(languagesMovieTextField.getText());
-                    for (String langString : languagesString) {
-                        languagesSet.add(langString);
-                    }
-                    List<PersistentObject> languages = new ArrayList<>();
-                    for (String langString : languagesSet) {
-                        PersistentObject l = new PersistentObject("movie_language")
-                                                    //.setProperty("movie_id", movie.getProperty("id"))
-                                                    .setProperty("language", langString);
-                        languages.add(l);
-                    }
-                    movie.setObject("languages", languages);
-
-                    // director
-                    if (!directorTextField.getText().trim().isEmpty()) {
-                        PersistentObject director = new PersistentObject("figure");
-                        director.setProperty("name", directorTextField.getText());
-                        movie.setObject("director", director);
-                    }
-
-                    // actors
-                    movie.moveObject("actors", "actors.old");
-                    List<PersistentObject> actors = new ArrayList<>();
-                    Iterable<String> actorNames = Splitter.on(',')
-                            .trimResults()
-                            .omitEmptyStrings()
-                            .split(actorsTextField.getText());
-                    for (String authorName : actorNames) {
-                        PersistentObject actor = new PersistentObject("figure");
-                        actor.setProperty("name", authorName);
-                        actors.add(actor);
-                    }
-                    movie.setObject("actors", actors);
-
+                    type = "movie";
+                    releaseDate = releaseDateMovieTextField.getText();
+                    length = lengthMovieTextField.getText();
+                    languages = languagesMovieTextField.getText();
+                    director = directorTextField.getText();
+                    actors = actorsTextField.getText();
                 }
                 else if (albumRadioButton.isSelected()) {
-                    PersistentObject album = (PersistentObject) po.getObject("album");
-                    if (album == null) {
-                        album = new PersistentObject("album");
-                        po.setObject("album", album);
-                        po.setObject("type", "album");
-                    }
-                    album.setProperty("release_date", releaseDateAlbumTextField.getText());
-                    album.setProperty("length", lengthAlbumTextField.getText());
-
-                    // artists
-                    album.moveObject("artists", "artists.old");
-                    List<PersistentObject> artists = new ArrayList<>();
-                    Iterable<String> artistNames = Splitter.on(',')
-                            .trimResults()
-                            .omitEmptyStrings()
-                            .split(artistsTextField.getText());
-                    for (String artistName : artistNames) {
-                        PersistentObject artist = new PersistentObject("figure");
-                        artist.setProperty("name", artistName);
-                        artists.add(artist);
-                    }
-                    album.setObject("artists", artists);
-
+                    type = "album";
+                    releaseDate = releaseDateAlbumTextField.getText();
+                    length = lengthAlbumTextField.getText();
+                    artists = artistsTextField.getText();
                 }
 
                 break;
 
             case EShopGrocery:
                 if (everydayProductRadioButton.isSelected()) {
-                    PersistentObject everyday = (PersistentObject) po.getObject("everyday");
-                    if (everyday == null) {
-                        everyday = new PersistentObject("everyday");
-                        po.setObject("everyday", everyday);
-                        po.setObject("type", "everyday");
-                    }
-                    everyday.setProperty("quantity", quantityTextField.getText());
-                    everyday.setProperty("unit", unitComboBox.getSelectionModel().getSelectedItem());
-                    everyday.setProperty("composition", compositionTextArea.getText());
+                    type = "everyday";
+                    quantity = quantityTextField.getText();
+                    unit = unitComboBox.getSelectionModel().getSelectedItem();
+                    composition = compositionTextArea.getText();
                 }
                 else if (foodProductRadioButton.isSelected()) {
-                    PersistentObject food = (PersistentObject) po.getObject("food");
-                    if (food == null) {
-                        food = new PersistentObject("food");
-                        po.setObject("food", food);
-                        po.setObject("type", "food");
-                    }
-                    food.setProperty("quantity", quantityTextField.getText());
-                    food.setProperty("unit", unitComboBox.getSelectionModel().getSelectedItem());
-                    food.setProperty("composition", compositionTextArea.getText());
-                    food.setProperty("nutritional_value", nutritionalValueTextArea.getText());
+                    type = "food";
+                    quantity = quantityTextField.getText();
+                    unit = unitComboBox.getSelectionModel().getSelectedItem();
+                    composition = compositionTextArea.getText();
+                    nutritionalValue = nutritionalValueTextArea.getText();
                 }
                 break;
         }
+
+        productService.populateProduct(po, name, description, price, available, img, familyId, tags,
+                type, releaseDate, isbn, language, pages, authors, length, languages, director, actors,
+                artists, quantity, unit, composition, nutritionalValue);
 
     }
 
@@ -903,6 +823,15 @@ public class ProductTabController implements Initializable {
         final KeyFrame kf = new KeyFrame(Duration.millis(300), onFinished, kv);
         timeline.getKeyFrames().add(kf);
         timeline.play();
+    }
+
+    @Subscribe
+    public void productAdded(ProductAddedEvent event) {
+        // update table
+        Platform.runLater(() -> {
+            ObservableList<PersistentObject> items = tableView.getItems();
+            items.add(event.getProduct());
+        });
     }
 
 }

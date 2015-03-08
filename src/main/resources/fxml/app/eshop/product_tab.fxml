@@ -31,11 +31,11 @@
                     <TableView fx:id="tableView" GridPane.columnIndex="0" onMouseClicked="#select" 
                                GridPane.rowIndex="1" GridPane.hgrow="ALWAYS">
                         <columns>
-                            <TableColumn text="Id">
+                            <TableColumn text="Id" minWidth="50">
                                 <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
                                 <cellFactory><DefaultTableCellFactory property="id"></DefaultTableCellFactory></cellFactory>
                             </TableColumn>
-                            <TableColumn text="Name">
+                            <TableColumn text="Name" prefWidth="500">
                                 <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
                                 <cellFactory><DefaultTableCellFactory property="name"></DefaultTableCellFactory></cellFactory>
                             </TableColumn>

@@ -15,6 +15,8 @@ import fr.icodem.db4labs.dbtools.validation.MessageBinder;
 import fr.icodem.db4labs.dbtools.validation.Validator;
 import fr.icodem.db4labs.dbtools.validation.ValidatorResultsHandler;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class AppContainer {
@@ -96,52 +98,52 @@ public class AppContainer {
         sqlExecutor.commit();
     }
 
-    public PersistentObject selectByPK(String tableName, Object... params) throws Exception {
+    public PersistentObject selectByPK(String tableName, Object... params) throws SQLException, IOException {
         updateSqlExecutor();
         return sqlExecutor.selectByPK(tableName, params);
     }
 
-    public ObservableList<PersistentObject> select(String tableName) throws Exception {
+    public ObservableList<PersistentObject> select(String tableName) throws SQLException, IOException {
         updateSqlExecutor();
         return sqlExecutor.select(tableName);
     }
 
-    public ObservableList<PersistentObject> select(String tableName, WhereDescriptor where) throws Exception {
+    public ObservableList<PersistentObject> select(String tableName, WhereDescriptor where) throws SQLException, IOException {
         updateSqlExecutor();
         return sqlExecutor.select(tableName, where);
     }
 
-    public PersistentObject selectUnique(String tableName, WhereDescriptor where) throws Exception {
+    public PersistentObject selectUnique(String tableName, WhereDescriptor where) throws SQLException, IOException {
         updateSqlExecutor();
         return sqlExecutor.selectUnique(tableName, where);
     }
 
-    public void insert(PersistentObject data) throws Exception {
+    public void insert(PersistentObject data) throws SQLException {
         updateSqlExecutor();
         sqlExecutor.insert(data);
     }
 
-    public void delete(PersistentObject data) throws Exception {
+    public void delete(PersistentObject data) throws SQLException {
         updateSqlExecutor();
         sqlExecutor.delete(data);
     }
 
-    public void delete(String table, WhereDescriptor where) throws Exception {
+    public void delete(String table, WhereDescriptor where) throws SQLException {
         updateSqlExecutor();
         sqlExecutor.delete(table, where);
     }
 
-    public void update(PersistentObject data) throws Exception {
+    public void update(PersistentObject data) throws SQLException {
         updateSqlExecutor();
         sqlExecutor.update(data);
     }
 
-    public int count(String tableName) throws Exception {
+    public int count(String tableName) throws SQLException {
         updateSqlExecutor();
         return sqlExecutor.count(tableName);
     }
 
-    public int count(String tableName, WhereDescriptor where) throws Exception {
+    public int count(String tableName, WhereDescriptor where) throws SQLException {
         updateSqlExecutor();
         return sqlExecutor.count(tableName, where);
     }

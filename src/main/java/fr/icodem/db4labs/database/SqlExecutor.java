@@ -37,21 +37,21 @@ public class SqlExecutor {
         this.connection = connection;
     }
 
-    public void commit() throws Exception {
+    public void commit() throws SQLException {
         //getConnection().commit();
         connection.commit();
     }
 
-    public void rollback() throws Exception {
+    public void rollback() throws SQLException {
         //getConnection().rollback();
         connection.rollback();
     }
 
-    public ObservableList<PersistentObject> select(String tableName) throws Exception {
+    public ObservableList<PersistentObject> select(String tableName) throws SQLException, IOException {
         return select(tableName, null);
     }
 
-    public PersistentObject selectUnique(String tableName, WhereDescriptor where) throws Exception {
+    public PersistentObject selectUnique(String tableName, WhereDescriptor where) throws SQLException, IOException {
         List<PersistentObject> list = select(tableName, where);
 
         if (list.size() == 0) return null;
@@ -63,7 +63,7 @@ public class SqlExecutor {
         return list.get(0);
     }
 
-    public ObservableList<PersistentObject> select(String tableName, WhereDescriptor where) throws Exception {
+    public ObservableList<PersistentObject> select(String tableName, WhereDescriptor where) throws SQLException, IOException {
         ObservableList<PersistentObject> result = null;
         TableDescriptor table = getTableDescriptor(tableName);
         SqlDescriptor sql = table.getSelect();
@@ -94,7 +94,7 @@ public class SqlExecutor {
                     Object value = getValue(rs, column.getName(), column.getType());
                     data.setProperty(column.getName(), value);
                 }
-                System.out.println("data => " + data.getProperties());
+                //System.out.println("data => " + data.getProperties());
                 result.add(data);
             }
         } catch (SQLException e) {
@@ -107,7 +107,7 @@ public class SqlExecutor {
         return result;
     }
 
-    public PersistentObject selectByPK(String tableName, Object... params) throws Exception {
+    public PersistentObject selectByPK(String tableName, Object... params) throws SQLException, IOException {
         TableDescriptor table = getTableDescriptor(tableName);
         SqlDescriptor sql = table.getSelectByPK();
         PreparedStatement ps = null;
@@ -145,11 +145,11 @@ public class SqlExecutor {
         return po;
     }
 
-    public int count(String tableName) throws Exception {
+    public int count(String tableName) throws SQLException {
         return count(tableName, null);
     }
 
-    public int count(String tableName, WhereDescriptor where) throws Exception {
+    public int count(String tableName, WhereDescriptor where) throws SQLException {
         int result = 0;
         TableDescriptor table = getTableDescriptor(tableName);
         SqlDescriptor sql = table.getCount();
@@ -185,7 +185,7 @@ public class SqlExecutor {
         return result;
     }
 
-    public void insert(PersistentObject data) throws Exception {
+    public void insert(PersistentObject data) throws SQLException {
         String tableName = data.getTable();
         Map<String, Object> params = data.getProperties();
         TableDescriptor table = getTableDescriptor(tableName);
@@ -218,12 +218,12 @@ public class SqlExecutor {
                     data.setProperty(identityColumn.getName(), rs.getInt(1));
                 }
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw e;
         }
     }
 
-    public void update(PersistentObject data) throws Exception {
+    public void update(PersistentObject data) throws SQLException {
         String tableName = data.getTable();
         Map<String, Object> params = data.getProperties();
         TableDescriptor table = getTableDescriptor(tableName);
@@ -249,7 +249,7 @@ public class SqlExecutor {
         }
     }
 
-    public void delete(String table, WhereDescriptor where) throws Exception {
+    public void delete(String table, WhereDescriptor where) throws SQLException {
         StringBuilder sql = new StringBuilder();
         sql.append("delete from ")
            .append(table).append(" where ")
@@ -269,7 +269,7 @@ public class SqlExecutor {
         }
     }
 
-    public void delete(PersistentObject data) throws Exception {
+    public void delete(PersistentObject data) throws SQLException {
         String tableName = data.getTable();
         Map<String, Object> params = data.getProperties();
         TableDescriptor table = getTableDescriptor(tableName);
@@ -303,7 +303,7 @@ public class SqlExecutor {
     }
 
     private void injectNullParams(TableDescriptor table, SqlDescriptor sqlDescriptor,
-                                  PreparedStatement st, Map<String, ?> params) throws Exception {
+                                  PreparedStatement st, Map<String, ?> params) throws SQLException {
         for (String columnName : sqlDescriptor.getParameterNames()) {
             if (!params.containsKey(columnName)) {
                 int index = sqlDescriptor.getPosition(columnName);

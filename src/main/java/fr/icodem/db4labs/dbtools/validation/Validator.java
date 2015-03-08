@@ -23,6 +23,7 @@ public abstract class Validator {
             for (Map.Entry<String, Object> entry : data.getProperties().entrySet()) {
                 ValidatorResult result = new ValidatorResult();
                 result.setProperty(entry.getKey());
+                result.setOriginalValue(entry.getValue());
                 result.setConvertedValue(entry.getValue());// by default, value is not converted
                                                            // so, we set the converted value now
                                                            // (useful in sub-class if a property
