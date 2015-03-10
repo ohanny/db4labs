@@ -585,6 +585,10 @@ public class ProductService {
 
                         case "price":
                             price = reader.getText();
+                            if (price == null || price.equals("0")) {
+                                System.out.println("Price should be more than 0");
+                                throw new IllegalArgumentException("Price should be more than 0");
+                            }
                             break;
 
                         case "available":
@@ -604,6 +608,10 @@ public class ProductService {
 
                         case "date":
                             releaseDate = reader.getText();
+                            if ("01/01/1970".equals(releaseDate)) {
+                                System.out.println("Date should not be 01/01/1970");
+                                throw new IllegalArgumentException("Date should not be 01/01/1970");
+                            }
                             break;
 
                         case "isbn":
@@ -674,10 +682,6 @@ public class ProductService {
         populateProduct(po, name, description, price, available, img, familyId, null,
                 type, releaseDate, isbn, language, pages, authors, length, languages,
                 director, actors, artists, quantity, unit, composition, nutritionalValue);
-
-        // change data types
-        //double priceDouble = Double.parseDouble((String)po.getProperty("price"));
-        //po.setProperty("price", priceDouble);
 
         // retrieve media product for validation
         PersistentObject subitem = null;

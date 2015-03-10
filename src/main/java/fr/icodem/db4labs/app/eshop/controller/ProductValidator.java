@@ -133,11 +133,11 @@ public class ProductValidator extends Validator {
                 break;
 
             case "actors":
-/*
+
                 List<PersistentObject> actors = (List<PersistentObject>) value;
                 checkNotNull(actors, "Actors may not be null");
                 checkArgument(actors.size() > 0, "At least one actor is required");
-*/
+
                 break;
 
             // album
