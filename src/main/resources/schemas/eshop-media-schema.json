@@ -9,12 +9,13 @@
             "columns":[
                 {"name":"id", "type":"integer", "nullable":false, "pk":true},
                 {"name":"release_date", "type":"date", "nullable":false},
-                {"name":"isbn", "type":"varchar", "length":14, "nullablel":false},
+                {"name":"isbn", "type":"varchar", "length":14, "nullable":false},
                 {"name":"language", "type":"varchar", "length":10, "nullable":false},
                 {"name":"pages", "type":"integer", "nullable":false}
             ],
             "constraints":[
-                {"name":"fk_book1", "type":"foreign", "column":"id", "tableRef":"product", "columnRef":"id"}
+                {"name":"fk_book1", "type":"foreign", "column":"id", "tableRef":"product", "columnRef":"id"},
+                {"name":"uk_book1", "type":"unique", "column":"isbn"}
             ]
         },
         {
@@ -86,7 +87,8 @@
             ],
             "constraints":[
                 {"name":"fk_movie_director1", "type":"foreign", "column":"movie_id", "tableRef":"movie", "columnRef":"id"},
-                {"name":"fk_movie_director2", "type":"foreign", "column":"director_id", "tableRef":"figure", "columnRef":"id"}
+                {"name":"fk_movie_director2", "type":"foreign", "column":"director_id", "tableRef":"figure", "columnRef":"id"},
+                {"name":"uk_movie_director1", "type":"unique", "column":"movie_id"}
             ]
         },
         {
