@@ -6,6 +6,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import fr.icodem.db4labs.app.eshop.controller.ProductValidator;
 import fr.icodem.db4labs.app.eshop.event.ProductAddedEvent;
+import fr.icodem.db4labs.dbtools.service.FileImporter;
 import fr.icodem.db4labs.dbtools.validation.ValidatorException;
 import fr.icodem.db4labs.dbtools.validation.ValidatorResult;
 import fr.icodem.db4labs.dbtools.validation.ValidatorResults;
@@ -41,6 +42,7 @@ public class ProductService {
     @Inject private AppContainer container;
     @Inject private AppNameProvider appNameProvider;
     @Inject private EventBus eventBus;
+    @Inject private FileImporter fileImporter;
 
     public ObservableList<PersistentObject> findProductList() throws SQLException, IOException {
         ObservableList<PersistentObject> result = container.select("product");
@@ -453,82 +455,7 @@ public class ProductService {
     }
 
     public void importData(File file) throws Exception {
-
-        Task<Void> task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                importDataInternal(file);
-                return null;
-            }
-        };
-
-        // notify end of processing
-        task.setOnSucceeded(event -> {
-            eventBus.post(new DataImportDoneEvent(WorkerStateEvent.WORKER_STATE_SUCCEEDED));
-
-        });
-        task.setOnFailed(event -> {
-            eventBus.post(new DataImportDoneEvent(WorkerStateEvent.WORKER_STATE_FAILED));
-
-        });
-        task.setOnCancelled(event -> {
-            eventBus.post(new DataImportDoneEvent(WorkerStateEvent.WORKER_STATE_CANCELLED));
-
-        });
-
-        // start task
-        new Thread(task).start();
-
-    }
-
-    private void importDataInternal(File file) throws Exception {
-        if (file.isDirectory()) {
-            Stream.of(file.listFiles())
-                    .filter(f -> f.getName().endsWith(".xml"))
-                    .forEach(f -> {
-                        try (InputStream is = new FileInputStream(f)) {
-                            importData(is);
-                        } catch (Exception e) {
-                            String source = f.getAbsolutePath();
-                            String dest = source + ".rejected";
-                            try {
-                                Files.copy(Paths.get(source), Paths.get(dest));
-                            } catch (IOException ioe) {}
-                        }
-
-                        backupImportedFile(f);
-                    });
-        }
-        else if (file.isFile()) {
-            try (InputStream is = new FileInputStream(file)) {
-                importData(is);
-            } catch (Exception e) {
-                e.printStackTrace();
-                String source = file.getAbsolutePath();
-                String dest = source + ".rejected";
-                Files.copy(Paths.get(source), Paths.get(dest));
-            }
-
-            backupImportedFile(file);
-        }
-    }
-
-    private void backupImportedFile(File file) {
-        if (file == null || !file.exists()) return;
-
-        // move processed file
-        try {
-            Path backupDir = Paths.get(file.getAbsolutePath())
-                                    .getParent().resolve("backup");
-            if (!Files.exists(backupDir)) {
-                Files.createDirectory(backupDir);
-            }
-            Files.move(Paths.get(file.getAbsolutePath()), backupDir.resolve(file.getName()),
-                    StandardCopyOption.REPLACE_EXISTING);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        fileImporter.importData(file, this::importData);
     }
 
     private void importData(InputStream is) throws Exception {
