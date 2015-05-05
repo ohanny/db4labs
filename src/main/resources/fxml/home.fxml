@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Text?>
 <GridPane fx:controller="fr.icodem.db4labs.controller.HomeController"
           xmlns:fx="http://javafx.com/fxml" alignment="TOP_CENTER" hgap="10" vgap="10"
-          gridLinesVisible="false">
+          gridLinesVisible="false" prefHeight="480">
 
     <stylesheets>
         <URL value="@/styles/home.css"/>
