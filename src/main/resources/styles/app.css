@@ -71,6 +71,16 @@
     visibility: hidden;
 }
 
+.image-input .switch-image-button {
+    visibility: hidden;
+}
+.image-input:hover .switch-image-button {
+    visibility: visible;
+}
+.image-input.no-content .switch-image-button {
+    visibility: hidden;
+}
+
 /* validation */
 .label.message-label {  /* todo keep message-mabel ?*/
     visibility: hidden;

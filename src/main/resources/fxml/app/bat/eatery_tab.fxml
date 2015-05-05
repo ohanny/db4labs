@@ -264,14 +264,46 @@
                                 <Text styleClass="form-title" text="Eatery Images"
                                       GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
 
-                                <ImageInput fx:id="eateryImageInput1" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                                <ImageInput fx:id="eateryImageInput2" GridPane.rowIndex="1" GridPane.columnIndex="1" />
-                                <ImageInput fx:id="eateryImageInput3" GridPane.rowIndex="1" GridPane.columnIndex="2" />
-                                <ImageInput fx:id="eateryImageInput4" GridPane.rowIndex="1" GridPane.columnIndex="3" />
-                                <ImageInput fx:id="eateryImageInput5" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-                                <ImageInput fx:id="eateryImageInput6" GridPane.rowIndex="2" GridPane.columnIndex="1" />
-                                <ImageInput fx:id="eateryImageInput7" GridPane.rowIndex="2" GridPane.columnIndex="2" />
-                                <ImageInput fx:id="eateryImageInput8" GridPane.rowIndex="2" GridPane.columnIndex="3" />
+                                <ImageInput fx:id="eateryImageInput1" GridPane.rowIndex="1" GridPane.columnIndex="0">
+                                    <Button text="Food spotting" fx:id="switchToFoodSpottingButton1"
+                                            styleClass="switch-image-button"
+                                            AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="5"/>
+                                </ImageInput>
+                                <ImageInput fx:id="eateryImageInput2" GridPane.rowIndex="1" GridPane.columnIndex="1" >
+                                    <Button text="Food spotting" fx:id="switchToFoodSpottingButton2"
+                                            styleClass="switch-image-button"
+                                            AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="5"/>
+                                </ImageInput>
+                                <ImageInput fx:id="eateryImageInput3" GridPane.rowIndex="1" GridPane.columnIndex="2" >
+                                    <Button text="Food spotting" fx:id="switchToFoodSpottingButton3"
+                                            styleClass="switch-image-button"
+                                            AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="5"/>
+                                </ImageInput>
+                                <ImageInput fx:id="eateryImageInput4" GridPane.rowIndex="1" GridPane.columnIndex="3" >
+                                    <Button text="Food spotting" fx:id="switchToFoodSpottingButton4"
+                                            styleClass="switch-image-button"
+                                            AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="5"/>
+                                </ImageInput>
+                                <ImageInput fx:id="eateryImageInput5" GridPane.rowIndex="2" GridPane.columnIndex="0" >
+                                    <Button text="Food spotting" fx:id="switchToFoodSpottingButton5"
+                                            styleClass="switch-image-button"
+                                            AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="5"/>
+                                </ImageInput>
+                                <ImageInput fx:id="eateryImageInput6" GridPane.rowIndex="2" GridPane.columnIndex="1" >
+                                    <Button text="Food spotting" fx:id="switchToFoodSpottingButton6"
+                                            styleClass="switch-image-button"
+                                            AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="5"/>
+                                </ImageInput>
+                                <ImageInput fx:id="eateryImageInput7" GridPane.rowIndex="2" GridPane.columnIndex="2" >
+                                    <Button text="Food spotting" fx:id="switchToFoodSpottingButton7"
+                                            styleClass="switch-image-button"
+                                            AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="5"/>
+                                </ImageInput>
+                                <ImageInput fx:id="eateryImageInput8" GridPane.rowIndex="2" GridPane.columnIndex="3" >
+                                    <Button text="Food spotting" fx:id="switchToFoodSpottingButton8"
+                                            styleClass="switch-image-button"
+                                            AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="5"/>
+                                </ImageInput>
 
                                 <HBox GridPane.rowIndex="3" GridPane.columnIndex="3"
                                       spacing="10" alignment="BOTTOM_RIGHT">
@@ -302,14 +334,46 @@
                                 <Text styleClass="form-title" text="Food Spotting Images"
                                       GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
 
-                                <ImageInput fx:id="foodSpottingImageInput1" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                                <ImageInput fx:id="foodSpottingImageInput2" GridPane.rowIndex="1" GridPane.columnIndex="1" />
-                                <ImageInput fx:id="foodSpottingImageInput3" GridPane.rowIndex="1" GridPane.columnIndex="2" />
-                                <ImageInput fx:id="foodSpottingImageInput4" GridPane.rowIndex="1" GridPane.columnIndex="3" />
-                                <ImageInput fx:id="foodSpottingImageInput5" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-                                <ImageInput fx:id="foodSpottingImageInput6" GridPane.rowIndex="2" GridPane.columnIndex="1" />
-                                <ImageInput fx:id="foodSpottingImageInput7" GridPane.rowIndex="2" GridPane.columnIndex="2" />
-                                <ImageInput fx:id="foodSpottingImageInput8" GridPane.rowIndex="2" GridPane.columnIndex="3" />
+                                <ImageInput fx:id="foodSpottingImageInput1" GridPane.rowIndex="1" GridPane.columnIndex="0">
+                                    <Button text="Eatery" fx:id="switchToEateryButton1"
+                                            styleClass="switch-image-button"
+                                            AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="5"/>
+                                </ImageInput>
+                                <ImageInput fx:id="foodSpottingImageInput2" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                                    <Button text="Eatery" fx:id="switchToEateryButton2"
+                                            styleClass="switch-image-button"
+                                            AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="5"/>
+                                </ImageInput>
+                                <ImageInput fx:id="foodSpottingImageInput3" GridPane.rowIndex="1" GridPane.columnIndex="2">
+                                    <Button text="Eatery" fx:id="switchToEateryButton3"
+                                            styleClass="switch-image-button"
+                                            AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="5"/>
+                                </ImageInput>
+                                <ImageInput fx:id="foodSpottingImageInput4" GridPane.rowIndex="1" GridPane.columnIndex="3">
+                                    <Button text="Eatery" fx:id="switchToEateryButton4"
+                                            styleClass="switch-image-button"
+                                            AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="5"/>
+                                </ImageInput>
+                                <ImageInput fx:id="foodSpottingImageInput5" GridPane.rowIndex="2" GridPane.columnIndex="0">
+                                    <Button text="Eatery" fx:id="switchToEateryButton5"
+                                            styleClass="switch-image-button"
+                                            AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="5"/>
+                                </ImageInput>
+                                <ImageInput fx:id="foodSpottingImageInput6" GridPane.rowIndex="2" GridPane.columnIndex="1">
+                                    <Button text="Food spotting" fx:id="switchToEateryButton6"
+                                            styleClass="switch-image-button"
+                                            AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="5"/>
+                                </ImageInput>
+                                <ImageInput fx:id="foodSpottingImageInput7" GridPane.rowIndex="2" GridPane.columnIndex="2">
+                                    <Button text="Eatery" fx:id="switchToEateryButton7"
+                                            styleClass="switch-image-button"
+                                            AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="5"/>
+                                </ImageInput>
+                                <ImageInput fx:id="foodSpottingImageInput8" GridPane.rowIndex="2" GridPane.columnIndex="3">
+                                    <Button text="Eatery" fx:id="switchToEateryButton8"
+                                            styleClass="switch-image-button"
+                                            AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="5"/>
+                                </ImageInput>
 
                                 <HBox GridPane.rowIndex="3" GridPane.columnIndex="3"
                                       spacing="10" alignment="BOTTOM_RIGHT">

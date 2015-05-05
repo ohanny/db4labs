@@ -39,10 +39,7 @@ import javafx.util.Duration;
 
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 @Singleton
 public class EateryTabController implements Initializable {
@@ -91,6 +88,7 @@ public class EateryTabController implements Initializable {
     @FXML private ImageInput eateryImageInput6;
     @FXML private ImageInput eateryImageInput7;
     @FXML private ImageInput eateryImageInput8;
+
     @FXML private ImageInput foodSpottingImageInput1;
     @FXML private ImageInput foodSpottingImageInput2;
     @FXML private ImageInput foodSpottingImageInput3;
@@ -99,6 +97,27 @@ public class EateryTabController implements Initializable {
     @FXML private ImageInput foodSpottingImageInput6;
     @FXML private ImageInput foodSpottingImageInput7;
     @FXML private ImageInput foodSpottingImageInput8;
+
+    private List<ImageInput> eateryImageInputs;
+    private List<ImageInput> foodSpottingImageInputs;
+
+    @FXML Button switchToFoodSpottingButton1;
+    @FXML Button switchToFoodSpottingButton2;
+    @FXML Button switchToFoodSpottingButton3;
+    @FXML Button switchToFoodSpottingButton4;
+    @FXML Button switchToFoodSpottingButton5;
+    @FXML Button switchToFoodSpottingButton6;
+    @FXML Button switchToFoodSpottingButton7;
+    @FXML Button switchToFoodSpottingButton8;
+
+    @FXML Button switchToEateryButton1;
+    @FXML Button switchToEateryButton2;
+    @FXML Button switchToEateryButton3;
+    @FXML Button switchToEateryButton4;
+    @FXML Button switchToEateryButton5;
+    @FXML Button switchToEateryButton6;
+    @FXML Button switchToEateryButton7;
+    @FXML Button switchToEateryButton8;
 
     // message binders
     private MessageBinders messageBinders;
@@ -208,6 +227,30 @@ public class EateryTabController implements Initializable {
                 .bind("payment_options").to(paymentOptionsTextField)
                 .build();
 
+        // switch images button
+        switchToFoodSpottingButton1.setOnAction(e -> switchImageToFoodSpotting(1));
+        switchToFoodSpottingButton2.setOnAction(e -> switchImageToFoodSpotting(2));
+        switchToFoodSpottingButton3.setOnAction(e -> switchImageToFoodSpotting(3));
+        switchToFoodSpottingButton4.setOnAction(e -> switchImageToFoodSpotting(4));
+        switchToFoodSpottingButton5.setOnAction(e -> switchImageToFoodSpotting(5));
+        switchToFoodSpottingButton6.setOnAction(e -> switchImageToFoodSpotting(6));
+        switchToFoodSpottingButton7.setOnAction(e -> switchImageToFoodSpotting(7));
+        switchToFoodSpottingButton8.setOnAction(e -> switchImageToFoodSpotting(8));
+
+        switchToEateryButton1.setOnAction(e -> switchImageToEatery(1));
+        switchToEateryButton2.setOnAction(e -> switchImageToEatery(2));
+        switchToEateryButton3.setOnAction(e -> switchImageToEatery(3));
+        switchToEateryButton4.setOnAction(e -> switchImageToEatery(4));
+        switchToEateryButton5.setOnAction(e -> switchImageToEatery(5));
+        switchToEateryButton6.setOnAction(e -> switchImageToEatery(6));
+        switchToEateryButton7.setOnAction(e -> switchImageToEatery(7));
+        switchToEateryButton8.setOnAction(e -> switchImageToEatery(8));
+
+        eateryImageInputs = Arrays.asList(eateryImageInput1, eateryImageInput2, eateryImageInput3, eateryImageInput4,
+                eateryImageInput5, eateryImageInput6, eateryImageInput7, eateryImageInput8);
+        foodSpottingImageInputs = Arrays.asList(foodSpottingImageInput1, foodSpottingImageInput2, foodSpottingImageInput3,
+                foodSpottingImageInput4, foodSpottingImageInput5, foodSpottingImageInput6, foodSpottingImageInput7,
+                foodSpottingImageInput8);
     }
     
     public void filter(String oldVal, String newVal) {
@@ -649,17 +692,49 @@ public class EateryTabController implements Initializable {
     private void hideForm() {
         container.clearValidationMessages(formPane, messageBinders);
 
-        EventHandler onFinished = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent t) {
-                tablePane.setDisable(false);
-            }
-        };
+        EventHandler onFinished = t -> tablePane.setDisable(false);
 
         final Timeline timeline = new Timeline();
         final KeyValue kv = new KeyValue(formPane.translateXProperty(), formPane.getWidth());
         final KeyFrame kf = new KeyFrame(Duration.millis(300), onFinished, kv);
         timeline.getKeyFrames().add(kf);
         timeline.play();
+    }
+
+    private void switchImageToFoodSpotting(int number) {
+        // find free input in food spotting
+        Optional<ImageInput> optional = foodSpottingImageInputs.stream()
+                .filter(ii -> ii.getData() == null).findFirst();
+        if (optional.isPresent()) {
+            ImageInput targetImageInput = optional.get();
+            ImageInput sourceImageInput = eateryImageInputs.get(number - 1);
+            targetImageInput.setData(sourceImageInput.getData());
+            sourceImageInput.setData(null);
+
+            for (int i = number; i < 8; i++) {
+                byte[] data = eateryImageInputs.get(i).getData();
+                eateryImageInputs.get(i).setData(null);
+                eateryImageInputs.get(i - 1).setData(data);
+            }
+        }
+    }
+
+    private void switchImageToEatery(int number) {
+        // find free input in eatery
+        Optional<ImageInput> optional = eateryImageInputs.stream()
+                .filter(ii -> ii.getData() == null).findFirst();
+        if (optional.isPresent()) {
+            ImageInput targetImageInput = optional.get();
+            ImageInput sourceImageInput = foodSpottingImageInputs.get(number - 1);
+            targetImageInput.setData(sourceImageInput.getData());
+            sourceImageInput.setData(null);
+
+            for (int i = number; i < 8; i++) {
+                byte[] data = foodSpottingImageInputs.get(i).getData();
+                foodSpottingImageInputs.get(i).setData(null);
+                foodSpottingImageInputs.get(i - 1).setData(data);
+            }
+        }
     }
 
     @Subscribe
