@@ -196,7 +196,9 @@ public class ImageInput extends AnchorPane implements Initializable {
         resetMessage();
         if (imageData == null) {
             imageView.setImage(null);
-            getStyleClass().add("no-content");
+            if (!getStyleClass().contains("no-content")) {
+                getStyleClass().add("no-content");
+            }
             return;
         }
 
@@ -205,6 +207,7 @@ public class ImageInput extends AnchorPane implements Initializable {
         Image img = new Image(is);
         imageView.setImage(img);
         getStyleClass().remove("no-content");
+        text.setText("");
     }
 
     private byte[] readChannel(ReadableByteChannel channel) throws Exception {
