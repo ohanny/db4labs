@@ -1,12 +1,15 @@
 package fr.icodem.db4labs.app.bat.controller;
 
+import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import fr.icodem.db4labs.app.AppNameProvider;
+import fr.icodem.db4labs.app.bat.event.EateryAddedEvent;
 import fr.icodem.db4labs.app.bat.service.CookingStyleService;
 import fr.icodem.db4labs.app.bat.service.CountryService;
 import fr.icodem.db4labs.app.bat.service.EateryService;
 import fr.icodem.db4labs.app.bat.service.EateryTagService;
+import fr.icodem.db4labs.app.eshop.event.ProductAddedEvent;
 import fr.icodem.db4labs.component.FormState;
 import fr.icodem.db4labs.component.ImageInput;
 import fr.icodem.db4labs.container.AppContainer;
@@ -17,6 +20,7 @@ import fr.icodem.db4labs.dbtools.validation.MessageBindersBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -516,65 +520,52 @@ public class EateryTabController implements Initializable {
 
     private void populateData(PersistentObject po) {
         // base properties
-        po.setProperty("name", nameTextField.getText());
-        po.setProperty("executive_chef", executiveChefTextField.getText());
-        po.setProperty("post_code", postCodeTextField.getText());
-        po.setProperty("street", streetTextField.getText());
-        po.setProperty("description", descriptionTextArea.getText());
+        String name = nameTextField.getText();
+        String executiveChef = executiveChefTextField.getText();
+        String postCode = postCodeTextField.getText();
+        String street = streetTextField.getText();
+        String description = descriptionTextArea.getText();
 
         // menu
-        PersistentObject menu = (PersistentObject) po.getObject("menu");
-        if (menu == null) {
-            menu = new PersistentObject("menu");
-            po.setObject("menu", menu);
-        }
-        menu.setProperty("content", menuTextArea.getText().trim());
+        String menuContent = menuTextArea.getText().trim();
 
         // practical information
-        PersistentObject practicalInfo = (PersistentObject) po.getObject("practicalInformation");
-        if (practicalInfo == null) {
-            practicalInfo = new PersistentObject("practical_information");
-            po.setObject("practicalInformation", practicalInfo);
-        }
-        practicalInfo.setProperty("getting_there", gettingThereTextField.getText());
-        practicalInfo.setProperty("parking", parkingTextField.getText());
-        practicalInfo.setProperty("hours_of_operation1", hoursOfOperationTextField1.getText());
-        practicalInfo.setProperty("hours_of_operation2", hoursOfOperationTextField2.getText());
-        practicalInfo.setProperty("price", priceTextField.getText());
-        practicalInfo.setProperty("payment_options", paymentOptionsTextField.getText());
+        String gettingThere = gettingThereTextField.getText();
+        String parking = parkingTextField.getText();
+        String hoursOfOperation1 = hoursOfOperationTextField1.getText();
+        String hoursOfOperation2 = hoursOfOperationTextField2.getText();
+        String price = priceTextField.getText();
+        String paymentOptions = paymentOptionsTextField.getText();
 
         // cooking style
+        Integer cookingStyleId = null;
         if (cookingStyleComboBox.getSelectionModel().getSelectedItem() != null) {
-            po.setProperty("cooking_style_id", cookingStyleComboBox.getSelectionModel().getSelectedItem().getProperty("id"));
-        } else {
-            po.setProperty("cooking_style_id", null);
+            cookingStyleId = (Integer) cookingStyleComboBox.getSelectionModel().getSelectedItem().getProperty("id");
         }
 
         // city
+        Integer cityId = null;
         if (cityComboBox.getSelectionModel().getSelectedItem() != null) {
-            po.setProperty("city_id", cityComboBox.getSelectionModel().getSelectedItem().getProperty("id"));
-        }
-        else {
-            po.setProperty("city_id", null);
+            cityId = (Integer) cityComboBox.getSelectionModel().getSelectedItem().getProperty("id");
         }
 
         // images
-        populateImage(eateryImageInput1, po, "eateryImage1");
-        populateImage(eateryImageInput2, po, "eateryImage2");
-        populateImage(eateryImageInput3, po, "eateryImage3");
-        populateImage(eateryImageInput4, po, "eateryImage4");
-        populateImage(eateryImageInput5, po, "eateryImage5");
-        populateImage(eateryImageInput6, po, "eateryImage6");
-        populateImage(eateryImageInput7, po, "eateryImage7");
-        populateImage(eateryImageInput8, po, "eateryImage8");
-        populateImage(foodSpottingImageInput1, po, "foodSpottingImage1");
-        populateImage(foodSpottingImageInput2, po, "foodSpottingImage2");
-        populateImage(foodSpottingImageInput3, po, "foodSpottingImage3");
-        populateImage(foodSpottingImageInput4, po, "foodSpottingImage4");
-        populateImage(foodSpottingImageInput5, po, "foodSpottingImage5");
-        populateImage(foodSpottingImageInput6, po, "foodSpottingImage6");
-        populateImage(foodSpottingImageInput7, po, "foodSpottingImage7");
-        populateImage(foodSpottingImageInput8, po, "foodSpottingImage8");
+        byte[] eateryImage1 = eateryImageInput1.getData();
+        byte[] eateryImage2 = eateryImageInput2.getData();
+        byte[] eateryImage3 = eateryImageInput3.getData();
+        byte[] eateryImage4 = eateryImageInput4.getData();
+        byte[] eateryImage5 = eateryImageInput5.getData();
+        byte[] eateryImage6 = eateryImageInput6.getData();
+        byte[] eateryImage7 = eateryImageInput7.getData();
+        byte[] eateryImage8 = eateryImageInput8.getData();
+        byte[] foodSpottingImage1 = foodSpottingImageInput1.getData();
+        byte[] foodSpottingImage2 = foodSpottingImageInput2.getData();
+        byte[] foodSpottingImage3 = foodSpottingImageInput3.getData();
+        byte[] foodSpottingImage4 = foodSpottingImageInput4.getData();
+        byte[] foodSpottingImage5 = foodSpottingImageInput5.getData();
+        byte[] foodSpottingImage6 = foodSpottingImageInput6.getData();
+        byte[] foodSpottingImage7 = foodSpottingImageInput7.getData();
+        byte[] foodSpottingImage8 = foodSpottingImageInput8.getData();
 
         // tags
         List<PersistentObject> tags = new ArrayList<>();
@@ -584,25 +575,16 @@ public class EateryTabController implements Initializable {
                 tags.add((PersistentObject) chk.getUserData());
             }
         }
-        po.setObject("tags", tags);
 
-    }
+        eateryService.populateEatery(po, name, executiveChef, postCode, street,
+                description, menuContent, gettingThere, parking,
+                hoursOfOperation1, hoursOfOperation2, price, paymentOptions,
+                cookingStyleId, cityId, eateryImage1, eateryImage2, eateryImage3,
+                eateryImage4, eateryImage5, eateryImage6, eateryImage7, eateryImage8,
+                foodSpottingImage1, foodSpottingImage2, foodSpottingImage3, foodSpottingImage4,
+                foodSpottingImage5, foodSpottingImage6, foodSpottingImage7, foodSpottingImage8,
+                tags);
 
-    private void populateImage(ImageInput imageInput, PersistentObject po, String objectName) {
-        byte[] img = imageInput.getData();
-        PersistentObject imgItem = (PersistentObject) po.getObject(objectName);
-        if (img != null) {
-            if (imgItem == null) {
-                imgItem = new PersistentObject("image_data");
-                imgItem.setProperty("content", img);
-                po.setObject(objectName, imgItem);
-            } else {
-                imgItem.setProperty("content", img);
-            }
-        } else if (imgItem != null) {// no image, delete previous one
-            po.setObject(objectName, null);
-            po.setObject(objectName + ".old", imgItem);// so that service can delete old image
-        }
     }
 
     @FXML
@@ -679,5 +661,15 @@ public class EateryTabController implements Initializable {
         timeline.getKeyFrames().add(kf);
         timeline.play();
     }
+
+    @Subscribe
+    public void eateryAdded(EateryAddedEvent event) {
+        // update table
+        Platform.runLater(() -> {
+            ObservableList<PersistentObject> items = tableView.getItems();
+            items.add(event.getEatery());
+        });
+    }
+
 
 }

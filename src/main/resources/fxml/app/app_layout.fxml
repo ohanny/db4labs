@@ -15,6 +15,7 @@
                         <MenuItem text="Export to database" onAction="#loadDatabase"/>
                         <MenuItem fx:id="menuItemImportFile" text="Import from XML File" onAction="#importXMLFile"/>
                         <MenuItem fx:id="menuItemImportFolder" text="Import from XML Folder" onAction="#importXMLFolder"/>
+                        <!--<MenuItem text="Fix" onAction="#fix"/>-->
                     </items>
                 </Menu>
                 <Menu text="Help" disable="true"/>
