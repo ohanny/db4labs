@@ -68,9 +68,6 @@ public class ProductService {
         List<PersistentObject> productTags = container.select("product_product_tag", where);
         List<PersistentObject> tags = new ArrayList<>();
         for (PersistentObject productTag : productTags) {
-            //where = WhereDescriptor.build("id = ?")
-            //                       .addParameter(productTag.getProperty("tag_id"), DataType.INTEGER);
-            //PersistentObject tag = container.selectUnique("product_tag", where);
             PersistentObject tag = container.selectByPK("product_tag", productTag.getProperty("tag_id"));
             tags.add(tag);
         }
