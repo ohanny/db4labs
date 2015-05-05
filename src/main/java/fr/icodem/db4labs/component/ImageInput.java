@@ -11,6 +11,7 @@ import javafx.scene.input.DataFormat;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
@@ -27,7 +28,7 @@ import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
 import java.util.ResourceBundle;
 
-public class ImageInput extends StackPane implements Initializable {
+public class ImageInput extends AnchorPane implements Initializable {
 
     @FXML
     private Text text;

@@ -5,15 +5,20 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.control.Button?>
 
-<fx:root type="javafx.scene.layout.StackPane" xmlns:fx="http://javafx.com/fxml"
+<fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml"
          maxWidth="150" minHeight="130"  maxHeight="130">
     <children>
-        <ImageView fx:id="imageView" fitWidth="150" fitHeight="130" preserveRatio="true"/>
-        <Text fx:id="text" text="&lt;no image&gt;"/>
-        <Button fx:id="removeButton" StackPane.alignment="BOTTOM_RIGHT"
+        <StackPane AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0"
+                   AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
+            <ImageView fx:id="imageView" fitWidth="150" fitHeight="130" preserveRatio="true"/>
+            <Text fx:id="text" text="&lt;no image&gt;"/>
+        </StackPane>
+        <Button fx:id="removeButton"
+                AnchorPane.bottomAnchor="3" AnchorPane.rightAnchor="0"
                 onAction="#removeImage">
             <graphic>
                 <ImageView fitWidth="32" fitHeight="32" preserveRatio="true">
