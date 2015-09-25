@@ -161,7 +161,7 @@
             "name":"eatery_weekly_report",
             "columns":[
                 {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
-                {"name":"week", "type":"date", "nullable":false},
+                {"name":"week", "type":"integer", "nullable":false},
                 {"name":"input_date", "type":"timestamp", "nullable":false},
                 {"name":"taking_amount", "type":"numeric", "precision":9, "scale":2, "nullable":true},
                 {"name":"due_amount", "type":"numeric", "precision":9, "scale":2, "nullable":true},
