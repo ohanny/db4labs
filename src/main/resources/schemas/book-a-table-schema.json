@@ -134,7 +134,7 @@
         {
             "name":"review",
             "columns":[
-                {"name":"id", "type":"integer", "nullable":false, "pk":true},
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
                 {"name":"booking_id", "type":"integer", "nullable":false},
                 {"name":"rating", "type":"integer", "nullable":false},
                 {"name":"comment", "type":"varchar", "length":500}
@@ -158,30 +158,19 @@
             ]
         },
         {
-            "name":"eatery_weekly_report",
-            "columns":[
-                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
-                {"name":"week", "type":"integer", "nullable":false},
-                {"name":"input_date", "type":"timestamp", "nullable":false},
-                {"name":"taking_amount", "type":"numeric", "precision":9, "scale":2, "nullable":true},
-                {"name":"due_amount", "type":"numeric", "precision":9, "scale":2, "nullable":true},
-                {"name":"manager_id", "type":"varchar", "length":30, "nullable":false}
-            ],
-            "constraints":[
-                {"name":"fk_eatery_weekly_report1", "type":"foreign", "column":"manager_id", "tableRef":"user_data", "columnRef":"username"}
-            ]
-        },
-        {
             "name":"booking_report",
             "columns":[
                 {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
                 {"name":"fulfilled", "type":"boolean", "nullable":false},
                 {"name":"comment", "type":"varchar", "length":500, "nullable":true},
-                {"name":"weekly_report_id", "type":"integer", "nullable":false},
-                {"name":"booking_id", "type":"integer", "nullable":false}
+                {"name":"input_date", "type":"timestamp", "nullable":false},
+                {"name":"taking_amount", "type":"numeric", "precision":9, "scale":2, "nullable":true},
+                {"name":"due_amount", "type":"numeric", "precision":9, "scale":2, "nullable":true},
+                {"name":"booking_id", "type":"integer", "nullable":false},
+                {"name":"manager_id", "type":"varchar", "length":30, "nullable":false}
             ],
             "constraints":[
-                {"name":"fk_booking_report1", "type":"foreign", "column":"weekly_report_id", "tableRef":"eatery_weekly_report", "columnRef":"id"},
+                {"name":"fk_booking_report1", "type":"foreign", "column":"manager_id", "tableRef":"user_data", "columnRef":"username"},
                 {"name":"fk_booking_report2", "type":"foreign", "column":"booking_id", "tableRef":"booking", "columnRef":"id"}
             ]
         }
