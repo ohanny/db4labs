@@ -48,7 +48,8 @@ public class CarpoolingService {
                     switch (currentElement) {
                         case "brand":
                             String brandStr = reader.getText();
-                            if (brandStr != null) {
+                            if (brandStr != null && !brandStr.trim().isEmpty()) {
+                                brandStr = brandStr.trim();
                                 PersistentObject brand = brandService.findBrandByName(brandStr);
                                 if (brand != null) {
                                     System.out.println("Brand already exists : " + brandStr);
@@ -70,11 +71,9 @@ public class CarpoolingService {
 
                 case XMLEvent.START_ELEMENT:
                     currentElement = reader.getLocalName();
-                    break;
-
-                case XMLEvent.END_ELEMENT:
                     switch (currentElement) {
                         case "city":
+                            nameAtt = reader.getAttributeValue(null, "name");
                             if (nameAtt != null) {
                                 PersistentObject city = cityService.findCityByName(nameAtt);
                                 if (city != null) {
@@ -92,6 +91,8 @@ public class CarpoolingService {
                             break;
 
                         case "model":
+                            nameAtt = reader.getAttributeValue(null, "name");
+                            brandAtt = reader.getAttributeValue(null, "brand");
                             if (nameAtt != null) {
                                 PersistentObject model = modelService.findModelByName(nameAtt);
                                 if (model != null) {
@@ -118,18 +119,6 @@ public class CarpoolingService {
                     }
                     break;
 
-                case XMLEvent.ATTRIBUTE:
-                    switch (currentElement) {
-                        case "name":
-                            nameAtt = reader.getText();
-                            break;
-
-                        case "brand":
-                            brandAtt = reader.getText();
-                            break;
-
-                    }
-                    break;
             }
         }
 
