@@ -447,7 +447,7 @@ public class EateryService {
         // save eatery
         saveEatery(po);
 
-        // notity product tab controller
+        // notify eatery tab controller
         eventBus.post(new EateryAddedEvent(po));
 
     }
