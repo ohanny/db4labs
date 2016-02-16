@@ -11,6 +11,21 @@ public class ColumnDescriptor {
     private short scale;
     private boolean storeAsFile;
 
+    @Override
+    public String toString() {
+        return "ColumnDescriptor{" +
+                "name='" + name + '\'' +
+                ", type=" + type +
+                ", nullable=" + nullable +
+                ", primaryKey=" + primaryKey +
+                ", identity=" + identity +
+                ", length=" + length +
+                ", precision=" + precision +
+                ", scale=" + scale +
+                ", storeAsFile=" + storeAsFile +
+                '}';
+    }
+
     public String getName() {
         return name;
     }
