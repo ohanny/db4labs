@@ -20,6 +20,10 @@ public abstract class DataTypeMapper {
     public String getSqlStringType(ColumnDescriptor column) {
         StringBuilder sb = new StringBuilder();
 
+        if (column.getType() == null) {
+            throw new IllegalArgumentException("Type cannot be null : "  + column);
+        }
+
         switch (column.getType()) {
             case VARCHAR:
                 sb.append("varchar");
