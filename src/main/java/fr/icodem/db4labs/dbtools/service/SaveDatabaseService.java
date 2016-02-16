@@ -55,7 +55,6 @@ public class SaveDatabaseService extends Service<Void> {
 
             h2Database.saveDatabase(exportPath);
 
-            System.out.println(event);
             h2Database.cleanAll();
         } catch (Exception e) {
             e.printStackTrace();
