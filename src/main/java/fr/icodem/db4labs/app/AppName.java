@@ -5,7 +5,8 @@ public enum AppName {
     EShop,
     EShopMedia,
     EShopGrocery,
-    BookATable;
+    BookATable,
+    Carpooling;
     // TODO remove common + remove db name and app name from common-schema.json
 
     public static class AppConfig {
@@ -32,39 +33,23 @@ public enum AppName {
         }
     }
 
-    /*
-    public String getTitle() {
-        switch (this) {
-            case EShop:
-                return "EShop";
-            case EShopMedia:
-                return "EShop Media";
-            case EShopGrocery:
-                return "EShop Grocery";
-        }
-        return null;
-    }  */
-
     public AppConfig getConfig() {
         AppConfig cfg = null;
         switch (this) {
             case  EShop:
-                //cfg = new AppConfig("EShop", "data-eshop.zip",
-                //        "common-schema.json", "eshop-schema.json");
                 cfg = new AppConfig("EShop", "data-eshop.zip", "eshop-schema.json");
                 break;
             case  EShopMedia:
-                //cfg = new AppConfig("EShop Media", "data-eshop-media.zip",
-                //        "common-schema.json", "eshop-schema.json", "eshop-media-schema.json");
                 cfg = new AppConfig("EShop Media", "data-eshop-media.zip", "eshop-media-schema.json");
                 break;
             case EShopGrocery:
-                //cfg = new AppConfig("EShop Grocery", "data-eshop-grocery.zip",
-                //        "common-schema.json", "eshop-schema.json", "eshop-grocery-schema.json");
                 cfg = new AppConfig("EShop Grocery", "data-eshop-grocery.zip", "eshop-grocery-schema.json");
                 break;
             case BookATable:
                 cfg = new AppConfig("Book a Table", "data-book-a-table.zip", "book-a-table-schema.json");
+                break;
+            case Carpooling:
+                cfg = new AppConfig("Carpooling", "data-carpooling.zip", "carpooling-schema.json");
                 break;
         }
 

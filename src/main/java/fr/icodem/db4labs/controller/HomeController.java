@@ -47,6 +47,12 @@ public class HomeController {
         loadApp();
     }
 
+    @FXML
+    protected void loadCarpooling() {
+        appNameProvider.setAppName(AppName.Carpooling);
+        loadApp();
+    }
+
     private void loadApp() {
         container.navigateTo("task_processing", null);
         LoadDatabaseEvent event = new LoadDatabaseEvent(appNameProvider.getAppName());
@@ -75,6 +81,9 @@ public class HomeController {
                 break;
             case BookATable:
                 container.navigateTo("app/bat/book_a_table", event.getAppName().getConfig().getTitle());
+                break;
+            case Carpooling:
+                container.navigateTo("app/carpooling/carpooling", event.getAppName().getConfig().getTitle());
                 break;
         }
     }

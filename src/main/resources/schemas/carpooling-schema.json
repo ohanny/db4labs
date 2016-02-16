@@ -1,0 +1,193 @@
+{
+    "dbName":"carpooling",
+    "appName":"Carpooling",
+    "description":"A database for carpooling",
+    "imports": ["common-schema.json"],
+    "tables": [
+        {
+            "name":"city",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
+                {"name":"name", "type":"varchar", "length":25, "nullable":false},
+                {"name":"postcode", "type":"varchar", "length":10, "nullable":true}
+            ]
+        },
+        {
+            "name":"brand",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
+                {"name":"name", "type":"varchar", "length":15, "nullable":false, "unique":true}
+            ]
+        },
+        {
+            "name":"model",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
+                {"name":"name", "type":"varchar", "length":15, "nullable":false, "unique":true},
+                {"name":"brand_id", "type":"integer", "nullable":false}
+            ],
+            "constraints":[
+                {"name":"fk_model1", "type":"foreign", "column":"brand_id", "tableRef":"brand", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"user_data",
+            "columns":[
+                {"name":"username", "type":"varchar", "length":30, "nullable":false, "pk":true},
+                {"name":"password", "type":"varchar", "length":20, "nullable":false}
+            ]
+        },
+        {
+            "name":"employee",
+            "columns":[
+                {"name":"id", "type":"varchar", "length":30, "nullable":false, "pk":true},
+                {"name":"name", "type":"varchar", "length":30, "nullable":false},
+                {"name":"email", "type":"varchar", "length":30, "nullable":false}
+            ],
+            "constraints":[
+                {"name":"fk_employee1", "type":"foreign", "column":"id", "tableRef":"user_data", "columnRef":"username"}
+            ]
+        },
+        {
+            "name":"member",
+            "columns":[
+                {"name":"id", "type":"varchar", "length":30, "nullable":false, "pk":true},
+                {"name":"first_name", "type":"varchar", "length":20, "nullable":false},
+                {"name":"last_name", "type":"varchar", "length":20, "nullable":false},
+                {"name":"sex", "type":"char", "length":1, "nullable":false},
+                {"name":"birth_year", "type":"integer", "nullable":false},
+                {"name":"phone", "type":"varchar", "length":10, "nullable":true},
+                {"name":"minibio", "type":"varchar", "length":300, "nullable":true},
+                {"name":"register_date", "type":"date", "nullable":false},
+                {"name":"last_login", "type":"timestamp", "nullable":true},
+                {"name":"chat", "type":"varchar", "length":10, "nullable":false},
+                {"name":"music", "type":"varchar", "length":10, "nullable":false},
+                {"name":"animal", "type":"varchar", "length":10, "nullable":false},
+                {"name":"smoking", "type":"varchar", "length":10, "nullable":false},
+                {"name":"street", "type":"varchar", "length":50, "nullable":true},
+                {"name":"postcode", "type":"varchar", "length":10, "nullable":true},
+                {"name":"city_id", "type":"integer", "nullable":true},
+                {"name":"photo_id", "type":"integer", "nullable":true}
+            ],
+            "constraints":[
+                {"name":"fk_member1", "type":"foreign", "column":"id", "tableRef":"user_data", "columnRef":"username"},
+                {"name":"fk_member2", "type":"foreign", "column":"city_id", "tableRef":"city", "columnRef":"id"},
+                {"name":"fk_member3", "type":"foreign", "column":"photo_id", "tableRef":"photo", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"photo",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
+                {"name":"content", "type":"blob", "nullable":false}
+            ]
+        },
+        {
+            "name":"vehicle",
+            "columns":[
+                {"name":"id", "type":"varchar", "length":30, "nullable":false, "pk":true},
+                {"name":"category", "type":"varchar", "length":15, "nullable":false},
+                {"name":"comfort", "type":"varchar", "length":10, "nullable":false},
+                {"name":"color", "type":"varchar", "length":15, "nullable":false},
+                {"name":"model_id", "type":"integer", "nullable":false}
+            ],
+            "constraints":[
+                {"name":"fk_vehicle1", "type":"foreign", "column":"id", "tableRef":"member", "columnRef":"id"},
+                {"name":"fk_vehicle2", "type":"foreign", "column":"model_id", "tableRef":"model", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"trip",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
+                {"name":"advertisement", "type":"varchar", "length":300, "nullable":false},
+                {"name":"seating_capacity", "type":"integer", "nullable":false},
+                {"name":"validated", "type":"char", "length":1, "nullable":false},
+                {"name":"from_id", "type":"integer", "nullable":false},
+                {"name":"to_id", "type":"integer", "nullable":false},
+                {"name":"departure", "type":"timestamp", "nullable":false},
+                {"name":"arrival", "type":"timestamp", "nullable":false},
+                {"name":"price", "type":"integer", "nullable":false},
+                {"name":"member_id", "type":"varchar", "length":30, "nullable":false}
+            ],
+            "constraints":[
+                {"name":"fk_trip1", "type":"foreign", "column":"member_id", "tableRef":"member", "columnRef":"id"},
+                {"name":"fk_trip2", "type":"foreign", "column":"from_id", "tableRef":"city", "columnRef":"id"},
+                {"name":"fk_trip3", "type":"foreign", "column":"to_id", "tableRef":"city", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"stop_over",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
+                {"name":"departure", "type":"timestamp", "nullable":false},
+                {"name":"arrival", "type":"timestamp", "nullable":false},
+                {"name":"price", "type":"integer", "nullable":false},
+                {"name":"trip_id", "type":"integer", "nullable":false},
+                {"name":"city_id", "type":"integer", "nullable":false}
+            ],
+            "constraints":[
+                {"name":"fk_stop_over1", "type":"foreign", "column":"trip_id", "tableRef":"trip", "columnRef":"id"},
+                {"name":"fk_stop_over2", "type":"foreign", "column":"city_id", "tableRef":"city", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"booking",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
+                {"name":"datetime", "type":"timestamp", "nullable":false},
+                {"name":"nb_people", "type":"integer", "nullable":false},
+                {"name":"member_id", "type":"varchar", "length":30, "nullable":false},
+                {"name":"trip_id", "type":"integer", "nullable":false}
+            ],
+            "constraints":[
+                {"name":"fk_booking1", "type":"foreign", "column":"member_id", "tableRef":"member", "columnRef":"id"},
+                {"name":"fk_booking2", "type":"foreign", "column":"trip_id", "tableRef":"trip", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"message",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
+                {"name":"text", "type":"varchar", "length":300, "nullable":false},
+                {"name":"author_id", "type":"varchar", "length":30, "nullable":false},
+                {"name":"trip_id", "type":"integer", "nullable":false},
+                {"name":"root_id", "type":"integer", "nullable":false}
+            ],
+            "constraints":[
+                {"name":"fk_message1", "type":"foreign", "column":"author_id", "tableRef":"member", "columnRef":"id"},
+                {"name":"fk_message2", "type":"foreign", "column":"trip_id", "tableRef":"trip", "columnRef":"id"},
+                {"name":"fk_message3", "type":"foreign", "column":"root_id", "tableRef":"message", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"alert",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
+                {"name":"date_of_travel", "type":"date", "nullable":false},
+                {"name":"from_id", "type":"integer", "nullable":false},
+                {"name":"to_id", "type":"integer", "nullable":false},
+                {"name":"passenger_id", "type":"varchar", "length":30, "nullable":false}
+            ],
+            "constraints":[
+                {"name":"fk_alert1", "type":"foreign", "column":"from_id", "tableRef":"city", "columnRef":"id"},
+                {"name":"fk_alert2", "type":"foreign", "column":"to_id", "tableRef":"city", "columnRef":"id"},
+                {"name":"fk_alert3", "type":"foreign", "column":"passenger_id", "tableRef":"member", "columnRef":"id"}
+            ]
+        },
+        {
+            "name":"appreciation",
+            "columns":[
+                {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
+                {"name":"author_id", "type":"varchar", "length":30, "nullable":false},
+                {"name":"member_id", "type":"varchar", "length":30, "nullable":false},
+                {"name":"rating", "type":"varchar", "length":10, "nullable":false},
+                {"name":"comment", "type":"varchar", "length":300}
+            ],
+            "constraints":[
+                {"name":"fk_appreciation1", "type":"foreign", "column":"author_id", "tableRef":"member", "columnRef":"id"},
+                {"name":"fk_appreciation2", "type":"foreign", "column":"member_id", "tableRef":"member", "columnRef":"id"}
+            ]
+        }
+    ]
+}

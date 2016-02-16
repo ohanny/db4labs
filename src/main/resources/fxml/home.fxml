@@ -5,9 +5,10 @@
 <?import java.net.URL?>
 
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.RowConstraints?>
 <GridPane fx:controller="fr.icodem.db4labs.controller.HomeController"
           xmlns:fx="http://javafx.com/fxml" alignment="TOP_CENTER" hgap="10" vgap="10"
-          gridLinesVisible="false" prefHeight="480">
+          gridLinesVisible="false" prefHeight="580">
 
     <stylesheets>
         <URL value="@/styles/home.css"/>
@@ -16,6 +17,16 @@
     <padding>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
     </padding>
+
+    <rowConstraints>
+        <RowConstraints fillHeight="true"/>
+        <RowConstraints fillHeight="true"/>
+        <RowConstraints fillHeight="true"/>
+        <RowConstraints fillHeight="true"/>
+        <RowConstraints prefHeight="104" fillHeight="true"/>
+        <RowConstraints fillHeight="true"/>
+        <RowConstraints fillHeight="true"/>
+    </rowConstraints>
 
     <Text id="home-title" text="Database Tools"
            GridPane.columnIndex="0" GridPane.rowIndex="0"/>
@@ -35,6 +46,10 @@
     <HomeMenu title="Book A Table" description="A database with restaurants where one can book a table"
               image="/images/multimedia-128.png" onSelectEvent="#loadBookATable"
               GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+
+    <HomeMenu title="Car Pooling" description="A database for carpooling"
+              image="/images/multimedia-128.png" onSelectEvent="#loadCarpooling"
+              GridPane.columnIndex="0" GridPane.rowIndex="5"/>
 
 
 </GridPane>

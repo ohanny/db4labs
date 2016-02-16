@@ -4,6 +4,7 @@ import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
 import fr.icodem.db4labs.app.AppNameProvider;
 import fr.icodem.db4labs.app.bat.service.EateryService;
+import fr.icodem.db4labs.app.carpooling.service.CarpoolingService;
 import fr.icodem.db4labs.database.ConnectionProvider;
 import fr.icodem.db4labs.event.DataImportDoneEvent;
 import fr.icodem.db4labs.app.eshop.service.ProductService;
@@ -58,6 +59,7 @@ public class ApplicationLayoutController {
     @Inject private AppContainer container;
     @Inject private ProductService productService;
     @Inject private EateryService eateryService;
+    @Inject private CarpoolingService carpoolingService;
     @Inject private AppNameProvider appNameProvider;
 
     @FXML
@@ -237,6 +239,10 @@ public class ApplicationLayoutController {
                     case BookATable:
                         eateryService.importData(file);
                         break;
+
+                    case Carpooling:
+                        carpoolingService.importData(file);
+                        break;
                 }
 
                 menuItemImportFile.setDisable(true);
@@ -267,6 +273,10 @@ public class ApplicationLayoutController {
 
                     case BookATable:
                         eateryService.importData(file);
+                        break;
+
+                    case Carpooling:
+                        carpoolingService.importData(file);
                         break;
                 }
 
