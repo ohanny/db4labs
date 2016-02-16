@@ -41,4 +41,12 @@ public class CityService {
     }
 
     public void checkDeleteCity(PersistentObject city) throws Exception {}
+
+    public PersistentObject findCityByName(String name) throws Exception {
+        WhereDescriptor where = WhereDescriptor.build("lower(name) = ?")
+                .addParameter(name.toLowerCase(), DataType.VARCHAR);
+        PersistentObject city = container.selectUnique("city", where);
+        return city;
+    }
+
 }

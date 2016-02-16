@@ -2,7 +2,9 @@ package fr.icodem.db4labs.app.carpooling.service;
 
 import com.google.inject.Inject;
 import fr.icodem.db4labs.container.AppContainer;
+import fr.icodem.db4labs.database.DataType;
 import fr.icodem.db4labs.database.PersistentObject;
+import fr.icodem.db4labs.database.WhereDescriptor;
 import fr.icodem.db4labs.dbtools.transaction.Transactionnal;
 import javafx.collections.ObservableList;
 
@@ -54,5 +56,13 @@ public class ModelService {
         // brand
         po.setProperty("brand_id", brandId);
     }
+
+    public PersistentObject findModelByName(String name) throws Exception {
+        WhereDescriptor where = WhereDescriptor.build("lower(name) = ?")
+                .addParameter(name.toLowerCase(), DataType.VARCHAR);
+        PersistentObject model = container.selectUnique("model", where);
+        return model;
+    }
+
 
 }

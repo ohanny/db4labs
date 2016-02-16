@@ -8,6 +8,9 @@ import fr.icodem.db4labs.database.WhereDescriptor;
 import fr.icodem.db4labs.dbtools.transaction.Transactionnal;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 @Transactionnal
 public class BrandService {
 
@@ -47,4 +50,12 @@ public class BrandService {
         int count = container.count("model", where);
         if (count > 0) throw new IllegalArgumentException("Cannot delete brand because it is linked at least to one model");
     }
+
+    public PersistentObject findBrandByName(String name) throws Exception {
+        WhereDescriptor where = WhereDescriptor.build("lower(name) = ?")
+                .addParameter(name.toLowerCase(), DataType.VARCHAR);
+        PersistentObject brand = container.selectUnique("brand", where);
+        return brand;
+    }
+
 }

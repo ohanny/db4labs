@@ -1,7 +1,10 @@
 package fr.icodem.db4labs.app.carpooling.controller;
 
+import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import fr.icodem.db4labs.app.bat.event.EateryAddedEvent;
+import fr.icodem.db4labs.app.carpooling.event.ModelAddedEvent;
 import fr.icodem.db4labs.app.carpooling.service.BrandService;
 import fr.icodem.db4labs.app.carpooling.service.ModelService;
 import fr.icodem.db4labs.component.FormState;
@@ -12,6 +15,7 @@ import fr.icodem.db4labs.dbtools.validation.MessageBindersBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
@@ -264,5 +268,15 @@ public class ModelTabController implements Initializable {
         timeline.getKeyFrames().add(kf);
         timeline.play();
     }
+
+    @Subscribe
+    public void modelAdded(ModelAddedEvent event) {
+        // update table
+        Platform.runLater(() -> {
+            ObservableList<PersistentObject> items = tableView.getItems();
+            items.add(event.getModel());
+        });
+    }
+
 
 }
