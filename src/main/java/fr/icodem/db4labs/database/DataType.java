@@ -2,7 +2,7 @@ package fr.icodem.db4labs.database;
 
 public enum DataType {
 
-    VARCHAR("varchar"), CHARACTER("character"),
+    VARCHAR("varchar"), CHARACTER("char"),
     INTEGER("integer"), NUMERIC("numeric"),
     DATE("date"), TIME("time"), TIMESTAMP("timestamp"),
     BOOLEAN("boolean"),
