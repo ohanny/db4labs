@@ -327,8 +327,8 @@ public class EateryTabController implements Initializable {
 
         // retrieve cooking styles
         try {
-            ObservableList<PersistentObject> countries = cookingStyleService.findCookingStyleList();
-            cookingStyleComboBox.setItems(countries);
+            ObservableList<PersistentObject> cookingStyles = cookingStyleService.findCookingStyleList();
+            cookingStyleComboBox.setItems(cookingStyles);
         } catch (Exception e) {
             e.printStackTrace();
         }
