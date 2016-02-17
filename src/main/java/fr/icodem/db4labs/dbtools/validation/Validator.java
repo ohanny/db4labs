@@ -6,6 +6,7 @@ import fr.icodem.db4labs.component.Message;
 import fr.icodem.db4labs.database.PersistentObject;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -171,7 +172,16 @@ public abstract class Validator {
 
     protected double tryParseDouble(String str, String pattern, String message) {
         try {
+            //if (str.contains("."))
             DecimalFormat fmt = new DecimalFormat(pattern);
+            DecimalFormatSymbols custom=new DecimalFormatSymbols();
+            if (str.contains(".")) {
+                custom.setDecimalSeparator('.');
+            }
+            else if (str.contains(",")) {
+                custom.setDecimalSeparator(',');
+            }
+            fmt.setDecimalFormatSymbols(custom);
             double result = fmt.parse(str).doubleValue();
             return result;
         } catch (ParseException e) {
