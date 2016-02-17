@@ -46,6 +46,9 @@ public class CityTabController implements Initializable {
 
     @FXML private TextField idTextField;
     @FXML private TextField nameTextField;
+    @FXML private TextField postcodeTextField;
+    @FXML private TextField longitudeTextField;
+    @FXML private TextField latitudeTextField;
 
     private MessageBinders messageBinders;
 
@@ -85,6 +88,9 @@ public class CityTabController implements Initializable {
         // message binders
         messageBinders = new MessageBindersBuilder()
                 .bind("name").to(nameTextField)
+                .bind("postcode").to(postcodeTextField)
+                .bind("longitude").to(longitudeTextField)
+                .bind("latitude").to(latitudeTextField)
                 .build();
 
     }
@@ -104,6 +110,9 @@ public class CityTabController implements Initializable {
         formState = FormState.Add;
         idTextField.setText("");
         nameTextField.setText("");
+        postcodeTextField.setText("");
+        longitudeTextField.setText("0.0");
+        latitudeTextField.setText("0.0");
         showForm();
     }
 
@@ -122,6 +131,9 @@ public class CityTabController implements Initializable {
 
         idTextField.setText(city.getProperty("id").toString());
         nameTextField.setText(city.getProperty("name").toString());
+        postcodeTextField.setText(city.getProperty("postcode").toString());
+        longitudeTextField.setText(city.getProperty("longitude").toString());
+        latitudeTextField.setText(city.getProperty("latitude").toString());
         showForm();
     }
 
@@ -183,8 +195,8 @@ public class CityTabController implements Initializable {
     }
 
     private void populateData(PersistentObject po) {
-        // base properties
-        po.setProperty("name", nameTextField.getText());
+        cityService.populateCity(po, nameTextField.getText(), postcodeTextField.getText(),
+                longitudeTextField.getText(), latitudeTextField.getText());
     }
 
     @FXML
@@ -217,11 +229,7 @@ public class CityTabController implements Initializable {
     private void hideForm() {
         container.clearValidationMessages(formPane, messageBinders);
 
-        EventHandler onFinished = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent t) {
-                tablePane.setDisable(false);
-            }
-        };
+        EventHandler onFinished = t -> tablePane.setDisable(false);
 
         final Timeline timeline = new Timeline();
         final KeyValue kv = new KeyValue(formPane.translateXProperty(), formPane.getWidth());

@@ -15,6 +15,12 @@ public class ModelService {
 
     public ObservableList<PersistentObject> findModelList() throws Exception {
         ObservableList<PersistentObject> result = container.select("model");
+        for (PersistentObject model : result) {
+            if (model.getProperty("brand_id") != null) {
+                PersistentObject brand = container.selectByPK("brand", model.getProperty("brand_id"));
+                model.setProperty("brandName", brand.getProperty("name"));
+            }
+        }
         return result;
     }
 
@@ -26,7 +32,6 @@ public class ModelService {
             PersistentObject brand = container.selectByPK("brand", model.getProperty("brand_id"));
             model.setObject("brand", brand);
         }
-
 
         return model;
     }
@@ -57,9 +62,10 @@ public class ModelService {
         po.setProperty("brand_id", brandId);
     }
 
-    public PersistentObject findModelByName(String name) throws Exception {
-        WhereDescriptor where = WhereDescriptor.build("lower(name) = ?")
-                .addParameter(name.toLowerCase(), DataType.VARCHAR);
+    public PersistentObject findModelByNameAndBrand(String name, int brandId) throws Exception {
+        WhereDescriptor where = WhereDescriptor.build("lower(name) = ? and brand_id = ?")
+                .addParameter(name.toLowerCase(), DataType.VARCHAR)
+                .addParameter(brandId, DataType.INTEGER);
         PersistentObject model = container.selectUnique("model", where);
         return model;
     }

@@ -2,12 +2,17 @@ package fr.icodem.db4labs.app.carpooling.service;
 
 import com.google.common.eventbus.EventBus;
 import com.google.inject.Inject;
+import fr.icodem.db4labs.app.carpooling.controller.CityValidator;
 import fr.icodem.db4labs.app.carpooling.event.BrandAddedEvent;
 import fr.icodem.db4labs.app.carpooling.event.CityAddedEvent;
 import fr.icodem.db4labs.app.carpooling.event.ModelAddedEvent;
+import fr.icodem.db4labs.app.eshop.controller.ProductValidator;
 import fr.icodem.db4labs.database.PersistentObject;
 import fr.icodem.db4labs.dbtools.service.FileImporter;
 import fr.icodem.db4labs.dbtools.transaction.Transactionnal;
+import fr.icodem.db4labs.dbtools.validation.ValidatorException;
+import fr.icodem.db4labs.dbtools.validation.ValidatorResult;
+import fr.icodem.db4labs.dbtools.validation.ValidatorResults;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
@@ -32,6 +37,9 @@ public class CarpoolingService {
 
         // attributes
         String nameAtt = null;
+        String postcodeAtt = null;
+        String longitudeAtt = null;
+        String latitudeAtt = null;
         String brandAtt = null;
 
         // parse XML content
@@ -74,14 +82,30 @@ public class CarpoolingService {
                     switch (currentElement) {
                         case "city":
                             nameAtt = reader.getAttributeValue(null, "name");
+                            postcodeAtt = reader.getAttributeValue(null, "postcode");
+                            longitudeAtt = reader.getAttributeValue(null, "longitude");
+                            latitudeAtt = reader.getAttributeValue(null, "latitude");
                             if (nameAtt != null) {
-                                PersistentObject city = cityService.findCityByName(nameAtt);
+                                PersistentObject city = cityService.findCityByNameAndPostCode(nameAtt, postcodeAtt);
                                 if (city != null) {
-                                    System.out.println("City already exists : " + nameAtt);
+                                    System.out.println("City already exists : " + nameAtt + " - " + postcodeAtt);
                                 }
                                 else {
                                     PersistentObject po = new PersistentObject("city");
-                                    po.setProperty("name", nameAtt);
+                                    cityService.populateCity(po, nameAtt, postcodeAtt, longitudeAtt, latitudeAtt);
+
+                                    // perform validation
+                                    ValidatorResults results = new CityValidator().validate(po);
+
+                                    // validation errors
+                                    if (!results.isValid()) {
+                                        for (ValidatorResult vr : results.getResults()) {
+                                            System.out.println(vr.getProperty() + " : " + vr.getMessage() + " : " + vr.getOriginalValue());
+                                        }
+                                        throw new ValidatorException("City validation failed", results);
+                                    }
+
+                                    // save to database
                                     cityService.saveCity(po);
 
                                     // notify city tab controller
@@ -94,12 +118,13 @@ public class CarpoolingService {
                             nameAtt = reader.getAttributeValue(null, "name");
                             brandAtt = reader.getAttributeValue(null, "brand");
                             if (nameAtt != null) {
-                                PersistentObject model = modelService.findModelByName(nameAtt);
+                                PersistentObject brand = brandService.findBrandByName(brandAtt);
+                                PersistentObject model = modelService.findModelByNameAndBrand(nameAtt, (Integer)brand.getProperty("id"));
                                 if (model != null) {
                                     System.out.println("Model already exists : " + nameAtt);
                                 }
                                 else {
-                                    PersistentObject brand = brandService.findBrandByName(brandAtt);
+                                    //PersistentObject brand = brandService.findBrandByName(brandAtt);
                                     if (brand == null) {
                                         System.out.println("Brand is incorrect : " + brandAtt);
                                     } else {

@@ -25,13 +25,25 @@
                     <TableView fx:id="tableView" GridPane.columnIndex="0"
                                GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
                         <columns>
-                            <TableColumn text="Id">
+                            <TableColumn text="Id" minWidth="50">
                                 <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
                                 <cellFactory><DefaultTableCellFactory property="id"></DefaultTableCellFactory></cellFactory>
                             </TableColumn>
-                            <TableColumn text="Name" prefWidth="400">
+                            <TableColumn text="Name" prefWidth="300">
                                 <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
                                 <cellFactory><DefaultTableCellFactory property="name"></DefaultTableCellFactory></cellFactory>
+                            </TableColumn>
+                            <TableColumn text="Postcode" prefWidth="100">
+                                <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
+                                <cellFactory><DefaultTableCellFactory property="postcode"></DefaultTableCellFactory></cellFactory>
+                            </TableColumn>
+                            <TableColumn text="Longitude" prefWidth="100">
+                                <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
+                                <cellFactory><DefaultTableCellFactory property="longitude"></DefaultTableCellFactory></cellFactory>
+                            </TableColumn>
+                            <TableColumn text="Latitude" prefWidth="100">
+                                <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
+                                <cellFactory><DefaultTableCellFactory property="latitude"></DefaultTableCellFactory></cellFactory>
                             </TableColumn>
                         </columns>
                     </TableView>
@@ -46,7 +58,7 @@
                 </GridPane>
 
                 <GridPane fx:id="formPane" hgap="10" vgap="10"
-                          maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300"
+                          maxWidth="-Infinity" minWidth="-Infinity" prefWidth="350"
                           styleClass="form"
                           StackPane.alignment="TOP_RIGHT">
                     <padding>
@@ -64,7 +76,13 @@
                                GridPane.rowIndex="1" GridPane.columnIndex="1"/>
                     <Label text="Name" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
                     <TextField fx:id="nameTextField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-                    <HBox GridPane.rowIndex="3" GridPane.columnIndex="1"
+                    <Label text="Postcode" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="postcodeTextField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                    <Label text="Longitude" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <TextField fx:id="longitudeTextField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                    <Label text="Latitude" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <TextField fx:id="latitudeTextField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                    <HBox GridPane.rowIndex="6" GridPane.columnIndex="1"
                           spacing="10" alignment="CENTER_RIGHT">
                         <Button text="Cancel" onAction="#cancel"/>
                         <Button text="Save" onAction="#save"/>

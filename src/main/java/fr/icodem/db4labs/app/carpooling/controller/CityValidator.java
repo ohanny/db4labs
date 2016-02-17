@@ -10,8 +10,26 @@ public class CityValidator extends Validator {
         switch (name) {
             case "name":
                 String str = checkStringNotNull(value, "The name may not be null !");
-                checkStringMaxLength(str, 25, "Length must be less than 25");
+                checkStringMaxLength(str, 50, "Length must be less than 50");
                 result.setConvertedValue(str);
+                break;
+
+            case "postcode":
+                String postcode = checkStringNotNull(value, "The postcode may not be null !");
+                checkStringMaxLength(postcode, 5, "Length must be less than 5");
+                result.setConvertedValue(postcode);
+                break;
+
+            case "longitude":
+                str = checkStringNotNull(value, "The longitude may not be null !");
+                double longitude = tryParseDouble(str, "##.########", "Not a valid longitude");
+                result.setConvertedValue(longitude);
+                break;
+
+            case "latitude":
+                str = checkStringNotNull(value, "The latitude may not be null !");
+                double latitude = tryParseDouble(str, "###.########", "Not a valid latitude");
+                result.setConvertedValue(latitude);
                 break;
         }
 

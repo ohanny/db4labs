@@ -42,11 +42,22 @@ public class CityService {
 
     public void checkDeleteCity(PersistentObject city) throws Exception {}
 
-    public PersistentObject findCityByName(String name) throws Exception {
-        WhereDescriptor where = WhereDescriptor.build("lower(name) = ?")
-                .addParameter(name.toLowerCase(), DataType.VARCHAR);
+    public PersistentObject findCityByNameAndPostCode(String name, String postcode) throws Exception {
+        WhereDescriptor where = WhereDescriptor.build("lower(name) = ? and postcode = ?")
+                .addParameter(name.toLowerCase(), DataType.VARCHAR)
+                .addParameter(postcode, DataType.VARCHAR);
         PersistentObject city = container.selectUnique("city", where);
         return city;
     }
+
+    public void populateCity(PersistentObject po, String name, String postcode,
+                              String longitude, String latitude) {
+        // base properties
+        po.setProperty("name", name);
+        po.setProperty("postcode", postcode);
+        po.setProperty("longitude", longitude);
+        po.setProperty("latitude", latitude);
+    }
+
 
 }

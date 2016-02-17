@@ -10,7 +10,7 @@ public class ModelValidator extends Validator {
         switch (name) {
             case "name":
                 String str = checkStringNotNull(value, "The name may not be null !");
-                checkStringMaxLength(str, 15, "Length must be less than 15");
+                checkStringMaxLength(str, 30, "Length must be less than 30");
                 result.setConvertedValue(str);
                 break;
 
