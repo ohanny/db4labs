@@ -18,6 +18,14 @@ public class CityService {
         return result;
     }
 
+    public ObservableList<PersistentObject> findCityByPostcodeList(String postcode) throws Exception {
+        final WhereDescriptor where =
+                WhereDescriptor.build("postcode = ?")
+                               .addParameter(postcode, DataType.VARCHAR);
+        ObservableList<PersistentObject> result = container.select("city", where);
+        return result;
+    }
+
     public PersistentObject findCityById(int id) throws Exception {
         PersistentObject city = container.selectByPK("city", id);
 

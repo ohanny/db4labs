@@ -70,5 +70,12 @@ public class ModelService {
         return model;
     }
 
+    public ObservableList<PersistentObject> findModelByBrand(int brandId) throws Exception {
+        WhereDescriptor where = WhereDescriptor.build("brand_id = ?")
+                .addParameter(brandId, DataType.INTEGER);
+        ObservableList<PersistentObject> models = container.select("model", where);
+        return models;
+    }
+
 
 }

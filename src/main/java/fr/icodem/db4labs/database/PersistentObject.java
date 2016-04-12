@@ -63,6 +63,10 @@ public class PersistentObject {
         return properties.get(name);
     }
 
+    public void removeProperty(String name) {
+        properties.remove(name);
+    }
+
     public PersistentObject setObject(String name, Object value) {
         if (objects == null) {
             objects = FXCollections.observableHashMap();

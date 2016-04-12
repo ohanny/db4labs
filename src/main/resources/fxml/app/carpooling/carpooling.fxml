@@ -29,6 +29,7 @@
             <fx:include source="city_tab.fxml"/>
             <fx:include source="brand_tab.fxml"/>
             <fx:include source="model_tab.fxml"/>
+            <fx:include source="member_tab.fxml"/>
         </tabs>
     </TabPane>
 

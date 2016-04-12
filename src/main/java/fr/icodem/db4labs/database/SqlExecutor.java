@@ -330,19 +330,29 @@ public class SqlExecutor {
                 else st.setDouble(index, (Double)value);
                 break;
             case DATE:
-                java.sql.Date date = new java.sql.Date(((Date)value).getTime());
-                st.setDate(index, date);
+                if (value == null) st.setNull(index, Types.DATE);
+                else {
+                    java.sql.Date date = new java.sql.Date(((Date) value).getTime());
+                    st.setDate(index, date);
+                }
                 break;
             case TIME:
-                Time time = new Time(((Date)value).getTime());
-                st.setTime(index, time);
+                if (value == null) st.setNull(index, Types.TIME);
+                else {
+                    Time time = new Time(((Date) value).getTime());
+                    st.setTime(index, time);
+                }
                 break;
             case TIMESTAMP:
-                Timestamp timestamp = new Timestamp(((Date)value).getTime());
-                st.setTimestamp(index, timestamp);
+                if (value == null) st.setNull(index, Types.TIMESTAMP);
+                else {
+                    Timestamp timestamp = new Timestamp(((Date) value).getTime());
+                    st.setTimestamp(index, timestamp);
+                }
                 break;
             case BOOLEAN:
-                st.setBoolean(index, (Boolean)value);
+                if (value == null) st.setNull(index, Types.BOOLEAN);
+                else st.setBoolean(index, (Boolean)value);
                 break;
             case BLOB:
                 ByteArrayInputStream bais = new ByteArrayInputStream((byte[])value);

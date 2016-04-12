@@ -1,0 +1,337 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import fr.icodem.db4labs.component.DefaultTableCellFactory?>
+<?import fr.icodem.db4labs.component.DefaultListCell?>
+<?import fr.icodem.db4labs.component.DefaultListCellFactory?>
+<?import fr.icodem.db4labs.component.ImageInput?>
+<?import java.lang.String?>
+<Tab xmlns:fx="http://javafx.com/fxml" text="Members"
+     fx:controller="fr.icodem.db4labs.app.carpooling.controller.MemberTabController">
+    <content>
+        <StackPane>
+            <children>
+                <GridPane fx:id="tablePane" hgap="10" vgap="10" visible="true"
+                          gridLinesVisible="false">
+                    <padding>
+                        <Insets bottom="5.0" left="0.0" right="0.0" top="10.0"/>
+                    </padding>
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="ALWAYS" />
+                        <RowConstraints />
+                    </rowConstraints>
+
+                    <TableView fx:id="tableView" GridPane.columnIndex="0"
+                               GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+                        <columns>
+                            <TableColumn text="Username" minWidth="250">
+                                <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
+                                <cellFactory><DefaultTableCellFactory property="id"></DefaultTableCellFactory></cellFactory>
+                            </TableColumn>
+                            <TableColumn text="First name" prefWidth="150">
+                                <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
+                                <cellFactory><DefaultTableCellFactory property="first_name"></DefaultTableCellFactory></cellFactory>
+                            </TableColumn>
+                            <TableColumn text="Last name" prefWidth="150">
+                                <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
+                                <cellFactory><DefaultTableCellFactory property="last_name"></DefaultTableCellFactory></cellFactory>
+                            </TableColumn>
+                        </columns>
+                    </TableView>
+
+                    <HBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="10" alignment="BASELINE_RIGHT">
+                        <Button fx:id="deleteButton" text="Delete" onAction="#delete" disable="true"/>
+                        <Button fx:id="editButton" text="Edit" onAction="#edit" disable="true"/>
+                        <Button text="Add" onAction="#add"/>
+                        <Button text="Refresh" onAction="#find"/>
+                    </HBox>
+
+                </GridPane>
+
+
+                <GridPane fx:id="formPane" hgap="10" vgap="10"
+                          maxWidth="-Infinity" minWidth="-Infinity" prefWidth="500"
+                          styleClass="form"
+                          StackPane.alignment="TOP_RIGHT">
+
+                    <rowConstraints>
+                        <RowConstraints vgrow="ALWAYS"/>
+                    </rowConstraints>
+
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+
+                    <StackPane>
+                        <children>
+
+                            <!-- main form pane -->
+                            <GridPane hgap="10" vgap="10" visible="true"
+                                      fx:id="mainFormPane" gridLinesVisible="false">
+
+                                <rowConstraints>
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints vgrow="ALWAYS" fillHeight="true" />
+                                </rowConstraints>
+
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="20.0"/>
+                                    <ColumnConstraints percentWidth="80.0"/>
+                                </columnConstraints>
+
+                                <Text styleClass="form-title" text="Member"
+                                      GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+                                <Label text="Username" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                <TextField fx:id="usernameTextField" editable="false" focusTraversable="false"
+                                           GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                                <Label text="Password" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                <TextField fx:id="passwordTextField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                                <Label text="Sex" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                                <HBox GridPane.rowIndex="3" GridPane.columnIndex="1"
+                                      GridPane.columnSpan="1" spacing="10" alignment="CENTER_LEFT">
+                                    <HBox fx:id="sexMediaBox" spacing="10" GridPane.columnSpan="3"
+                                          GridPane.rowIndex="3" GridPane.columnIndex="1" alignment="CENTER">
+                                        <fx:define>
+                                            <ToggleGroup fx:id="sexMediaGroup"/>
+                                        </fx:define>
+                                        <children>
+                                            <RadioButton fx:id="maleRadioButton" text="M" toggleGroup="$sexMediaGroup"/>
+                                            <RadioButton fx:id="femaleRadioButton" text="F" toggleGroup="$sexMediaGroup"/>
+                                        </children>
+                                    </HBox>
+
+                                    <Label text="Birth Year" prefWidth="100">
+                                        <HBox.margin>
+                                            <Insets left="10.0" />
+                                        </HBox.margin>
+                                    </Label>
+                                    <ComboBox fx:id="birthYearComboBox" prefHeight="21.0" prefWidth="120.0" >
+                                    </ComboBox>
+                                </HBox>
+
+                                <Label text="First name" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                                <TextField fx:id="firstNameTextField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                                <Label text="Last name" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                                <TextField fx:id="lastNameTextField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                                <Label text="Street" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                                <TextField fx:id="streetTextField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                                <Label text="Postcode" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                                <HBox GridPane.rowIndex="7" GridPane.columnIndex="1"
+                                      GridPane.columnSpan="1" spacing="10" alignment="CENTER_LEFT">
+                                    <TextField fx:id="postcodeTextField" prefWidth="120"/>
+
+                                    <Label text="City" prefWidth="70">
+                                        <HBox.margin>
+                                            <Insets left="20.0" />
+                                        </HBox.margin>
+                                    </Label>
+                                    <ComboBox fx:id="cityComboBox" prefHeight="21.0" prefWidth="250.0"
+                                              GridPane.rowIndex="7" GridPane.columnIndex="1"  promptText="Select a city...">
+                                        <cellFactory><DefaultListCellFactory property="name"></DefaultListCellFactory></cellFactory>
+                                        <buttonCell><DefaultListCell property="name"/></buttonCell>
+                                    </ComboBox>
+                                </HBox>
+
+                                <Label text="Register date" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                                <DatePicker fx:id="registerDatePicker" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+
+                                <Label text="Photo" GridPane.rowIndex="9" GridPane.columnIndex="0"
+                                       GridPane.valignment="CENTER" />
+                                <ImageInput fx:id="imageInput" GridPane.rowIndex="9" GridPane.columnIndex="1"
+                                            GridPane.rowSpan="1" GridPane.columnSpan="1" GridPane.valignment="TOP" />
+
+                                <HBox GridPane.rowIndex="11" GridPane.columnIndex="1"
+                                      spacing="10" alignment="CENTER_RIGHT">
+                                    <Button text="Details" onAction="#showDetailsForm"/>
+                                    <Button text="Cancel" onAction="#cancel"/>
+                                    <Button text="Save" onAction="#save"/>
+                                </HBox>
+
+                            </GridPane><!-- end main form -->
+
+                            <!-- details form -->
+                            <GridPane hgap="10" vgap="10" visible="false"
+                                      fx:id="detailsFormPane" gridLinesVisible="false">
+
+                                <rowConstraints>
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints vgrow="ALWAYS" fillHeight="true" />
+                                </rowConstraints>
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="20.0"/>
+                                    <ColumnConstraints percentWidth="80.0"/>
+                                </columnConstraints>
+
+                                <Text styleClass="form-title" text="Member details"
+                                      GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+                                <Label text="Minibio" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                <TextArea fx:id="minibioTextField" GridPane.rowIndex="1" GridPane.columnIndex="1" prefRowCount="4"/>
+
+                                <Label text="Chat" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                <HBox fx:id="chatBox" spacing="10" GridPane.columnSpan="3"
+                                      GridPane.rowIndex="2" GridPane.columnIndex="1">
+                                    <fx:define>
+                                        <ToggleGroup fx:id="chatGroup"/>
+                                    </fx:define>
+                                    <children>
+                                        <RadioButton fx:id="chatLowRadioButton" text="Low" toggleGroup="$chatGroup"/>
+                                        <RadioButton fx:id="chatMediumRadioButton" text="Medium" toggleGroup="$chatGroup"/>
+                                        <RadioButton fx:id="chatHighRadioButton" text="High" toggleGroup="$chatGroup"/>
+                                    </children>
+                                </HBox>
+
+                                <Label text="Music" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                                <HBox fx:id="musicBox" spacing="10" GridPane.columnSpan="3"
+                                      GridPane.rowIndex="3" GridPane.columnIndex="1">
+                                    <fx:define>
+                                        <ToggleGroup fx:id="musicGroup"/>
+                                    </fx:define>
+                                    <children>
+                                        <RadioButton fx:id="musicLowRadioButton" text="Low" toggleGroup="$musicGroup"/>
+                                        <RadioButton fx:id="musicMediumRadioButton" text="Medium" toggleGroup="$musicGroup"/>
+                                        <RadioButton fx:id="musicHighRadioButton" text="High" toggleGroup="$musicGroup"/>
+                                    </children>
+                                </HBox>
+
+                                <Label text="Animal" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                                <HBox fx:id="animalBox" spacing="10" GridPane.columnSpan="3"
+                                      GridPane.rowIndex="4" GridPane.columnIndex="1">
+                                    <fx:define>
+                                        <ToggleGroup fx:id="animalGroup"/>
+                                    </fx:define>
+                                    <children>
+                                        <RadioButton fx:id="animalLowRadioButton" text="Low" toggleGroup="$animalGroup"/>
+                                        <RadioButton fx:id="animalMediumRadioButton" text="Medium" toggleGroup="$animalGroup"/>
+                                        <RadioButton fx:id="animalHighRadioButton" text="High" toggleGroup="$animalGroup"/>
+                                    </children>
+                                </HBox>
+
+                                <Label text="Smoking" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                                <HBox fx:id="smokingBox" spacing="10" GridPane.columnSpan="3"
+                                      GridPane.rowIndex="5" GridPane.columnIndex="1">
+                                    <fx:define>
+                                        <ToggleGroup fx:id="smokingGroup"/>
+                                    </fx:define>
+                                    <children>
+                                        <RadioButton fx:id="smokingLowRadioButton" text="Low" toggleGroup="$smokingGroup"/>
+                                        <RadioButton fx:id="smokingMediumRadioButton" text="Medium" toggleGroup="$smokingGroup"/>
+                                        <RadioButton fx:id="smokingHighRadioButton" text="High" toggleGroup="$smokingGroup"/>
+                                    </children>
+                                </HBox>
+
+                                <Label text="Brand" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                                <ComboBox fx:id="brandComboBox" prefHeight="21.0" prefWidth="210.0"
+                                          GridPane.rowIndex="6" GridPane.columnIndex="1"  promptText="Select a brand...">
+                                    <cellFactory><DefaultListCellFactory property="name"></DefaultListCellFactory></cellFactory>
+                                    <buttonCell><DefaultListCell property="name"/></buttonCell>
+                                </ComboBox>
+
+                                <Label text="Model" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                                <ComboBox fx:id="modelComboBox" prefHeight="21.0" prefWidth="210.0"
+                                          GridPane.rowIndex="7" GridPane.columnIndex="1"  promptText="Select a model...">
+                                    <cellFactory><DefaultListCellFactory property="name"></DefaultListCellFactory></cellFactory>
+                                    <buttonCell><DefaultListCell property="name"/></buttonCell>
+                                </ComboBox>
+
+                                <Label text="Category" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                                <ComboBox fx:id="categoryComboBox" prefHeight="21.0" prefWidth="210.0"
+                                          GridPane.rowIndex="8" GridPane.columnIndex="1" promptText="Select a category...">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="Sedan"/>
+                                            <String fx:value="Tourism"/>
+                                            <String fx:value="Convertible"/>
+                                            <String fx:value="StationWagon"/>
+                                            <String fx:value="SUV"/>
+                                            <String fx:value="PeopleCarrier"/>
+                                            <String fx:value="UtilityVehicle"/>
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
+
+                                <Label text="Color" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+                                <ComboBox fx:id="colorComboBox" prefHeight="21.0" prefWidth="210.0"
+                                          GridPane.rowIndex="9" GridPane.columnIndex="1"  promptText="Select a color...">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="Black"/>
+                                            <String fx:value="Blue"/>
+                                            <String fx:value="DarkBlue"/>
+                                            <String fx:value="Green"/>
+                                            <String fx:value="DarkGreen"/>
+                                            <String fx:value="LightGray"/>
+                                            <String fx:value="DarkGray"/>
+                                            <String fx:value="Purple"/>
+                                            <String fx:value="Brown"/>
+                                            <String fx:value="Maroon"/>
+                                            <String fx:value="Red"/>
+                                            <String fx:value="Pink"/>
+                                            <String fx:value="Orange"/>
+                                            <String fx:value="Yellow"/>
+                                            <String fx:value="White"/>
+                                            <String fx:value="Beige"/>
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
+
+                                <Label text="Comfort" GridPane.rowIndex="10" GridPane.columnIndex="0"/>
+                                <ComboBox fx:id="comfortComboBox" prefHeight="21.0" prefWidth="210.0"
+                                          GridPane.rowIndex="10" GridPane.columnIndex="1"  promptText="Select a comfort...">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="Basic"/>
+                                            <String fx:value="Normal"/>
+                                            <String fx:value="Comfort"/>
+                                            <String fx:value="Luxe"/>
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
+
+                                <HBox GridPane.rowIndex="11" GridPane.columnIndex="1"
+                                      spacing="10" alignment="BOTTOM_RIGHT">
+                                    <Button text="Back" onAction="#showMainForm"/>
+                                </HBox>
+
+                            </GridPane>
+                        </children>
+                    </StackPane>
+
+                </GridPane>
+            </children>
+        </StackPane>
+    </content>
+</Tab>
+
+

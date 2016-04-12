@@ -27,13 +27,17 @@
                     <TableView fx:id="tableView" GridPane.columnIndex="0"
                                GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
                         <columns>
-                            <TableColumn text="Id">
+                            <TableColumn text="Id" minWidth="50">
                                 <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
                                 <cellFactory><DefaultTableCellFactory property="id"></DefaultTableCellFactory></cellFactory>
                             </TableColumn>
-                            <TableColumn text="Name" prefWidth="400">
+                            <TableColumn text="Name" prefWidth="350">
                                 <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
                                 <cellFactory><DefaultTableCellFactory property="name"></DefaultTableCellFactory></cellFactory>
+                            </TableColumn>
+                            <TableColumn text="Brand" prefWidth="200">
+                                <cellValueFactory><PropertyValueFactory property="properties"/></cellValueFactory>
+                                <cellFactory><DefaultTableCellFactory property="brandName"></DefaultTableCellFactory></cellFactory>
                             </TableColumn>
                         </columns>
                     </TableView>
