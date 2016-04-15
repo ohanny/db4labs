@@ -103,6 +103,7 @@
             "columns":[
                 {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
                 {"name":"advertisement", "type":"varchar", "length":300, "nullable":false},
+                {"name":"created", "type":"timestamp", "nullable":false},
                 {"name":"seating_capacity", "type":"integer", "nullable":false},
                 {"name":"validated", "type":"char", "length":1, "nullable":false},
                 {"name":"from_id", "type":"integer", "nullable":false},
@@ -148,18 +149,29 @@
             ]
         },
         {
+            "name":"trip_thread",
+            "columns":[
+                {"name":"trip_id", "type":"integer", "nullable":false, "pk":true},
+                {"name":"author_id", "type":"varchar", "length":30, "nullable":false, "pk":true}
+            ],
+            "constraints":[
+                {"name":"fk_trip_thread1", "type":"foreign", "column":"trip_id", "tableRef":"trip", "columnRef":"id"},
+                {"name":"fk_trip_thread2", "type":"foreign", "column":"author_id", "tableRef":"member", "columnRef":"id"},
+                {"name":"uk_trip_thread1", "type":"unique", "column":"trip_id, author_id"}
+            ]
+        },
+        {
             "name":"message",
             "columns":[
                 {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
-                {"name":"text", "type":"varchar", "length":300, "nullable":false},
-                {"name":"author_id", "type":"varchar", "length":30, "nullable":false},
+                {"name":"message_type", "type":"varchar", "length":1, "nullable":false},
+                {"name":"message_datetime", "type":"timestamp", "nullable":false},
                 {"name":"trip_id", "type":"integer", "nullable":false},
-                {"name":"root_id", "type":"integer", "nullable":false}
+                {"name":"author_id", "type":"varchar", "length":30, "nullable":false},
+                {"name":"text", "type":"varchar", "length":300, "nullable":false}
             ],
             "constraints":[
-                {"name":"fk_message1", "type":"foreign", "column":"author_id", "tableRef":"member", "columnRef":"id"},
-                {"name":"fk_message2", "type":"foreign", "column":"trip_id", "tableRef":"trip", "columnRef":"id"},
-                {"name":"fk_message3", "type":"foreign", "column":"root_id", "tableRef":"message", "columnRef":"id"}
+                {"name":"fk_message1", "type":"foreign", "column":"author_id, trip_id", "tableRef":"trip_thread", "columnRef":"author_id, trip_id"}
             ]
         },
         {

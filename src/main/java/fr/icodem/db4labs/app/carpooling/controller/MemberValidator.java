@@ -18,12 +18,6 @@ public class MemberValidator extends Validator {
                 result.setConvertedValue(str);
                 break;
 
-//            case "password":
-//                str = checkStringNotNull(value, "The password may not be null !");
-//                checkStringMaxLength(str, 20, "Length must be less than 20");
-//                result.setConvertedValue(str);
-//                break;
-
             case "first_name":
                 str = checkStringNotNull(value, "The first name may not be null !");
                 checkStringMaxLength(str, 20, "Length must be less than 20");
