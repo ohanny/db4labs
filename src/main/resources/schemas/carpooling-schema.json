@@ -165,7 +165,7 @@
             "columns":[
                 {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
                 {"name":"message_type", "type":"varchar", "length":1, "nullable":false},
-                {"name":"message_datetime", "type":"timestamp", "nullable":false},
+                {"name":"created", "type":"timestamp", "nullable":false},
                 {"name":"trip_id", "type":"integer", "nullable":false},
                 {"name":"author_id", "type":"varchar", "length":30, "nullable":false},
                 {"name":"text", "type":"varchar", "length":300, "nullable":false}
