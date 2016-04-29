@@ -26,7 +26,7 @@ public class VehicleValidator extends Validator {
                 result.setConvertedValue(str);
                 break;
 
-            case "model_id":
+            case "car_model_id":
                 checkNotNull(value, "The model may not be null !");
                 int modelId = (int) value;
                 result.setConvertedValue(modelId);

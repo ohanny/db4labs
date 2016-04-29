@@ -31,8 +31,8 @@ public class MemberService {
         }
         PersistentObject vehicle = container.selectByPK("vehicle", id);
         if (vehicle != null) {
-            PersistentObject model = container.selectByPK("model", vehicle.getProperty("model_id"));
-            vehicle.setObject("model", model);
+            PersistentObject model = container.selectByPK("car_model", vehicle.getProperty("car_model_id"));
+            vehicle.setObject("car_model", model);
             if (model != null) {
                 PersistentObject brand = container.selectByPK("brand", model.getProperty("brand_id"));
                 vehicle.setObject("brand", brand);

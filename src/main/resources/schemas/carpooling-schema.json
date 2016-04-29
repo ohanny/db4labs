@@ -91,11 +91,11 @@
                 {"name":"category", "type":"varchar", "length":15, "nullable":false},
                 {"name":"comfort", "type":"varchar", "length":10, "nullable":false},
                 {"name":"color", "type":"varchar", "length":15, "nullable":false},
-                {"name":"model_id", "type":"integer", "nullable":false}
+                {"name":"car_model_id", "type":"integer", "nullable":false}
             ],
             "constraints":[
                 {"name":"fk_vehicle1", "type":"foreign", "column":"id", "tableRef":"member", "columnRef":"id"},
-                {"name":"fk_vehicle2", "type":"foreign", "column":"model_id", "tableRef":"car_model", "columnRef":"id"}
+                {"name":"fk_vehicle2", "type":"foreign", "column":"car_model_id", "tableRef":"car_model", "columnRef":"id"}
             ]
         },
         {

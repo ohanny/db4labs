@@ -205,7 +205,7 @@ public class MemberTabController implements Initializable {
                 .bind("first_name").to(firstNameTextField)
                 .bind("last_name").to(lastNameTextField)
                 .bind("birth_year").to(birthYearComboBox)
-                .bind("model_id").to(modelComboBox)
+                .bind("car_model_id").to(modelComboBox)
                 .bind("category").to(categoryComboBox)
                 .bind("comfort").to(comfortComboBox)
                 .bind("color").to(colorComboBox)
@@ -330,7 +330,7 @@ public class MemberTabController implements Initializable {
                 final Integer brandId = (Integer) brand.getProperty("id");
                 selectItem(brandId, brandComboBox);
 
-                PersistentObject model = (PersistentObject) vehicle.getObject("model");
+                PersistentObject model = (PersistentObject) vehicle.getObject("car_model");
                 if (model != null) {
                     try {
                         ObservableList<PersistentObject> models = modelService.findModelByBrand(brandId);
@@ -537,9 +537,9 @@ public class MemberTabController implements Initializable {
             vehicle.setProperty("category", category);
             vehicle.setProperty("color", color);
             vehicle.setProperty("comfort", comfort);
-            vehicle.setObject("model", model);
+            vehicle.setObject("car_model", model);
             vehicle.setObject("brand", brand);
-            vehicle.setProperty("model_id", model.getProperty("id"));
+            vehicle.setProperty("car_model_id", model.getProperty("id"));
         }
 
         po.setObject("user", user);
