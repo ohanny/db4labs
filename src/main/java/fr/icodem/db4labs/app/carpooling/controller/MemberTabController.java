@@ -59,6 +59,7 @@ public class MemberTabController implements Initializable {
     @FXML private Button deleteButton;
 
     @FXML private TextField usernameTextField;
+    @FXML private TextField usernameChangeTextField;
     @FXML private TextField passwordTextField;
     @FXML private TextField firstNameTextField;
     @FXML private TextField lastNameTextField;
@@ -227,6 +228,7 @@ public class MemberTabController implements Initializable {
     protected void add(ActionEvent event) {
         formState = FormState.Add;
         usernameTextField.clear();
+        usernameChangeTextField.clear();
         passwordTextField.clear();
         maleRadioButton.setSelected(true);
         usernameTextField.setEditable(true);
@@ -275,6 +277,7 @@ public class MemberTabController implements Initializable {
         PersistentObject user = (PersistentObject) member.getObject("user");
 
         usernameTextField.setText(member.getProperty("id").toString());
+        usernameChangeTextField.setText(member.getProperty("id").toString());
         passwordTextField.setText(user.getProperty("password").toString());
         firstNameTextField.setText(member.getProperty("first_name").toString());
         lastNameTextField.setText(member.getProperty("last_name").toString());
@@ -471,6 +474,7 @@ public class MemberTabController implements Initializable {
 
     private void populateData(PersistentObject po) {
         String username = usernameTextField.getText();
+        String newUsername = usernameChangeTextField.getText().trim();
         String password = passwordTextField.getText();
         String firstName = firstNameTextField.getText();
         String lastName = lastNameTextField.getText();
@@ -492,8 +496,11 @@ public class MemberTabController implements Initializable {
         }
         byte[] photoContent = imageInput.getData();
         String phone = null;
-        String minibio = minibioTextField.getText().trim();
-        minibio = minibio.isEmpty()?null:minibio;
+        String minibio = minibioTextField.getText();
+        if (minibio != null) {
+            minibio = minibio.trim();
+            minibio = minibio.isEmpty()?null:minibio;
+        }
         String chat = (String) chatGroup.getSelectedToggle().getUserData();
         String music = (String) musicGroup.getSelectedToggle().getUserData();
         String animal = (String) animalGroup.getSelectedToggle().getUserData();
@@ -524,6 +531,10 @@ public class MemberTabController implements Initializable {
         PersistentObject user = new PersistentObject("user_data");
         user.setProperty("username", username);
         user.setProperty("password", password);
+
+        if (newUsername != null && !newUsername.isEmpty() && !newUsername.equals(username)) {
+            user.setObject("newUsername", newUsername);
+        }
 
         PersistentObject photo = null;
         if (photoContent != null) {

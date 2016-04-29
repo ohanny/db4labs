@@ -47,7 +47,7 @@ public class BrandService {
         // check if brand is linked to a model
         WhereDescriptor where = WhereDescriptor.build("brand_id = ?")
                                                .addParameter(brand.getProperty("id"), DataType.INTEGER);
-        int count = container.count("model", where);
+        int count = container.count("car_model", where);
         if (count > 0) throw new IllegalArgumentException("Cannot delete brand because it is linked at least to one model");
     }
 

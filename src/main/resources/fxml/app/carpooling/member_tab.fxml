@@ -100,12 +100,15 @@
                                 <Label text="Username" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
                                 <TextField fx:id="usernameTextField" editable="false" focusTraversable="false"
                                            GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                                <Label text="New username" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                <TextField fx:id="usernameChangeTextField" focusTraversable="false"
+                                           GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-                                <Label text="Password" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                                <TextField fx:id="passwordTextField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                                <Label text="Password" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                                <TextField fx:id="passwordTextField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-                                <Label text="Sex" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                                <HBox GridPane.rowIndex="3" GridPane.columnIndex="1"
+                                <Label text="Sex" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                                <HBox GridPane.rowIndex="4" GridPane.columnIndex="1"
                                       GridPane.columnSpan="1" spacing="10" alignment="CENTER_LEFT">
                                     <HBox fx:id="sexMediaBox" spacing="10" GridPane.columnSpan="3"
                                           GridPane.rowIndex="3" GridPane.columnIndex="1" alignment="CENTER">
@@ -127,17 +130,17 @@
                                     </ComboBox>
                                 </HBox>
 
-                                <Label text="First name" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                                <TextField fx:id="firstNameTextField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                                <Label text="First name" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                                <TextField fx:id="firstNameTextField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
-                                <Label text="Last name" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                                <TextField fx:id="lastNameTextField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                                <Label text="Last name" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                                <TextField fx:id="lastNameTextField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
-                                <Label text="Street" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-                                <TextField fx:id="streetTextField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                                <Label text="Street" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                                <TextField fx:id="streetTextField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
 
-                                <Label text="Postcode" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
-                                <HBox GridPane.rowIndex="7" GridPane.columnIndex="1"
+                                <Label text="Postcode" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                                <HBox GridPane.rowIndex="8" GridPane.columnIndex="1"
                                       GridPane.columnSpan="1" spacing="10" alignment="CENTER_LEFT">
                                     <TextField fx:id="postcodeTextField" prefWidth="120"/>
 
@@ -153,12 +156,12 @@
                                     </ComboBox>
                                 </HBox>
 
-                                <Label text="Register date" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
-                                <DatePicker fx:id="registerDatePicker" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+                                <Label text="Register date" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+                                <DatePicker fx:id="registerDatePicker" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
 
-                                <Label text="Photo" GridPane.rowIndex="9" GridPane.columnIndex="0"
+                                <Label text="Photo" GridPane.rowIndex="10" GridPane.columnIndex="0"
                                        GridPane.valignment="CENTER" />
-                                <ImageInput fx:id="imageInput" GridPane.rowIndex="9" GridPane.columnIndex="1"
+                                <ImageInput fx:id="imageInput" GridPane.rowIndex="10" GridPane.columnIndex="1"
                                             GridPane.rowSpan="1" GridPane.columnSpan="1" GridPane.valignment="TOP" />
 
                                 <HBox GridPane.rowIndex="11" GridPane.columnIndex="1"

@@ -98,6 +98,25 @@ public class MemberService {
             }
         }
 
+        // new username
+        String newUsername = (String) user.getObject("newUsername");
+        if (newUsername != null) {
+            String oldUsername = (String) member.getProperty("id");
+
+            PersistentObject newMember = member.clone();
+            newMember.setProperty("id", newUsername);
+
+            PersistentObject newUser = (PersistentObject) member.getObject("user");
+            newUser.setProperty("username", newUsername);
+            newUser.setObject("newUsername", null);
+
+            PersistentObject newVehicle = (PersistentObject) member.getObject("vehicle");
+            if (newVehicle != null) {
+                newVehicle.setProperty("id", newUsername);
+            }
+            saveMember(newMember);
+            deleteMember(member);
+        }
     }
 
     public void deleteMember(PersistentObject member) throws Exception {
