@@ -22,14 +22,14 @@
             ]
         },
         {
-            "name":"model",
+            "name":"car_model",
             "columns":[
                 {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
                 {"name":"name", "type":"varchar", "length":30, "nullable":false, "unique":true},
                 {"name":"brand_id", "type":"integer", "nullable":false}
             ],
             "constraints":[
-                {"name":"fk_model1", "type":"foreign", "column":"brand_id", "tableRef":"brand", "columnRef":"id"}
+                {"name":"fk_car_model1", "type":"foreign", "column":"brand_id", "tableRef":"brand", "columnRef":"id"}
             ]
         },
         {
@@ -95,7 +95,7 @@
             ],
             "constraints":[
                 {"name":"fk_vehicle1", "type":"foreign", "column":"id", "tableRef":"member", "columnRef":"id"},
-                {"name":"fk_vehicle2", "type":"foreign", "column":"model_id", "tableRef":"model", "columnRef":"id"}
+                {"name":"fk_vehicle2", "type":"foreign", "column":"model_id", "tableRef":"car_model", "columnRef":"id"}
             ]
         },
         {
@@ -105,7 +105,8 @@
                 {"name":"advertisement", "type":"varchar", "length":300, "nullable":false},
                 {"name":"created", "type":"timestamp", "nullable":false},
                 {"name":"seating_capacity", "type":"integer", "nullable":false},
-                {"name":"validated", "type":"char", "length":1, "nullable":false},
+                {"name":"status", "type":"varchar", "length":10, "nullable":false},
+                {"name":"refused_comment", "type":"varchar", "length":300, "nullable":true},
                 {"name":"from_id", "type":"integer", "nullable":false},
                 {"name":"to_id", "type":"integer", "nullable":false},
                 {"name":"departure", "type":"timestamp", "nullable":false},

@@ -8,13 +8,15 @@ import fr.icodem.db4labs.database.WhereDescriptor;
 import fr.icodem.db4labs.dbtools.transaction.Transactionnal;
 import javafx.collections.ObservableList;
 
+import java.sql.SQLException;
+
 @Transactionnal
 public class ModelService {
 
     @Inject private AppContainer container;
 
     public ObservableList<PersistentObject> findModelList() throws Exception {
-        ObservableList<PersistentObject> result = container.select("model");
+        ObservableList<PersistentObject> result = container.select("car_model");
         for (PersistentObject model : result) {
             if (model.getProperty("brand_id") != null) {
                 PersistentObject brand = container.selectByPK("brand", model.getProperty("brand_id"));
@@ -25,7 +27,7 @@ public class ModelService {
     }
 
     public PersistentObject findModelById(int id) throws Exception {
-        PersistentObject model = container.selectByPK("model", id);
+        PersistentObject model = container.selectByPK("car_model", id);
 
         // brand
         if (model.getProperty("brand_id") != null) {
@@ -66,14 +68,14 @@ public class ModelService {
         WhereDescriptor where = WhereDescriptor.build("lower(name) = ? and brand_id = ?")
                 .addParameter(name.toLowerCase(), DataType.VARCHAR)
                 .addParameter(brandId, DataType.INTEGER);
-        PersistentObject model = container.selectUnique("model", where);
+        PersistentObject model = container.selectUnique("car_model", where);
         return model;
     }
 
     public ObservableList<PersistentObject> findModelByBrand(int brandId) throws Exception {
         WhereDescriptor where = WhereDescriptor.build("brand_id = ?")
                 .addParameter(brandId, DataType.INTEGER);
-        ObservableList<PersistentObject> models = container.select("model", where);
+        ObservableList<PersistentObject> models = container.select("car_model", where);
         return models;
     }
 

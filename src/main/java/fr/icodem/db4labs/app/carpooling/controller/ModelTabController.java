@@ -173,7 +173,7 @@ public class ModelTabController implements Initializable {
             switch (formState) {
                 case Add:
                     // populate data
-                    item = new PersistentObject("model");
+                    item = new PersistentObject("car_model");
                     break;
                 case Edit:
                     // populate data
