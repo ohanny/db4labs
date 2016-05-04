@@ -102,7 +102,7 @@
             "name":"trip",
             "columns":[
                 {"name":"id", "type":"integer", "nullable":false, "pk":true, "identity":true},
-                {"name":"advertisement", "type":"varchar", "length":300, "nullable":false},
+                {"name":"advertisement", "type":"varchar", "length":1000, "nullable":false},
                 {"name":"created", "type":"timestamp", "nullable":false},
                 {"name":"seating_capacity", "type":"integer", "nullable":false},
                 {"name":"status", "type":"varchar", "length":10, "nullable":false},
@@ -169,7 +169,7 @@
                 {"name":"created", "type":"timestamp", "nullable":false},
                 {"name":"trip_id", "type":"integer", "nullable":false},
                 {"name":"author_id", "type":"varchar", "length":30, "nullable":false},
-                {"name":"text", "type":"varchar", "length":300, "nullable":false}
+                {"name":"text", "type":"varchar", "length":500, "nullable":false}
             ],
             "constraints":[
                 {"name":"fk_message1", "type":"foreign", "column":"author_id, trip_id", "tableRef":"trip_thread", "columnRef":"author_id, trip_id"}
