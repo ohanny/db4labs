@@ -21,6 +21,11 @@ public class MySqlSqlGenerator extends SqlGenerator {
                     .append(" ")
                     .append(typeMapper.getSqlStringType(column));
             if (!column.isNullable()) sql.append(" not null");
+            else {
+                if (column.getType().equals(DataType.TIMESTAMP)) {
+                    sql.append(" null on update current_timestamp");
+                }
+            }
             if (column.isIdentity()) sql.append(" auto_increment");
             sql.append(",");
 
